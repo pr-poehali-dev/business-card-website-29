@@ -119,7 +119,7 @@ export function PhotoDivider({ img, label, sublabel, bgFrom = C.bg, bgTo = C.bgD
   return (
     <div className="relative w-full overflow-hidden" style={{ height: 220 }}>
       <img src={img} alt={label} className="w-full h-full object-cover object-center"
-        style={{ filter: "brightness(0.4) saturate(0.75)" }} />
+        style={{ filter: "brightness(0.65) saturate(0.85)" }} />
       <div className="absolute inset-0" style={{ background: `linear-gradient(to right, ${bgFrom} 0%, transparent 15%, transparent 85%, ${bgTo} 100%)` }} />
       <div className="absolute inset-0" style={{ background: `linear-gradient(to bottom, ${bgFrom} 0%, transparent 30%, transparent 70%, ${bgTo} 100%)` }} />
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
