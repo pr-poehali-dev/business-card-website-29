@@ -1,22 +1,89 @@
+import { useEffect, useState } from "react";
 import Icon from "@/components/ui/icon";
-import { C, HERO_IMG, PHONE, PHONE_HREF } from "./constants";
+import { C, HERO_IMG, PHONE, PHONE_HREF, WORKS } from "./constants";
 
 interface HeroSectionProps {
   go: (id: string) => void;
 }
 
+const SLIDES = [{ img: HERO_IMG, tag: "", title: "" }, ...WORKS];
+
 export default function HeroSection({ go }: HeroSectionProps) {
+  const [cur, setCur] = useState(0);
+  const [prev, setPrev] = useState<number | null>(null);
+  const [fading, setFading] = useState(false);
+
+  useEffect(() => {
+    const id = setInterval(() => switchTo((c) => (c + 1) % SLIDES.length), 5000);
+    return () => clearInterval(id);
+  }, []);
+
+  function switchTo(nextFn: (c: number) => number) {
+    setFading(true);
+    setTimeout(() => {
+      setCur((c) => {
+        const n = nextFn(c);
+        setPrev(c);
+        return n;
+      });
+      setFading(false);
+    }, 600);
+  }
+
+  function goTo(i: number) {
+    if (i === cur) return;
+    setFading(true);
+    setTimeout(() => {
+      setPrev(cur);
+      setCur(i);
+      setFading(false);
+    }, 600);
+  }
+
+  const slide = SLIDES[cur];
+
   return (
     <>
       {/* ── ГЕРОЙ ── */}
       <section id="hero" className="relative overflow-hidden pt-[70px]" style={{ minHeight: "100svh" }}>
-        <div className="absolute inset-0">
-          <img src={HERO_IMG} alt="Асфальтирование Фаворит" className="w-full h-full object-cover" style={{ filter: "saturate(1.2) contrast(1.05)" }} />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(10,14,24,0.88) 0%, rgba(10,14,24,0.55) 60%, rgba(10,14,24,0.15) 100%)" }} />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,14,24,1) 0%, rgba(10,14,24,0.3) 40%, transparent 70%)" }} />
+
+        {/* Предыдущий слайд (уходит) */}
+        {prev !== null && (
+          <div className="absolute inset-0 transition-opacity duration-600" style={{ opacity: fading ? 1 : 0, zIndex: 0 }}>
+            <img src={SLIDES[prev].img} alt="" className="w-full h-full object-cover" style={{ filter: "saturate(1.2) contrast(1.05)" }} />
+          </div>
+        )}
+
+        {/* Текущий слайд (приходит) */}
+        <div className="absolute inset-0 transition-opacity duration-600" style={{ opacity: fading ? 0 : 1, zIndex: 1 }}>
+          <img src={slide.img} alt="" className="w-full h-full object-cover" style={{ filter: "saturate(1.2) contrast(1.05)" }} />
         </div>
 
-        <div className="relative max-w-screen-xl mx-auto px-5 flex flex-col justify-center" style={{ minHeight: "calc(100svh - 70px)", paddingTop: "3rem", paddingBottom: "5rem" }}>
+        {/* Градиенты поверх */}
+        <div className="absolute inset-0" style={{ zIndex: 2, background: "linear-gradient(105deg, rgba(10,14,24,0.88) 0%, rgba(10,14,24,0.55) 60%, rgba(10,14,24,0.15) 100%)" }} />
+        <div className="absolute inset-0" style={{ zIndex: 2, background: "linear-gradient(to top, rgba(10,14,24,1) 0%, rgba(10,14,24,0.3) 40%, transparent 70%)" }} />
+
+        {/* Тег текущего слайда */}
+        {slide.tag && (
+          <div className="absolute top-[90px] right-5 md:right-10 z-10 transition-opacity duration-600" style={{ opacity: fading ? 0 : 1 }}>
+            <div className="rounded-xl overflow-hidden border" style={{ borderColor: "rgba(34,211,238,0.25)", backdropFilter: "blur(10px)", background: "rgba(10,14,24,0.65)", maxWidth: 260 }}>
+              <div className="h-1 w-full" style={{ background: `linear-gradient(to right, ${C.cyan}, ${C.gold})` }} />
+              <div className="px-4 py-3">
+                <div className="text-[9px] font-black uppercase tracking-widest mb-1" style={{ color: C.cyan }}>{slide.tag}</div>
+                <div className="font-black text-xs uppercase leading-tight">{slide.title}</div>
+                {"area" in slide && (
+                  <div className="flex items-center gap-3 mt-2">
+                    <span className="text-[10px] font-bold" style={{ color: C.muted }}>{"area" in slide ? (slide as typeof WORKS[0]).area : ""}</span>
+                    <span className="text-[10px] font-bold" style={{ color: C.muted }}>{"city" in slide ? (slide as typeof WORKS[0]).city : ""}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Контент */}
+        <div className="relative max-w-screen-xl mx-auto px-5 flex flex-col justify-center" style={{ minHeight: "calc(100svh - 70px)", paddingTop: "3rem", paddingBottom: "5rem", zIndex: 3 }}>
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-7 text-xs font-bold uppercase tracking-widest"
               style={{ background: "rgba(34,211,238,0.08)", border: `1px solid rgba(34,211,238,0.25)`, color: C.cyan }}>
@@ -73,7 +140,20 @@ export default function HeroSection({ go }: HeroSectionProps) {
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+        {/* Точки-индикаторы */}
+        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+          {SLIDES.map((_, i) => (
+            <button key={i} onClick={() => goTo(i)}
+              className="rounded-full transition-all duration-300"
+              style={{
+                width: i === cur ? 24 : 6,
+                height: 6,
+                background: i === cur ? C.cyan : "rgba(255,255,255,0.25)",
+              }} />
+          ))}
+        </div>
+
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce" style={{ zIndex: 10 }}>
           <div className="text-[10px] font-bold uppercase tracking-widest" style={{ color: C.muted }}>Листайте</div>
           <Icon name="ChevronDown" size={20} style={{ color: C.cyan } as React.CSSProperties} />
         </div>
