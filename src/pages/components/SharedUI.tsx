@@ -80,6 +80,28 @@ export function Card({
   );
 }
 
+export function PhotoDivider({ img, label, sublabel, bgFrom = C.bg, bgTo = C.bgDeep }: {
+  img: string; label: string; sublabel?: string; bgFrom?: string; bgTo?: string;
+}) {
+  return (
+    <div className="relative w-full overflow-hidden" style={{ height: 220 }}>
+      <img src={img} alt={label} className="w-full h-full object-cover object-center"
+        style={{ filter: "brightness(0.4) saturate(0.75)" }} />
+      <div className="absolute inset-0" style={{ background: `linear-gradient(to right, ${bgFrom} 0%, transparent 15%, transparent 85%, ${bgTo} 100%)` }} />
+      <div className="absolute inset-0" style={{ background: `linear-gradient(to bottom, ${bgFrom} 0%, transparent 30%, transparent 70%, ${bgTo} 100%)` }} />
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="text-center px-4">
+          {sublabel && (
+            <div className="text-[10px] font-black uppercase tracking-[0.3em] mb-2" style={{ color: C.cyan }}>{sublabel}</div>
+          )}
+          <div className="font-black text-2xl md:text-4xl uppercase" style={{ textShadow: "0 2px 24px rgba(0,0,0,0.9)", color: "#fff" }}
+            dangerouslySetInnerHTML={{ __html: label }} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function SectionTitle({ accent: accentColor, label, title }: { accent: string; label: string; title: React.ReactNode }) {
   return (
     <div className="mb-12">

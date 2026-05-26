@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import { C, SERVICES, TECH, HOW, WORKS } from "./constants";
-import { accent, Card, SectionTitle, DOT_BG, LINE_BG } from "./SharedUI";
+import { accent, Card, SectionTitle, PhotoDivider, DOT_BG, LINE_BG } from "./SharedUI";
 
 export default function ServicesSections() {
   return (
@@ -62,8 +62,15 @@ export default function ServicesSections() {
         </div>
       </section>
 
+      <PhotoDivider
+        img="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/4f631491-fdcd-46fa-a9d9-5b93bf5a3039.jpg"
+        label='Как это <span style="color:#38e8ff">работает</span>'
+        sublabel="Просто и прозрачно"
+        bgFrom={C.bgDeep} bgTo={C.bg}
+      />
+
       {/* ── КАК РАБОТАЕТ ── */}
-      <section id="services" className="py-24 relative overflow-hidden" style={{ background: C.bg }}>
+      <section id="services" className="py-16 relative overflow-hidden" style={{ background: C.bg }}>
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: DOT_BG, backgroundSize: "22px 22px", opacity: 0.6 }} />
         <div className="absolute top-1/2 -translate-y-1/2 left-0 w-[400px] h-[400px] pointer-events-none" style={{ background: `radial-gradient(circle, ${C.cyanDim}08 0%, transparent 70%)` }} />
         <div className="max-w-screen-xl mx-auto px-5 relative">
@@ -76,8 +83,15 @@ export default function ServicesSections() {
         </div>
       </section>
 
+      <PhotoDivider
+        img="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/ec73bf99-c0e3-49c3-9722-5f313c5fdc4f.jpg"
+        label='Примеры <span style="color:#ffd140">работ</span>'
+        sublabel="Выполненные объекты"
+        bgFrom={C.bg} bgTo={C.bgDeep}
+      />
+
       {/* ── ПРИМЕРЫ РАБОТ ── */}
-      <section id="portfolio" className="py-24 relative overflow-hidden" style={{ background: C.bgDeep }}>
+      <section id="portfolio" className="py-16 relative overflow-hidden" style={{ background: C.bgDeep }}>
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: LINE_BG, backgroundSize: "50px 50px" }} />
         <div className="max-w-screen-xl mx-auto px-5 relative">
           <SectionTitle accent={C.cyan} label="Выполненные объекты" title={<>Примеры <span style={{ color: C.gold }}>работ</span></>} />

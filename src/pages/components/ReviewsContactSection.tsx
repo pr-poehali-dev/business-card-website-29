@@ -1,6 +1,6 @@
 import Icon from "@/components/ui/icon";
 import { C, REVIEWS, PHONE, PHONE_HREF } from "./constants";
-import { accent, ACCENTS, Card, SectionTitle, DOT_BG, LINE_BG, FormState } from "./SharedUI";
+import { accent, ACCENTS, Card, SectionTitle, PhotoDivider, DOT_BG, LINE_BG, FormState } from "./SharedUI";
 
 interface Props {
   form: FormState;
@@ -71,8 +71,15 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
         </div>
       </section>
 
+      <PhotoDivider
+        img="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/c044d8db-6cca-4aa4-9ab7-7f0ccc8c8d40.jpg"
+        label='Оставить <span style="color:#38e8ff">заявку</span>'
+        sublabel="Бесплатный расчёт"
+        bgFrom={C.bg} bgTo={C.bgDeep}
+      />
+
       {/* ── ФОРМА ЗАЯВКИ ── */}
-      <section id="form" className="py-24 relative overflow-hidden" style={{ background: C.bgDeep }}>
+      <section id="form" className="py-16 relative overflow-hidden" style={{ background: C.bgDeep }}>
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: LINE_BG, backgroundSize: "55px 55px" }} />
         <div className="absolute bottom-0 left-0 w-[500px] h-[400px] pointer-events-none" style={{ background: `radial-gradient(ellipse at bottom left, ${C.cyanDim}09 0%, transparent 65%)` }} />
         <div className="max-w-screen-xl mx-auto px-5 relative">
@@ -176,8 +183,15 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
         </div>
       </section>
 
+      <PhotoDivider
+        img="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/f703c39b-47e7-430c-9935-13763dc5fc81.jpg"
+        label='Конта<span style="color:#38e8ff">кты</span>'
+        sublabel="Связаться"
+        bgFrom={C.bgDeep} bgTo={C.bg}
+      />
+
       {/* ── КОНТАКТЫ ── */}
-      <section id="contacts" className="py-24 relative overflow-hidden" style={{ background: C.bg }}>
+      <section id="contacts" className="py-16 relative overflow-hidden" style={{ background: C.bg }}>
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: DOT_BG, backgroundSize: "26px 26px", opacity: 0.7 }} />
         <div className="max-w-screen-xl mx-auto px-5 relative">
           <SectionTitle accent={C.gold} label="Связаться" title={<>Конта<span style={{ color: C.cyan }}>кты</span></>} />
