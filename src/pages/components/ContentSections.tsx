@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import { C, SERVICES, TECH, HOW, WORKS, REVIEWS, PHONE, PHONE_HREF } from "./constants";
+import YandexMap from "./YandexMap";
 
 interface FormState {
   name: string;
@@ -452,15 +453,23 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
       </section>
 
       {/* ── КАРТА ── */}
-      <section style={{ background: C.bgDark, borderTop: `1px solid ${C.border}` }}>
-        <iframe
-          src="https://api-maps.yandex.ru/services/constructor/1.0/static/?um=constructor%3Af599b5fb73bdbcfea11b78c8612fc71493c58efb8712143741b0752e2ed790f7&lang=ru_RU&scroll=true"
-          width="100%"
-          height="420"
-          frameBorder="0"
-          allowFullScreen
-          style={{ display: "block", filter: "brightness(0.9) contrast(1.05)" }}
-        />
+      <section className="py-16 relative overflow-hidden" style={{ background: C.bgDeep }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px)", backgroundSize: "26px 26px" }} />
+        <div className="max-w-screen-xl mx-auto px-5 relative">
+          <div className="mb-8">
+            <div className="inline-flex items-center gap-2.5 rounded-full px-4 py-1.5 mb-5"
+              style={{ background: `${C.gold}14`, border: `1px solid ${C.gold}35` }}>
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: C.gold }} />
+              <span className="text-[10px] font-black uppercase tracking-[0.25em]" style={{ color: C.gold }}>Мы на карте</span>
+            </div>
+            <h2 className="font-black text-4xl md:text-5xl uppercase leading-tight">
+              Нижний <span style={{ color: C.cyan }}>Новгород</span>
+            </h2>
+          </div>
+          <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${C.borderCyan}`, height: 440 }}>
+            <YandexMap />
+          </div>
+        </div>
       </section>
 
       {/* ── ПОДВАЛ ── */}
