@@ -7,7 +7,7 @@ const data: ServicePageData = {
   titleAccent: "устройство",
   subtitle: "Дворы, парки, территории",
   description: "Комплексное благоустройство придомовых территорий, дворов ЖК, парков и общественных пространств. Дорожки, газон, освещение, детские площадки, водоотвод.",
-  heroImg: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/82ce0839-fc62-4366-97e5-6db2abbaaeaf.jpg",
+  heroImg: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/683dc952-4c0a-44d7-99cb-bc437d0fdbb8.jpg",
   price: "от 900 ₽/м²",
   priceNote: "Стоимость зависит от состава работ и материалов. Выезд замерщика бесплатно.",
   stats: [

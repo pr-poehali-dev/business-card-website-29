@@ -7,7 +7,7 @@ const data: ServicePageData = {
   titleAccent: "брусчатки",
   subtitle: "Тротуарная плитка и брусчатка",
   description: "Укладка тротуарной плитки и брусчатки для дворов, пешеходных зон, въездов и общественных пространств. Ровная укладка, точная геометрия, долговечное основание.",
-  heroImg: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/024c7194-a34a-4ea6-b406-af32146279b1.jpg",
+  heroImg: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/ac75e147-b6f5-4c1d-9759-55e454a9930f.jpg",
   price: "от 1 400 ₽/м²",
   priceNote: "В стоимость включены материалы, подготовка основания и бордюры. Замер бесплатно.",
   stats: [

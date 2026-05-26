@@ -7,7 +7,7 @@ const data: ServicePageData = {
   titleAccent: "ремонт",
   subtitle: "Быстро, круглый год",
   description: "Заделка выбоин, трещин и просадок на дорогах, дворах и парковках. Выезд за 24 часа. Работаем горячим и холодным асфальтом в любое время года.",
-  heroImg: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/d78a96e0-1626-446e-b57d-a029cc0a5420.jpg",
+  heroImg: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/5eaf8366-b7a6-49b4-8d8c-7c9aea756113.jpg",
   price: "от 800 ₽/м²",
   priceNote: "Цена зависит от объёма и способа ремонта. Замер и расчёт — бесплатно.",
   stats: [

@@ -1,4 +1,4 @@
-export const HERO_IMG = "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/9986e217-5eed-40ef-8d2d-543498f0532e.jpg";
+export const HERO_IMG = "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/4023d18d-978c-4ca3-8908-287d434f629c.jpg";
 export const PHONE = "+7 960 169-09-90";
 export const PHONE_HREF = "tel:+79601690990";
 
@@ -38,7 +38,7 @@ export const WORKS = [
     desc: "Полное благоустройство двора на 3 500 м²: дорожки, детская площадка, газон, водоотвод.",
     area: "3 500 м²",
     city: "Нижний Новгород",
-    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/82ce0839-fc62-4366-97e5-6db2abbaaeaf.jpg",
+    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/683dc952-4c0a44d7-99cb-bc437d0fdbb8.jpg",
   },
   {
     tag: "Укладка брусчатки",
@@ -46,7 +46,7 @@ export const WORKS = [
     desc: "Укладка гранитной брусчатки на центральной улице. Подготовка основания, бордюры, ливнёвка.",
     area: "1 200 м²",
     city: "Нижний Новгород",
-    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/024c7194-a34a-4ea6-b406-af32146279b1.jpg",
+    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/f2b1b9a9-9af8-43da-9c77-9673cf242070.jpg",
   },
   {
     tag: "Укладка бордюров",
@@ -54,7 +54,7 @@ export const WORKS = [
     desc: "Установка 860 пог. м бордюрного камня по периметру производственной площадки.",
     area: "860 пог. м",
     city: "Кстово",
-    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/4f25364f-271f-4bb6-afd6-221ac88492b4.jpg",
+    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/7c40e11c-2af5-497a-988b-330f91ece6ba.jpg",
   },
   {
     tag: "Строительство ангаров",
@@ -62,7 +62,7 @@ export const WORKS = [
     desc: "Металлокаркасный ангар 30×60 м с воротами, утеплением и ленточным фундаментом. Срок — 45 дней.",
     area: "1 800 м²",
     city: "Богородск",
-    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/e1bc6369-6cd3-47e4-9eaa-dbaed2b58e9d.jpg",
+    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/4f864de5-1495-465f-8319-91d8ce47b37d.jpg",
   },
   {
     tag: "Благоустройство",
@@ -70,7 +70,7 @@ export const WORKS = [
     desc: "Брусчатка + газон + лавочки + освещение. Комплексное благоустройство за 3 недели.",
     area: "2 100 м²",
     city: "Нижний Новгород",
-    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/94656144-ef7f-494c-9bdf-0eaf0c63ed64.jpg",
+    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/ac75e147-b6f5-4c1d-9759-55e454a9930f.jpg",
   },
   {
     tag: "Строительство ангаров",
@@ -78,7 +78,7 @@ export const WORKS = [
     desc: "Ангар под производство 24×48 м. Промышленные ворота, вентиляция, бетонный пол с упрочнением.",
     area: "1 150 м²",
     city: "Дзержинск",
-    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/e02ed826-047c-4b59-baa3-b95b7fff37ed.jpg",
+    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/1cc85a54-a90c-4e00-a444-b4493ba47603.jpg",
   },
   {
     tag: "Укладка асфальта",
@@ -86,7 +86,7 @@ export const WORKS = [
     desc: "Полное асфальтирование придомовой территории: подготовка основания, укладка 2 слоёв асфальта, бордюры.",
     area: "2 800 м²",
     city: "Нижний Новгород",
-    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/bc6ea85b-cab3-4863-9d21-5aaa82210354.jpg",
+    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/f68ff280-6729-43e9-8a6f-c869e803fe81.jpg",
   },
   {
     tag: "Парковки",
@@ -94,7 +94,7 @@ export const WORKS = [
     desc: "Асфальтирование парковки на 320 машино-мест: разметка, дренаж, освещение, въездные группы.",
     area: "9 600 м²",
     city: "Нижний Новгород",
-    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/1894a226-cb6e-41b4-8ef9-89e6b743b4bd.jpg",
+    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/5b8c2d1e-dbdc-4359-a710-1114299d5c9f.jpg",
   },
   {
     tag: "Ямочный ремонт",
@@ -102,7 +102,7 @@ export const WORKS = [
     desc: "Заделка выбоин на 4 км городских дорог. Фрезерование, горячий асфальт, уплотнение — срок 3 дня.",
     area: "4 км",
     city: "Кстово",
-    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/d78a96e0-1626-446e-b57d-a029cc0a5420.jpg",
+    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/5eaf8366-b7a6-49b4-8d8c-7c9aea756113.jpg",
   },
   {
     tag: "Промышленные площадки",
@@ -110,7 +110,7 @@ export const WORKS = [
     desc: "Усиленное асфальтобетонное покрытие под грузовой транспорт. Нагрузка до 60 т на ось.",
     area: "14 000 м²",
     city: "Богородск",
-    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/dd20f856-7757-4c39-8b70-ccfbd82e2b55.jpg",
+    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/743ebb95-8d22-4310-82df-925fc56f822a.jpg",
   },
   {
     tag: "Укладка брусчатки",
@@ -118,7 +118,7 @@ export const WORKS = [
     desc: "Декоративная брусчатка у входа в БЦ: узорная укладка, клумбы, гранитные бордюры.",
     area: "650 м²",
     city: "Нижний Новгород",
-    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/89dc0763-bd60-4bee-b45b-c52d823f1c11.jpg",
+    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/5f39c824-8926-4384-be7d-d4ec4af9734d.jpg",
   },
   {
     tag: "Строительство ангаров",
@@ -126,7 +126,7 @@ export const WORKS = [
     desc: "Три ангара 20×40 м с общим бетонным основанием, воротами, системой вентиляции и охраны.",
     area: "2 400 м²",
     city: "Павлово",
-    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/fd8d9b0f-04af-4337-94d4-cf53d89c4503.jpg",
+    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/1cc85a54-a90c-4e00-a444-b4493ba47603.jpg",
   },
 ];
 

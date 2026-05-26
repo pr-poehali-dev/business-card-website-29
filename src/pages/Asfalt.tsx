@@ -7,7 +7,7 @@ const data: ServicePageData = {
   titleAccent: "рование",
   subtitle: "Дороги, дворы, парковки",
   description: "Укладка горячего и холодного асфальта для дорог, дворовых территорий, парковок и промышленных площадок. Гарантия 3 года. Собственная техника, без посредников.",
-  heroImg: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/bc6ea85b-cab3-4863-9d21-5aaa82210354.jpg",
+  heroImg: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/743ebb95-8d22-4310-82df-925fc56f822a.jpg",
   price: "от 1 200 ₽/м²",
   priceNote: "Выезд замерщика — бесплатно. Смета в день обращения. Работаем с НДС.",
   stats: [
