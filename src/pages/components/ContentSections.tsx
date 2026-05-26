@@ -52,12 +52,6 @@ function Card({
       onMouseEnter={e => (e.currentTarget.style.boxShadow = `0 8px 32px ${a.border}`)}
       onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}
     >
-      {/* Большой номер-фон */}
-      <div className="absolute right-4 bottom-2 font-black select-none leading-none pointer-events-none"
-        style={{ fontSize: "5.5rem", color: a.border, lineHeight: 1 }}>
-        {String(i + 1).padStart(2, "0")}
-      </div>
-
       <div className="relative">
         <div className="flex items-start justify-between mb-4 gap-3">
           <div className="flex items-center gap-3">
@@ -171,11 +165,7 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
                         {w.tag}
                       </span>
                     </div>
-                    {/* Номер */}
-                    <div className="absolute bottom-1 right-3 font-black select-none pointer-events-none leading-none"
-                      style={{ fontSize: "4rem", color: a.border }}>
-                      {String(i + 1).padStart(2, "0")}
-                    </div>
+
                   </div>
 
                   <div className="p-5">
@@ -215,7 +205,7 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
                   onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}>
                   {/* Большая кавычка */}
                   <div className="absolute right-4 top-0 font-black select-none pointer-events-none leading-none"
-                    style={{ fontSize: "7rem", color: a.border }}>
+                    style={{ fontSize: "7rem", color: a.border, fontFamily: "Georgia, serif" }}>
                     "
                   </div>
                   <div className="relative">
