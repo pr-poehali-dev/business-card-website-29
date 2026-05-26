@@ -96,21 +96,7 @@ export default function HeroSection({ go }: HeroSectionProps) {
           background: "linear-gradient(to top, rgba(10,14,24,1) 0%, rgba(10,14,24,0.4) 25%, transparent 55%)",
         }} />
 
-        {/* Точки-индикаторы */}
-        <div className="absolute bottom-[48%] sm:bottom-20 right-4 sm:right-6 flex flex-col gap-2" style={{ zIndex: 10 }}>
-          {PHOTOS.map((_, i) => (
-            <button key={i}
-              onClick={() => { setFading(true); setTimeout(() => { setCurrent(i); setFading(false); }, 600); }}
-              style={{
-                width: 6, height: i === current ? 22 : 6,
-                borderRadius: 4,
-                background: i === current ? C.cyan : "rgba(255,255,255,0.25)",
-                border: "none", cursor: "pointer",
-                transition: "all 0.4s ease",
-                padding: 0,
-              }} />
-          ))}
-        </div>
+
 
         {/* Контент */}
         <div className="relative max-w-screen-xl mx-auto px-5 flex flex-col justify-end sm:justify-center"
