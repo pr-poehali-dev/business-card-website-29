@@ -92,9 +92,9 @@ export default function Index() {
         <div className="max-w-screen-xl mx-auto px-5 h-[70px] flex items-center justify-between gap-4">
 
           <button onClick={() => go("hero")} className="flex items-center gap-3 shrink-0">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-              style={{ background: "linear-gradient(135deg,#b8960c,#f0c030)", boxShadow: "0 2px 14px rgba(240,192,48,0.35)" }}>
-              <Icon name="Shield" size={22} className="text-black" />
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 overflow-hidden"
+              style={{ background: "#0f1422", boxShadow: "0 2px 14px rgba(240,192,48,0.35)", border: "1.5px solid rgba(240,192,48,0.4)" }}>
+              <img src="/favicon.svg" alt="Фаворит" className="w-10 h-10" />
             </div>
             <div className="leading-[1.2] text-left">
               <div className="text-[8px] font-bold uppercase tracking-[0.25em]" style={{ color: C.muted }}>КОМПАНИЯ · ОНЛАЙН</div>
@@ -531,8 +531,9 @@ export default function Index() {
       <footer className="py-7 border-t" style={{ background: C.bgDark, borderColor: C.border }}>
         <div className="max-w-screen-xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: `linear-gradient(135deg,#b8960c,${C.gold})` }}>
-              <Icon name="Shield" size={14} className="text-black" />
+            <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center"
+              style={{ background: "#0f1422", border: "1px solid rgba(240,192,48,0.35)" }}>
+              <img src="/favicon.svg" alt="Фаворит" className="w-7 h-7" />
             </div>
             <span className="font-black text-sm tracking-wide uppercase" style={{ color: C.gold }}>ООО Фаворит</span>
           </div>
