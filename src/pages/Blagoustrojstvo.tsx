@@ -76,6 +76,12 @@ const data: ServicePageData = {
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/b5f6bd73-e0c4-42e1-99be-b9f65f298aad.jpg",
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/49c3b7fc-0f0a-4e24-bbea-73a13006ac47.jpg",
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/2a445d86-17ca-4642-b11e-ce34f1c42024.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/f16927c4-5196-4644-8582-f18e795cf449.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/f7dbeec9-4280-4a5b-983f-c47ab8e44f45.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/f355f819-6a25-4449-b050-e9b680498da8.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/8b8a83a6-afa2-4cc1-9950-1d0d315f01c7.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/e262ac4b-a0bd-45c5-9f1c-d9c64aff480f.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/ba2fccb5-754c-49fe-809c-720bd2103736.jpg",
   ],
   faq: [
     { q: "Что входит в комплексное благоустройство?", a: "Стандартный комплекс: дорожки, газон, освещение, дренаж, детская площадка, парковка. Мы беремся за всё под ключ — один договор, одна бригада, один подрядчик." },
