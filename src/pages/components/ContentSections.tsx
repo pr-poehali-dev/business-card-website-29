@@ -451,6 +451,18 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
         </div>
       </section>
 
+      {/* ── КАРТА ── */}
+      <section style={{ background: C.bgDark, borderTop: `1px solid ${C.border}` }}>
+        <iframe
+          src="https://api-maps.yandex.ru/services/constructor/1.0/static/?um=constructor%3Af599b5fb73bdbcfea11b78c8612fc71493c58efb8712143741b0752e2ed790f7&lang=ru_RU&scroll=true"
+          width="100%"
+          height="420"
+          frameBorder="0"
+          allowFullScreen
+          style={{ display: "block", filter: "brightness(0.9) contrast(1.05)" }}
+        />
+      </section>
+
       {/* ── ПОДВАЛ ── */}
       <footer style={{ background: C.bgDark, borderTop: `1px solid ${C.border}` }}>
         {/* Дисклеймер */}
