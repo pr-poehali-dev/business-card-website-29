@@ -3,12 +3,12 @@ import Icon from "@/components/ui/icon";
 import { C, SERVICES, TECH, HOW, WORKS } from "./constants";
 import { accent, Card, SectionTitle, PhotoDivider } from "./SharedUI";
 
-const BG_OVERLAY = `linear-gradient(to bottom, rgba(10,14,24,0.6) 0%, rgba(10,14,24,0.45) 50%, rgba(10,14,24,0.65) 100%)`;
+const BG_OVERLAY = `linear-gradient(to bottom, rgba(10,14,24,0.4) 0%, rgba(10,14,24,0.25) 50%, rgba(10,14,24,0.45) 100%)`;
 
 function SectionBg({ img }: { img: string }) {
   return (
     <div className="absolute inset-0 pointer-events-none">
-      <img src={img} alt="" className="w-full h-full object-cover object-center" style={{ filter: "brightness(0.8) saturate(0.85)" }} />
+      <img src={img} alt="" className="w-full h-full object-cover object-center" style={{ filter: "brightness(1.0) saturate(0.9)" }} />
       <div className="absolute inset-0" style={{ background: BG_OVERLAY }} />
     </div>
   );

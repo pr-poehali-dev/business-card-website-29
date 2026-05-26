@@ -15,7 +15,7 @@ export default function MapFooter({ go }: Props) {
         <img
           src="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/58857beb-7868-45cc-a054-534e6722a2be.jpg"
           alt="" className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
-          style={{ filter: "brightness(0.7) saturate(0.8)" }}
+          style={{ filter: "brightness(0.9) saturate(0.9)" }}
         />
         <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to bottom, rgba(10,14,24,0.75) 0%, rgba(10,14,24,0.55) 40%, rgba(10,14,24,0.8) 100%)" }} />
         {/* Боковые затемнения */}
