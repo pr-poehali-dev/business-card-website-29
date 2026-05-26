@@ -99,10 +99,10 @@ export default function HeroSection({ go }: HeroSectionProps) {
 
 
         {/* Контент */}
-        <div className="relative max-w-screen-xl mx-auto px-5 flex flex-col justify-end sm:justify-center"
-          style={{ minHeight: "calc(100svh - 70px)", paddingTop: "3rem", paddingBottom: "5rem", zIndex: 5 }}>
+        <div className="relative max-w-screen-xl mx-auto px-4 sm:px-5 flex flex-col justify-end sm:justify-center"
+          style={{ minHeight: "calc(100svh - 70px)", paddingTop: "2rem", paddingBottom: "4rem", zIndex: 5 }}>
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-7 text-xs font-bold uppercase tracking-widest"
+            <div className="hidden sm:inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-7 text-xs font-bold uppercase tracking-widest"
               style={{ background: "rgba(56,232,255,0.08)", border: `1px solid rgba(56,232,255,0.28)`, color: C.cyan }}>
               <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: C.cyan }} />
               Нижний Новгород и область · Работаем 24/7
@@ -118,7 +118,7 @@ export default function HeroSection({ go }: HeroSectionProps) {
               Укладка асфальта, ямочный ремонт, парковки, промзоны — под ключ.<br />Подача бригады за 24 часа. Гарантия 3 года.
             </p>
 
-            <div className="inline-flex items-center gap-3 rounded-xl px-5 py-3 mb-8"
+            <div className="inline-flex items-center gap-3 rounded-xl px-5 py-3 mb-5 sm:mb-8"
               style={{ background: "rgba(240,192,48,0.12)", border: `1px solid rgba(240,192,48,0.4)`, backdropFilter: "blur(8px)" }}>
               <Icon name="Layers" size={20} style={{ color: C.gold } as React.CSSProperties} />
               <div>
@@ -127,7 +127,7 @@ export default function HeroSection({ go }: HeroSectionProps) {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-x-4 gap-y-2 mb-6 sm:mb-10">
+            <div className="hidden sm:flex flex-wrap gap-x-4 gap-y-2 mb-6 sm:mb-10">
               {[
                 ["Clock",        "Начало работ от 1 дня"],
                 ["CalendarCheck","Мин. заказ — 200 м²"],
