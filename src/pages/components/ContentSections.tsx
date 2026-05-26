@@ -79,7 +79,7 @@ function Card({
         {/* Разделитель */}
         <div className="h-px mb-4 w-12" style={{ background: a.border }} />
 
-        <p className="text-sm leading-relaxed" style={{ color: C.muted }}>{desc}</p>
+        <p className="leading-relaxed" style={{ fontSize: 14.5, color: "#a8b3c7" }}>{desc}</p>
 
         {extra && <div className="mt-4">{extra}</div>}
       </div>
@@ -181,7 +181,7 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
                   <div className="p-5">
                     <div className="h-px mb-4 w-10" style={{ background: a.border }} />
                     <h3 className="font-black text-sm uppercase tracking-wide mb-2">{w.title}</h3>
-                    <p className="text-sm leading-relaxed mb-4" style={{ color: C.muted }}>{w.desc}</p>
+                    <p className="leading-relaxed mb-4" style={{ fontSize: 14.5, color: "#a8b3c7" }}>{w.desc}</p>
                     <div className="flex items-center justify-between pt-3 border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
                       <div className="flex items-center gap-1.5 text-xs font-bold" style={{ color: C.subtle }}>
                         <Icon name="Maximize2" size={12} />
@@ -225,7 +225,7 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
                       ))}
                     </div>
                     <div className="h-px mb-4 w-10" style={{ background: a.border }} />
-                    <p className="text-sm leading-relaxed mb-6 italic" style={{ color: C.light }}>«{r.text}»</p>
+                    <p className="leading-relaxed mb-6 italic" style={{ fontSize: 15, color: "#d1dae8" }}>«{r.text}»</p>
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
                         style={{ background: a.icon, border: `1px solid ${a.border}` }}>
@@ -256,7 +256,7 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
               <h2 className="font-black text-4xl md:text-6xl uppercase leading-tight mb-6">
                 Оставить <span style={{ color: C.cyan }}>заявку</span>
               </h2>
-              <p className="text-base leading-relaxed mb-8" style={{ color: C.muted }}>
+              <p className="leading-relaxed mb-8" style={{ fontSize: 16, color: "#a8b3c7" }}>
                 Перезвоним за 5 минут, рассчитаем стоимость и подберём бригаду. Выезд замерщика — бесплатно.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -389,7 +389,7 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
               <div className="absolute -right-10 -top-10 w-48 h-48 rounded-full opacity-10" style={{ background: `radial-gradient(circle, ${C.gold}, transparent)` }} />
               <div className="relative">
                 <div className="font-black text-2xl uppercase leading-snug mb-3">Нужен расчёт<br />стоимости?</div>
-                <p className="text-sm leading-relaxed" style={{ color: C.muted }}>
+                <p className="leading-relaxed" style={{ fontSize: 15, color: "#a8b3c7" }}>
                   Выезд замерщика — бесплатно. Смета в день обращения. Работаем с физ. и юр. лицами, НДС.
                 </p>
               </div>
