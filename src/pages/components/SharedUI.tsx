@@ -62,10 +62,12 @@ export function Card({
             </div>
             <h3 className="font-black text-sm uppercase leading-snug tracking-wide">{title}</h3>
           </div>
-          <span className="shrink-0 text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full"
-            style={{ background: a.icon, color: a.color, border: `1px solid ${a.border}`, whiteSpace: "nowrap" }}>
-            {badge}
-          </span>
+          {badge && (
+            <span className="shrink-0 text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full"
+              style={{ background: a.icon, color: a.color, border: `1px solid ${a.border}`, whiteSpace: "nowrap" }}>
+              {badge}
+            </span>
+          )}
         </div>
 
         <div className="h-px mb-4 w-12 rounded-full" style={{ background: `linear-gradient(to right, ${a.color}, transparent)` }} />

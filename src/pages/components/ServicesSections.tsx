@@ -37,7 +37,7 @@ export default function ServicesSections() {
           <SectionTitle accent={C.gold} label="Собственный парк" title={<>Наша <span style={{ color: C.cyan }}>техника</span></>} />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {TECH.map((t, i) => (
-              <Card key={i} i={i} icon="Truck" title={t.name} badge={t.count} desc={t.cap} />
+              <Card key={i} i={i} icon="Truck" title={t.name} badge="" desc={t.cap} />
             ))}
           </div>
         </div>
