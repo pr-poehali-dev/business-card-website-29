@@ -117,8 +117,10 @@ export default function HeroSection({ go }: HeroSectionProps) {
               Нижний Новгород и область · Работаем 24/7
             </div>
 
-            <h1 className="leading-[1.05] mb-6 whitespace-nowrap" style={{ fontFamily: "'Bebas Neue', 'Oswald', sans-serif", fontSize: "clamp(2rem, 5.2vw, 5.4rem)", letterSpacing: "0.02em", textShadow: "0 2px 30px rgba(0,0,0,0.7)" }}>
-              Профессиональное <span style={{ color: C.cyan }}>асфальтирование</span> в НН
+            <h1 className="font-black leading-[1.0] mb-6" style={{ fontSize: "clamp(1.6rem,4vw,3.4rem)", textShadow: "0 2px 20px rgba(0,0,0,0.6)" }}>
+              Профессиональное<br />
+              <span style={{ color: C.cyan }}>асфальтирование</span><br />
+              в Нижнем Новгороде
             </h1>
 
             <p className="text-lg leading-relaxed mb-7 max-w-xl" style={{ color: C.light }}>
