@@ -19,9 +19,8 @@ export default {
 			}
 		},
 		fontFamily: {
+			sans: ["Inter", "sans-serif"],
 			oswald: ["Oswald", "sans-serif"],
-			roboto: ["Roboto", "sans-serif"],
-			montserrat: ["Montserrat", "sans-serif"],
 		},
 		extend: {
 			colors: {
