@@ -1,302 +1,298 @@
 import { useState, useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 
-const HERO_IMG = "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/7897c21a-b422-4b40-8fd5-700ffff4a3c9.jpg";
-
-const NAV_LINKS = [
-  ["hero", "Главная"],
-  ["services", "Услуги"],
-  ["portfolio", "Объекты"],
-  ["calc", "Стоимость"],
-  ["reviews", "Отзывы"],
-  ["contacts", "Контакты"],
-];
+const HERO_IMG = "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/fd91c0c7-8bb2-4659-bd63-cab84f331cb2.jpg";
+const PHONE = "+7 (960) 169-09-90";
+const PHONE_HREF = "tel:+79601690990";
 
 const SERVICES = [
-  { icon: "Layers", title: "Укладка асфальта", desc: "Жилые дворы, парковки, дороги. Горячий и холодный асфальт. Гарантия 3 года." },
-  { icon: "SquareStack", title: "Ямочный ремонт", desc: "Заделка ям и выбоин. Выезд за 24 часа. Работаем круглый год." },
-  { icon: "Warehouse", title: "Промышленные площадки", desc: "Заводские территории, склады, логистические комплексы. До 50 000 м²." },
-  { icon: "Car", title: "Парковки и стоянки", desc: "Разметка и асфальтирование парковок «под ключ». Дренаж и бордюры." },
-  { icon: "TreePine", title: "Благоустройство", desc: "Пешеходные дорожки, тротуары, площадки. Тротуарная плитка и асфальт." },
-  { icon: "Ruler", title: "Проектирование", desc: "Геодезия, проектная документация, согласование с администрацией НН." },
+  { icon: "Layers", num: "01", title: "Укладка асфальта", desc: "Горячий и холодный асфальт для дорог, дворов, парковок любой площади. Гарантия — 3 года." },
+  { icon: "Hammer", num: "02", title: "Ямочный ремонт", desc: "Ликвидируем выбоины и трещины за 24 часа. Литой и щебёночный асфальтобетон." },
+  { icon: "Warehouse", num: "03", title: "Промышленные площадки", desc: "Заводские территории, логистика, склады. Усиленное основание под тяжёлую технику." },
+  { icon: "Car", num: "04", title: "Парковки", desc: "Полный цикл: разметка, дренаж, бордюры, освещение. До 500 машино-мест." },
+  { icon: "TreePine", num: "05", title: "Благоустройство", desc: "Пешеходные зоны, тротуары, велодорожки. Тротуарная плитка и мелкозернистый асфальт." },
+  { icon: "FileText", num: "06", title: "Документация", desc: "Геодезические изыскания, проект, согласование с администрацией НН и области." },
 ];
 
-const PORTFOLIO = [
-  { title: "ЖК «Новинки Смарт Сити»", area: "12 000 м²", type: "Двор и парковка", year: "2024" },
-  { title: "Завод ГАЗ, территория склада", area: "8 500 м²", type: "Промплощадка", year: "2024" },
-  { title: "ТЦ «Небо», ул. Родионова", area: "5 200 м²", type: "Парковка", year: "2023" },
-  { title: "Шоссе Московское, 10 км", area: "3 400 м²", type: "Ямочный ремонт", year: "2024" },
-  { title: "ЖК «Анкудиновский парк»", area: "9 800 м²", type: "Двор и дорожки", year: "2023" },
-  { title: "Логопарк «Бор»", area: "22 000 м²", type: "Промплощадка", year: "2024" },
+const WORKS = [
+  { title: "ЖК «Новинки Smart City»", area: "12 000", type: "Двор + парковка", year: "2024" },
+  { title: "Завод ГАЗ, склад №4", area: "8 500", type: "Промплощадка", year: "2024" },
+  { title: "ТЦ «Небо», ул. Родионова", area: "5 200", type: "Открытая парковка", year: "2023" },
+  { title: "Московское шоссе, 10 км", area: "3 400", type: "Ямочный ремонт", year: "2024" },
+  { title: "ЖК «Анкудиновский Парк»", area: "9 800", type: "Двор и дорожки", year: "2023" },
+  { title: "Логопарк «Бор»", area: "22 000", type: "Промплощадка", year: "2024" },
 ];
 
 const REVIEWS = [
-  { name: "Сергей Никонов", role: "Управляющая компания «Уют»", text: "Заасфальтировали 4 двора в нашем ЖК. Работали аккуратно, без задержек. Жители очень довольны!", stars: 5 },
-  { name: "Алёна Кузьмина", role: "ИП, автостоянка", text: "Сделали парковку на 80 машин. Хорошая геометрия, ровное покрытие. Зиму пережило отлично!", stars: 5 },
-  { name: "Роман Третьяков", role: "Директор, ООО «ПромСтрой НН»", text: "Работаем с ними на всех наших объектах. Надёжный подрядчик, соблюдают сроки и бюджет.", stars: 5 },
-  { name: "Наталья Берёзова", role: "Городская администрация, МО Кстово", text: "Выполнили ямочный ремонт 18 км дорог. Хорошее качество, всё в срок. Рекомендуем.", stars: 5 },
+  { name: "Сергей Никонов", role: "УК «Уют», Нижний Новгород", text: "Заасфальтировали 4 двора в нашем ЖК. Работали аккуратно, без задержек. Жители в восторге!", stars: 5 },
+  { name: "Алёна Кузьмина", role: "ИП, автостоянка «Центральная»", text: "Парковка на 80 мест — ровная, красивая. Зиму пережило без единой трещины. Всё по договору.", stars: 5 },
+  { name: "Роман Третьяков", role: "Директор ООО «ПромСтрой НН»", text: "Работаем на всех объектах только с Фаворитом. Соблюдают сроки, всё по смете, без сюрпризов.", stars: 5 },
+  { name: "Наталья Берёзова", role: "Администрация МО Кстово", text: "Ямочный ремонт 18 км. Отличное качество, сдали раньше срока. Сотрудничество продолжаем.", stars: 5 },
 ];
 
-const STATS = [
-  { val: "350", suffix: "+", label: "Объектов сдано" },
-  { val: "800", suffix: "к м²", label: "Уложено асфальта" },
-  { val: "11", suffix: " лет", label: "Работаем в НН" },
-  { val: "48", suffix: " ч", label: "Выезд на объект" },
+const PRICE_TIERS: { label: string; range: string; price: number }[] = [
+  { label: "Мини", range: "до 500 м²", price: 1800 },
+  { label: "Стандарт", range: "500–2000 м²", price: 1550 },
+  { label: "Бизнес", range: "2000–5000 м²", price: 1300 },
+  { label: "Крупный", range: "от 5000 м²", price: 1050 },
 ];
 
-function useInView(threshold = 0.3) {
+function useInView() {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [inView, setInView] = useState(false);
   useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold });
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, [threshold]);
-  return { ref, visible };
+    const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true); }, { threshold: 0.4 });
+    if (ref.current) o.observe(ref.current);
+    return () => o.disconnect();
+  }, []);
+  return { ref, inView };
 }
 
-function AnimCounter({ val, suffix }: { val: string; suffix: string }) {
-  const { ref, visible } = useInView(0.5);
-  const [count, setCount] = useState(0);
-  const target = parseInt(val);
+function Counter({ to, suffix = "", dur = 1800 }: { to: number; suffix?: string; dur?: number }) {
+  const { ref, inView } = useInView();
+  const [val, setVal] = useState(0);
   useEffect(() => {
-    if (!visible) return;
-    let start: number;
-    const run = (ts: number) => {
-      if (!start) start = ts;
-      const p = Math.min((ts - start) / 1600, 1);
-      setCount(Math.floor(p * target));
-      if (p < 1) requestAnimationFrame(run);
+    if (!inView) return;
+    let t: number;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const p = Math.min((now - start) / dur, 1);
+      setVal(Math.floor(p * to));
+      if (p < 1) t = requestAnimationFrame(tick);
     };
-    requestAnimationFrame(run);
-  }, [visible, target]);
-  return (
-    <div ref={ref} className="text-center group">
-      <div className="font-montserrat text-5xl font-black text-orange-500 mb-1 tabular-nums">
-        {visible ? count : 0}{suffix}
-      </div>
-    </div>
-  );
+    t = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(t);
+  }, [inView, to, dur]);
+  return <span ref={ref}>{val}{suffix}</span>;
 }
-
-const AREA_PRICES: [string, number][] = [
-  ["До 500 м²", 1800],
-  ["500–1000 м²", 1600],
-  ["1000–3000 м²", 1400],
-  ["Свыше 3000 м²", 1200],
-];
 
 export default function Index() {
-  const [activeNav, setActiveNav] = useState("hero");
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [area, setArea] = useState(500);
-  const [form, setForm] = useState({ name: "", phone: "", address: "" });
+  const [nav, setNav] = useState("hero");
+  const [open, setOpen] = useState(false);
+  const [area, setArea] = useState(1000);
+  const [form, setForm] = useState({ name: "", phone: "", obj: "" });
+  const [sent, setSent] = useState(false);
 
-  const getPrice = () => {
-    if (area < 500) return 1800;
-    if (area < 1000) return 1600;
-    if (area < 3000) return 1400;
-    return 1200;
-  };
+  const tier = PRICE_TIERS.find((t, i) => {
+    if (i === 0 && area < 500) return true;
+    if (i === 1 && area >= 500 && area < 2000) return true;
+    if (i === 2 && area >= 2000 && area < 5000) return true;
+    if (i === 3 && area >= 5000) return true;
+    return false;
+  }) ?? PRICE_TIERS[0];
 
-  const totalPrice = area * getPrice();
+  const total = area * tier.price;
 
-  const scrollTo = (id: string) => {
+  const go = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    setMenuOpen(false);
+    setOpen(false);
   };
 
   useEffect(() => {
-    const ids = NAV_LINKS.map(([id]) => id);
-    const obs = new IntersectionObserver(
-      (entries) => { entries.forEach((e) => { if (e.isIntersecting) setActiveNav(e.target.id); }); },
-      { threshold: 0.35 }
+    const ids = ["hero", "services", "works", "calc", "reviews", "contacts"];
+    const ob = new IntersectionObserver(
+      (es) => es.forEach((e) => { if (e.isIntersecting) setNav(e.target.id); }),
+      { threshold: 0.3 }
     );
-    ids.forEach((id) => { const el = document.getElementById(id); if (el) obs.observe(el); });
-    return () => obs.disconnect();
+    ids.forEach((id) => { const el = document.getElementById(id); if (el) ob.observe(el); });
+    return () => ob.disconnect();
   }, []);
 
   return (
-    <div className="bg-[#111213] text-white min-h-screen font-montserrat overflow-x-hidden">
+    <div className="bg-zinc-950 text-white min-h-screen font-montserrat overflow-x-hidden selection:bg-amber-500 selection:text-black">
 
-      {/* ── NAV ── */}
-      <header className="fixed top-0 inset-x-0 z-50 bg-[#111213]/95 backdrop-blur border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-5 h-16 flex items-center justify-between">
-          <button onClick={() => scrollTo("hero")} className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-orange-500 flex items-center justify-center">
-              <Icon name="Layers" size={16} className="text-white" />
+      {/* ─── ШАПКА ─── */}
+      <header className="fixed inset-x-0 top-0 z-50 bg-zinc-950/90 backdrop-blur-xl border-b border-white/5">
+        <div className="max-w-screen-xl mx-auto px-5 h-[68px] flex items-center justify-between gap-6">
+
+          {/* Лого */}
+          <button onClick={() => go("hero")} className="flex items-center gap-3 shrink-0">
+            <div className="relative">
+              <div className="w-9 h-9 bg-amber-500 skew-x-[-8deg]" />
+              <span className="absolute inset-0 flex items-center justify-center font-black text-black text-sm tracking-tighter">Ф</span>
             </div>
-            <span className="font-montserrat font-black text-lg tracking-tight">
-              АСФАЛЬТ<span className="text-orange-500">НН</span>
-            </span>
+            <div className="leading-none">
+              <div className="font-black text-base tracking-[0.08em] uppercase">Фаворит</div>
+              <div className="text-[9px] text-zinc-500 uppercase tracking-[0.15em]">Асфальтирование НН</div>
+            </div>
           </button>
 
-          <nav className="hidden lg:flex items-center gap-7">
-            {NAV_LINKS.map(([id, label]) => (
-              <button key={id} onClick={() => scrollTo(id)}
-                className={`text-xs font-semibold uppercase tracking-widest transition-colors ${activeNav === id ? "text-orange-500" : "text-gray-400 hover:text-white"}`}>
+          {/* Навигация */}
+          <nav className="hidden lg:flex items-center gap-8">
+            {[["hero","Главная"],["services","Услуги"],["works","Объекты"],["calc","Цены"],["reviews","Отзывы"],["contacts","Контакты"]].map(([id, label]) => (
+              <button key={id} onClick={() => go(id)}
+                className={`relative text-[11px] font-bold uppercase tracking-[0.15em] transition-colors pb-0.5 ${nav === id ? "text-amber-500" : "text-zinc-400 hover:text-white"}`}>
                 {label}
+                {nav === id && <span className="absolute -bottom-0.5 left-0 right-0 h-px bg-amber-500" />}
               </button>
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
-            <a href="tel:+78312000000" className="hidden md:flex items-center gap-2 text-sm font-bold text-white hover:text-orange-500 transition-colors">
-              <Icon name="Phone" size={14} className="text-orange-500" />
-              +7 (831) 200-00-00
+          {/* Телефон + кнопка */}
+          <div className="hidden md:flex items-center gap-5 shrink-0">
+            <a href={PHONE_HREF} className="text-sm font-black tracking-tight hover:text-amber-500 transition-colors flex items-center gap-2">
+              <span className="w-6 h-6 bg-amber-500/15 rounded-sm flex items-center justify-center">
+                <Icon name="Phone" size={12} className="text-amber-500" />
+              </span>
+              {PHONE}
             </a>
-            <button onClick={() => scrollTo("contacts")} className="hidden md:block bg-orange-500 text-white font-bold text-xs px-5 py-2.5 uppercase tracking-widest hover:bg-orange-400 transition-colors">
+            <button onClick={() => go("contacts")}
+              className="bg-amber-500 hover:bg-amber-400 text-black font-black text-[11px] uppercase tracking-[0.15em] px-5 py-2.5 transition-all hover:scale-105 active:scale-95 skew-x-[-4deg]">
               Заявка
             </button>
-            <button className="lg:hidden text-white" onClick={() => setMenuOpen(!menuOpen)}>
-              <Icon name={menuOpen ? "X" : "Menu"} size={22} />
-            </button>
           </div>
+
+          <button className="lg:hidden" onClick={() => setOpen(!open)}>
+            <Icon name={open ? "X" : "Menu"} size={22} />
+          </button>
         </div>
 
-        {menuOpen && (
-          <div className="lg:hidden bg-[#1a1b1c] border-t border-white/5 px-5 py-5 flex flex-col gap-4">
-            {NAV_LINKS.map(([id, label]) => (
-              <button key={id} onClick={() => scrollTo(id)}
-                className="text-left font-montserrat font-bold text-sm uppercase tracking-widest text-gray-300 hover:text-orange-500 transition-colors">
-                {label}
-              </button>
+        {open && (
+          <div className="lg:hidden bg-zinc-900 border-t border-white/5 px-5 py-5 flex flex-col gap-4">
+            {[["hero","Главная"],["services","Услуги"],["works","Объекты"],["calc","Цены"],["reviews","Отзывы"],["contacts","Контакты"]].map(([id, label]) => (
+              <button key={id} onClick={() => go(id)} className="text-left font-bold text-sm uppercase tracking-widest text-zinc-300 hover:text-amber-500 transition-colors">{label}</button>
             ))}
-            <a href="tel:+78312000000" className="text-orange-500 font-bold text-sm mt-2">+7 (831) 200-00-00</a>
+            <a href={PHONE_HREF} className="text-amber-500 font-black text-sm mt-1">{PHONE}</a>
           </div>
         )}
       </header>
 
-      {/* ── HERO ── */}
-      <section id="hero" className="relative min-h-screen flex flex-col justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${HERO_IMG})` }} />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#111213] via-[#111213]/85 to-[#111213]/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#111213] via-transparent to-transparent" />
+      {/* ─── ГЕРОЙ ─── */}
+      <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
+        {/* Фото */}
+        <div className="absolute inset-0">
+          <img src={HERO_IMG} alt="Асфальтирование Фаворит НН" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/75 to-zinc-950/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-zinc-950/60" />
+        </div>
 
-        {/* texture grid */}
-        <div className="absolute inset-0 opacity-5" style={{
-          backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255,255,255,0.3) 40px, rgba(255,255,255,0.3) 41px), repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,0.3) 40px, rgba(255,255,255,0.3) 41px)"
-        }} />
+        {/* Диагональные полосы */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+          {[0,1,2,3].map(i => (
+            <div key={i} className="absolute h-full w-px bg-gradient-to-b from-transparent via-amber-500 to-transparent"
+              style={{ left: `${20 + i * 22}%`, transform: "skewX(-15deg)", animationDelay: `${i * 0.4}s` }} />
+          ))}
+        </div>
 
-        <div className="relative max-w-7xl mx-auto px-5 pt-20 pb-44 w-full">
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-3 mb-7">
-              <div className="h-px w-10 bg-orange-500" />
-              <span className="text-orange-500 font-bold text-xs uppercase tracking-[0.2em]">Нижний Новгород и область</span>
+        <div className="relative max-w-screen-xl mx-auto px-5 pt-24 pb-52 w-full">
+          <div className="max-w-2xl">
+            {/* Бейдж */}
+            <div className="inline-flex items-center gap-3 mb-8 bg-amber-500/10 border border-amber-500/25 px-4 py-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shrink-0" />
+              <span className="text-amber-400 text-[10px] font-black uppercase tracking-[0.25em]">Нижний Новгород и область · Работаем с 2013</span>
             </div>
-            <h1 className="font-montserrat font-black text-[clamp(2.8rem,7vw,5.5rem)] leading-[0.95] uppercase mb-7 tracking-tight">
-              Профес-<br />сиональное<br /><span className="text-orange-500">асфальти-<br />рование</span>
+
+            <h1 className="font-black text-[clamp(2.4rem,8vw,5.8rem)] leading-[0.92] uppercase tracking-tight mb-7">
+              Асфаль-<br />тируем<br /><span className="text-amber-500 italic">Фаворит</span>
             </h1>
-            <p className="text-gray-300 text-lg leading-relaxed mb-10 max-w-xl">
-              Дороги, дворы, парковки и промышленные площадки. Работаем с 2013 года. Гарантия на покрытие — 3 года.
+
+            <p className="text-zinc-300 text-lg leading-relaxed mb-10 max-w-lg">
+              Дороги, дворы, парковки, промзоны — берём любые объекты под ключ. Более 350 сданных объектов по НН и области.
             </p>
-            <div className="flex flex-wrap gap-4">
-              <button onClick={() => scrollTo("calc")} className="bg-orange-500 hover:bg-orange-400 text-white font-black text-sm px-8 py-4 uppercase tracking-widest transition-all hover:scale-105 active:scale-95">
-                Рассчитать стоимость
+
+            <div className="flex flex-wrap gap-4 mb-12">
+              <button onClick={() => go("calc")}
+                className="group bg-amber-500 hover:bg-amber-400 text-black font-black text-sm uppercase tracking-widest px-8 py-4 transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
+                Рассчитать цену
+                <Icon name="ArrowRight" size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
-              <button onClick={() => scrollTo("portfolio")} className="border-2 border-white/20 hover:border-orange-500 text-white hover:text-orange-500 font-bold text-sm px-8 py-4 uppercase tracking-widest transition-all">
-                Наши объекты
-              </button>
+              <a href={PHONE_HREF}
+                className="border-2 border-white/20 hover:border-amber-500 text-white hover:text-amber-500 font-black text-sm uppercase tracking-widest px-8 py-4 transition-all flex items-center gap-2">
+                <Icon name="Phone" size={15} />
+                {PHONE}
+              </a>
+            </div>
+
+            {/* Быстрые факты */}
+            <div className="flex flex-wrap gap-6">
+              {[["ShieldCheck","Гарантия 3 года"], ["Clock","Выезд за 24 ч"], ["BadgeCheck","Своя техника"]].map(([icon, text]) => (
+                <div key={text} className="flex items-center gap-2 text-zinc-400 text-xs font-bold uppercase tracking-wider">
+                  <Icon name={icon} fallback="Check" size={14} className="text-amber-500" />
+                  {text}
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* stats */}
-        <div className="absolute bottom-0 inset-x-0 bg-[#1a1b1c]/90 backdrop-blur-sm border-t border-white/5">
-          <div className="max-w-7xl mx-auto px-5 py-8 grid grid-cols-2 md:grid-cols-4 gap-6">
-            {STATS.map((s) => (
-              <div key={s.label} className="text-center">
-                <AnimCounter val={s.val} suffix={s.suffix} />
-                <div className="text-gray-500 text-xs uppercase tracking-widest mt-1">{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── WHY US ── */}
-      <section className="py-20 bg-[#1a1b1c]">
-        <div className="max-w-7xl mx-auto px-5">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5">
+        {/* Счётчики */}
+        <div className="absolute bottom-0 inset-x-0 bg-zinc-900/95 backdrop-blur border-t border-white/5">
+          <div className="max-w-screen-xl mx-auto px-5 py-7 grid grid-cols-2 md:grid-cols-4 gap-6 divide-x divide-white/5">
             {[
-              { icon: "ShieldCheck", title: "Гарантия 3 года", desc: "Письменный договор и гарантийный талон на каждый объект" },
-              { icon: "Zap", title: "Выезд за 24 часа", desc: "Замер и коммерческое предложение в день обращения" },
-              { icon: "BadgeCheck", title: "Своя техника", desc: "Весь парк — наш. Никаких субподрядчиков и переплат" },
-            ].map((item) => (
-              <div key={item.title} className="bg-[#1a1b1c] p-8 flex gap-5 hover:bg-[#222325] transition-colors group">
-                <div className="w-12 h-12 bg-orange-500/10 flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500/20 transition-colors">
-                  <Icon name={item.icon} fallback="Check" size={22} className="text-orange-500" />
+              { to: 350, suffix: "+", label: "Объектов сдано" },
+              { to: 800, suffix: "к м²", label: "Уложено асфальта" },
+              { to: 11, suffix: " лет", label: "На рынке НН" },
+              { to: 24, suffix: " ч", label: "Выезд на замер" },
+            ].map((s) => (
+              <div key={s.label} className="text-center px-4">
+                <div className="font-black text-4xl text-amber-500 tabular-nums">
+                  <Counter to={s.to} suffix={s.suffix} />
                 </div>
-                <div>
-                  <h3 className="font-montserrat font-black text-sm uppercase tracking-wide mb-2">{item.title}</h3>
-                  <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
-                </div>
+                <div className="text-zinc-500 text-[10px] uppercase tracking-widest mt-1">{s.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── SERVICES ── */}
-      <section id="services" className="py-28 bg-[#111213]">
-        <div className="max-w-7xl mx-auto px-5">
-          <div className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+      {/* ─── УСЛУГИ ─── */}
+      <section id="services" className="py-28 bg-zinc-950">
+        <div className="max-w-screen-xl mx-auto px-5">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
             <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="h-px w-8 bg-orange-500" />
-                <span className="text-orange-500 text-xs font-bold uppercase tracking-[0.2em]">Что мы делаем</span>
-              </div>
-              <h2 className="font-montserrat font-black text-4xl md:text-6xl uppercase leading-none tracking-tight">
-                Наши<br /><span className="text-orange-500">услуги</span>
+              <p className="text-amber-500 text-[10px] font-black uppercase tracking-[0.25em] mb-4">— Что мы делаем</p>
+              <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight">
+                Наши<br /><span className="text-amber-500">услуги</span>
               </h2>
             </div>
-            <p className="text-gray-500 text-sm max-w-sm md:text-right leading-relaxed">
-              Полный цикл дорожных работ: от проектирования до сдачи объекта с документами
+            <p className="text-zinc-500 text-sm max-w-sm leading-relaxed md:text-right">
+              Полный цикл дорожных работ от проекта до сдачи объекта с исполнительной документацией
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {SERVICES.map((s, i) => (
-              <div key={i} className="bg-[#111213] hover:bg-[#1a1b1c] p-8 transition-colors group cursor-pointer border-b border-white/5 md:border-b-0">
-                <div className="w-10 h-10 bg-orange-500/10 flex items-center justify-center mb-5 group-hover:bg-orange-500/20 transition-colors">
-                  <Icon name={s.icon} fallback="Layers" size={20} className="text-orange-500" />
+              <div key={i}
+                className="group border border-white/5 hover:border-amber-500/40 p-8 transition-all duration-300 hover:bg-zinc-900/60 cursor-pointer relative overflow-hidden">
+                <div className="absolute top-5 right-5 font-black text-5xl text-white/4 group-hover:text-amber-500/8 transition-colors leading-none select-none">
+                  {s.num}
                 </div>
-                <h3 className="font-montserrat font-black text-base uppercase tracking-wide mb-3 group-hover:text-orange-500 transition-colors">{s.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{s.desc}</p>
-                <div className="mt-6 flex items-center gap-2 text-orange-500 text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
-                  Подробнее <Icon name="ArrowRight" size={12} />
+                <div className="w-11 h-11 bg-amber-500/10 group-hover:bg-amber-500/20 flex items-center justify-center mb-6 transition-colors skew-x-[-4deg]">
+                  <Icon name={s.icon} fallback="Layers" size={20} className="text-amber-500" />
                 </div>
+                <h3 className="font-black text-base uppercase tracking-wide mb-3 group-hover:text-amber-500 transition-colors">{s.title}</h3>
+                <p className="text-zinc-500 text-sm leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── PORTFOLIO ── */}
-      <section id="portfolio" className="py-28 bg-[#1a1b1c]">
-        <div className="max-w-7xl mx-auto px-5">
+      {/* ─── ОБЪЕКТЫ ─── */}
+      <section id="works" className="py-28 bg-zinc-900">
+        <div className="max-w-screen-xl mx-auto px-5">
           <div className="mb-16">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-px w-8 bg-orange-500" />
-              <span className="text-orange-500 text-xs font-bold uppercase tracking-[0.2em]">Реализованные проекты</span>
-            </div>
-            <h2 className="font-montserrat font-black text-4xl md:text-6xl uppercase leading-none tracking-tight">
-              Наши<br /><span className="text-orange-500">объекты</span>
+            <p className="text-amber-500 text-[10px] font-black uppercase tracking-[0.25em] mb-4">— Выполненные проекты</p>
+            <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight">
+              Наши<br /><span className="text-amber-500">объекты</span>
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {PORTFOLIO.map((p, i) => (
-              <div key={i} className="group bg-[#111213] border border-white/5 hover:border-orange-500/30 p-7 transition-all duration-300 relative overflow-hidden">
-                <div className="absolute -right-6 -top-6 w-24 h-24 bg-orange-500/5 rounded-full group-hover:bg-orange-500/10 transition-colors" />
-                <div className="flex items-start justify-between mb-4">
-                  <span className="inline-block bg-orange-500/10 text-orange-500 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1">{p.type}</span>
-                  <span className="text-gray-600 text-xs font-bold">{p.year}</span>
+            {WORKS.map((w, i) => (
+              <div key={i}
+                className="group bg-zinc-950 hover:bg-zinc-800 border border-white/5 hover:border-amber-500/30 p-7 transition-all duration-300 relative overflow-hidden">
+                {/* Угловой акцент */}
+                <div className="absolute top-0 right-0 w-0 h-0 border-l-[40px] border-l-transparent border-t-[40px] border-t-amber-500/20 group-hover:border-t-amber-500/40 transition-colors" />
+
+                <div className="flex items-start justify-between mb-5">
+                  <span className="inline-block bg-amber-500/10 text-amber-500 text-[9px] font-black uppercase tracking-[0.2em] px-2.5 py-1">{w.type}</span>
+                  <span className="text-zinc-600 text-xs font-bold">{w.year}</span>
                 </div>
-                <h3 className="font-montserrat font-black text-base uppercase tracking-tight mb-3 group-hover:text-orange-500 transition-colors leading-tight">{p.title}</h3>
-                <div className="flex items-center gap-2 text-gray-400 text-sm">
-                  <Icon name="Square" size={12} className="text-orange-500" />
-                  <span className="font-bold">{p.area}</span>
+                <h3 className="font-black text-base uppercase tracking-tight mb-3 group-hover:text-amber-500 transition-colors leading-tight">{w.title}</h3>
+                <div className="flex items-center gap-2 text-zinc-400 text-sm">
+                  <Icon name="Maximize2" size={12} className="text-amber-500 shrink-0" />
+                  <span className="font-bold">{parseInt(w.area).toLocaleString("ru")} м²</span>
                 </div>
               </div>
             ))}
@@ -304,111 +300,124 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ── CALC ── */}
-      <section id="calc" className="py-28 bg-[#111213]">
-        <div className="max-w-7xl mx-auto px-5">
+      {/* ─── КАЛЬКУЛЯТОР ─── */}
+      <section id="calc" className="py-28 bg-zinc-950">
+        <div className="max-w-screen-xl mx-auto px-5">
           <div className="mb-16">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-px w-8 bg-orange-500" />
-              <span className="text-orange-500 text-xs font-bold uppercase tracking-[0.2em]">Быстрый расчёт</span>
-            </div>
-            <h2 className="font-montserrat font-black text-4xl md:text-6xl uppercase leading-none tracking-tight">
-              Стои-<br /><span className="text-orange-500">мость</span>
+            <p className="text-amber-500 text-[10px] font-black uppercase tracking-[0.25em] mb-4">— Онлайн-расчёт</p>
+            <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight">
+              Стои-<br /><span className="text-amber-500">мость</span>
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="mb-8">
-                <div className="flex justify-between items-center mb-3">
-                  <span className="text-sm font-bold uppercase tracking-wide text-gray-400">Площадь объекта</span>
-                  <span className="font-montserrat font-black text-2xl text-white">{area.toLocaleString("ru")} м²</span>
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+            {/* Ползунок + тарифы */}
+            <div className="lg:col-span-3 space-y-8">
+              <div className="bg-zinc-900 border border-white/5 p-8">
+                <div className="flex items-end justify-between mb-6">
+                  <span className="text-zinc-400 text-xs font-bold uppercase tracking-widest">Площадь объекта</span>
+                  <span className="font-black text-4xl text-white tabular-nums">{area.toLocaleString("ru")} <span className="text-xl text-zinc-400">м²</span></span>
                 </div>
-                <input
-                  type="range" min={50} max={10000} step={50} value={area}
+                <input type="range" min={50} max={10000} step={50} value={area}
                   onChange={(e) => setArea(Number(e.target.value))}
-                  className="w-full h-1 bg-white/10 appearance-none cursor-pointer accent-orange-500"
-                />
-                <div className="flex justify-between text-gray-600 text-xs mt-2">
+                  className="w-full cursor-pointer accent-amber-500 h-1" />
+                <div className="flex justify-between text-zinc-600 text-xs mt-3 font-bold">
                   <span>50 м²</span><span>10 000 м²</span>
                 </div>
               </div>
 
-              <div className="space-y-2 mb-8">
-                {AREA_PRICES.map(([label, price]) => (
-                  <div key={label} className={`flex justify-between items-center px-4 py-3 border transition-colors ${getPrice() === price ? "border-orange-500 bg-orange-500/10" : "border-white/5 bg-[#1a1b1c]"}`}>
-                    <span className="text-sm font-semibold">{label}</span>
-                    <span className={`font-black text-sm ${getPrice() === price ? "text-orange-500" : "text-gray-500"}`}>{price.toLocaleString("ru")} ₽/м²</span>
-                  </div>
-                ))}
+              <div className="grid grid-cols-2 gap-3">
+                {PRICE_TIERS.map((t) => {
+                  const active = tier.label === t.label;
+                  return (
+                    <div key={t.label}
+                      className={`p-5 border transition-all ${active ? "border-amber-500 bg-amber-500/10" : "border-white/5 bg-zinc-900 hover:border-white/15"}`}>
+                      <div className={`text-xs font-black uppercase tracking-widest mb-1 ${active ? "text-amber-500" : "text-zinc-500"}`}>{t.label}</div>
+                      <div className={`font-black text-2xl mb-1 ${active ? "text-white" : "text-zinc-300"}`}>{t.price.toLocaleString("ru")} ₽</div>
+                      <div className="text-zinc-500 text-xs">{t.range}</div>
+                    </div>
+                  );
+                })}
               </div>
 
-              <div className="bg-orange-500/10 border border-orange-500/30 px-6 py-5 flex items-center justify-between">
-                <span className="text-sm font-bold uppercase tracking-wide">Примерная сумма</span>
-                <span className="font-montserrat font-black text-3xl text-orange-500">{totalPrice.toLocaleString("ru")} ₽</span>
+              <div className="bg-amber-500 p-6 flex items-center justify-between">
+                <div>
+                  <div className="text-black/60 text-xs font-bold uppercase tracking-widest mb-1">Итого от</div>
+                  <div className="font-black text-4xl text-black">{total.toLocaleString("ru")} ₽</div>
+                  <div className="text-black/60 text-xs mt-1">* без учёта подготовки основания</div>
+                </div>
+                <Icon name="Calculator" size={48} className="text-black/20" />
               </div>
-              <p className="text-gray-600 text-xs mt-3">* Без учёта подготовки основания. Точный расчёт — после выезда замерщика</p>
             </div>
 
-            <div className="bg-[#1a1b1c] border border-white/5 p-8">
-              <h3 className="font-montserrat font-black text-xl uppercase mb-1">Вызвать замерщика</h3>
-              <p className="text-gray-500 text-sm mb-7">Приедем, замерим и дадим точную смету — бесплатно</p>
-              <div className="space-y-4">
-                {[
-                  { key: "name", label: "Имя", ph: "Иван Петров" },
-                  { key: "phone", label: "Телефон", ph: "+7 (___) ___-__-__" },
-                  { key: "address", label: "Адрес объекта", ph: "ул. Горького, 12, Нижний Новгород" },
-                ].map(({ key, label, ph }) => (
-                  <div key={key}>
-                    <label className="text-gray-500 text-xs uppercase tracking-widest block mb-2">{label}</label>
-                    <input
-                      className="w-full bg-[#111213] border border-white/10 text-white px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors placeholder-gray-700"
-                      placeholder={ph}
-                      value={form[key as keyof typeof form]}
-                      onChange={(e) => setForm({ ...form, [key]: e.target.value })}
-                    />
+            {/* Форма */}
+            <div className="lg:col-span-2 bg-zinc-900 border border-white/5 p-8">
+              {sent ? (
+                <div className="h-full flex flex-col items-center justify-center text-center py-12 gap-4">
+                  <div className="w-16 h-16 bg-amber-500/20 flex items-center justify-center">
+                    <Icon name="CheckCircle" size={32} className="text-amber-500" />
                   </div>
-                ))}
-                <button className="w-full bg-orange-500 hover:bg-orange-400 text-white font-montserrat font-black text-sm px-8 py-4 uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-[0.98]">
-                  Вызвать замерщика →
-                </button>
-                <p className="text-gray-600 text-xs text-center">Ответим в течение 30 минут в рабочее время</p>
-              </div>
+                  <h3 className="font-black text-xl uppercase">Заявка отправлена!</h3>
+                  <p className="text-zinc-400 text-sm">Перезвоним в течение 30 минут в рабочее время</p>
+                </div>
+              ) : (
+                <>
+                  <h3 className="font-black text-lg uppercase mb-1">Вызвать замерщика</h3>
+                  <p className="text-zinc-500 text-sm mb-7 leading-relaxed">Приедем, замерим, дадим точную смету — бесплатно</p>
+                  <div className="space-y-4">
+                    {[
+                      { key: "name", label: "Ваше имя", ph: "Иван Петров" },
+                      { key: "phone", label: "Телефон", ph: "+7 (___) ___-__-__" },
+                      { key: "obj", label: "Адрес объекта", ph: "ул. Горького 12, НН" },
+                    ].map(({ key, label, ph }) => (
+                      <div key={key}>
+                        <label className="text-zinc-500 text-[10px] uppercase tracking-widest block mb-2">{label}</label>
+                        <input
+                          className="w-full bg-zinc-950 border border-white/10 focus:border-amber-500 text-white px-4 py-3 text-sm outline-none transition-colors placeholder-zinc-700"
+                          placeholder={ph}
+                          value={form[key as keyof typeof form]}
+                          onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+                        />
+                      </div>
+                    ))}
+                    <button
+                      onClick={() => { if (form.name && form.phone) setSent(true); }}
+                      className="w-full bg-amber-500 hover:bg-amber-400 text-black font-black text-xs uppercase tracking-[0.2em] py-4 transition-all hover:scale-[1.02] active:scale-[0.98]">
+                      Отправить заявку →
+                    </button>
+                    <p className="text-zinc-700 text-[10px] text-center leading-relaxed">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── REVIEWS ── */}
-      <section id="reviews" className="py-28 bg-[#1a1b1c]">
-        <div className="max-w-7xl mx-auto px-5">
+      {/* ─── ОТЗЫВЫ ─── */}
+      <section id="reviews" className="py-28 bg-zinc-900">
+        <div className="max-w-screen-xl mx-auto px-5">
           <div className="mb-16">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-px w-8 bg-orange-500" />
-              <span className="text-orange-500 text-xs font-bold uppercase tracking-[0.2em]">Мнения клиентов</span>
-            </div>
-            <h2 className="font-montserrat font-black text-4xl md:text-6xl uppercase leading-none tracking-tight">
-              От<span className="text-orange-500">зывы</span>
+            <p className="text-amber-500 text-[10px] font-black uppercase tracking-[0.25em] mb-4">— Клиенты о нас</p>
+            <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight">
+              От<span className="text-amber-500">зывы</span>
             </h2>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {REVIEWS.map((r, i) => (
-              <div key={i} className="bg-[#111213] border border-white/5 p-8 relative overflow-hidden group hover:border-orange-500/20 transition-colors">
-                <div className="absolute top-5 right-6 font-montserrat font-black text-8xl text-orange-500/10 leading-none select-none">"</div>
-                <div className="flex gap-0.5 mb-5">
-                  {Array.from({ length: r.stars }).map((_, j) => (
-                    <Icon key={j} name="Star" size={13} className="text-orange-500" />
-                  ))}
+              <div key={i} className="bg-zinc-950 border border-white/5 hover:border-amber-500/20 p-8 transition-colors relative group overflow-hidden">
+                <div className="absolute -right-2 -top-4 font-black text-[9rem] text-white/3 group-hover:text-amber-500/5 transition-colors select-none leading-none">"</div>
+                <div className="flex gap-1 mb-5">
+                  {Array.from({ length: r.stars }).map((_, j) => <Icon key={j} name="Star" size={13} className="text-amber-500" />)}
                 </div>
-                <p className="text-gray-300 text-sm leading-relaxed mb-7 italic">«{r.text}»</p>
+                <p className="text-zinc-300 text-sm leading-relaxed mb-7 italic relative">«{r.text}»</p>
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 bg-orange-500/10 flex items-center justify-center flex-shrink-0">
-                    <Icon name="User" size={14} className="text-orange-500" />
+                  <div className="w-10 h-10 bg-amber-500/10 flex items-center justify-center shrink-0 skew-x-[-4deg]">
+                    <Icon name="User" size={14} className="text-amber-500" />
                   </div>
                   <div>
-                    <div className="font-montserrat font-black text-xs uppercase tracking-wide">{r.name}</div>
-                    <div className="text-gray-600 text-xs mt-0.5">{r.role}</div>
+                    <div className="font-black text-xs uppercase tracking-wide">{r.name}</div>
+                    <div className="text-zinc-600 text-xs mt-0.5">{r.role}</div>
                   </div>
                 </div>
               </div>
@@ -417,78 +426,90 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ── CONTACTS ── */}
-      <section id="contacts" className="py-28 bg-[#111213]">
-        <div className="max-w-7xl mx-auto px-5">
+      {/* ─── КОНТАКТЫ ─── */}
+      <section id="contacts" className="py-28 bg-zinc-950">
+        <div className="max-w-screen-xl mx-auto px-5">
           <div className="mb-16">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-px w-8 bg-orange-500" />
-              <span className="text-orange-500 text-xs font-bold uppercase tracking-[0.2em]">Свяжитесь с нами</span>
-            </div>
-            <h2 className="font-montserrat font-black text-4xl md:text-6xl uppercase leading-none tracking-tight">
-              Конта<span className="text-orange-500">кты</span>
+            <p className="text-amber-500 text-[10px] font-black uppercase tracking-[0.25em] mb-4">— Связаться</p>
+            <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight">
+              Конта<span className="text-amber-500">кты</span>
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            <div className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Инфо */}
+            <div className="space-y-5">
               {[
-                { icon: "Phone", label: "Телефон", val: "+7 (831) 200-00-00", sub: "Звонки принимаем круглосуточно" },
-                { icon: "Mail", label: "Email", val: "info@asfalt-nn.ru", sub: "Ответ в течение 2 часов" },
-                { icon: "MapPin", label: "Офис", val: "г. Нижний Новгород, ул. Родионова, 23", sub: "Пн–Пт: 9:00–18:00" },
-                { icon: "Truck", label: "Зона работ", val: "Нижний Новгород и вся область", sub: "Выезд по НН — бесплатно" },
+                { icon: "Phone", label: "Телефон", val: PHONE, sub: "Звоните в любое время" },
+                { icon: "MapPin", label: "Город", val: "Нижний Новгород", sub: "Работаем по всей области" },
+                { icon: "Clock", label: "Режим", val: "Пн–Пт 8:00–19:00", sub: "Приём заявок — круглосуточно" },
               ].map((c) => (
-                <div key={c.label} className="flex gap-5 group">
-                  <div className="w-11 h-11 bg-orange-500/10 flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500/20 transition-colors mt-0.5">
-                    <Icon name={c.icon} fallback="Info" size={17} className="text-orange-500" />
+                <a key={c.label}
+                  href={c.icon === "Phone" ? PHONE_HREF : undefined}
+                  className="flex items-start gap-5 group p-5 bg-zinc-900 border border-white/5 hover:border-amber-500/30 transition-colors">
+                  <div className="w-11 h-11 bg-amber-500/10 group-hover:bg-amber-500/20 flex items-center justify-center shrink-0 transition-colors">
+                    <Icon name={c.icon} fallback="Info" size={17} className="text-amber-500" />
                   </div>
                   <div>
-                    <div className="text-gray-600 text-[10px] uppercase tracking-widest font-bold mb-0.5">{c.label}</div>
-                    <div className="font-montserrat font-black text-sm">{c.val}</div>
-                    <div className="text-gray-500 text-xs mt-0.5">{c.sub}</div>
+                    <div className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.15em] mb-0.5">{c.label}</div>
+                    <div className="font-black text-base">{c.val}</div>
+                    <div className="text-zinc-600 text-xs mt-0.5">{c.sub}</div>
                   </div>
-                </div>
+                </a>
               ))}
 
-              {/* mini CTA */}
-              <div className="mt-8 bg-orange-500 p-6">
-                <p className="font-montserrat font-black text-base uppercase mb-1">Нужна срочная заявка?</p>
-                <p className="text-orange-100 text-sm mb-4">Ямочный ремонт — выедем за 24 часа</p>
-                <a href="tel:+78312000000" className="inline-flex items-center gap-2 bg-white text-orange-500 font-black text-sm px-5 py-2.5 uppercase tracking-widest hover:bg-orange-50 transition-colors">
-                  <Icon name="Phone" size={14} />
-                  Позвонить
-                </a>
+              {/* Города */}
+              <div className="p-5 bg-zinc-900 border border-white/5">
+                <div className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.15em] mb-3">Работаем в городах</div>
+                <div className="flex flex-wrap gap-2">
+                  {["НН","Кстово","Бор","Дзержинск","Балахна","Арзамас","Выкса","Павлово"].map((city) => (
+                    <span key={city} className="bg-amber-500/10 text-amber-400 text-[10px] font-black uppercase tracking-widest px-3 py-1.5">{city}</span>
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* Map placeholder */}
-            <div className="bg-[#1a1b1c] border border-white/5 flex flex-col items-center justify-center min-h-64 gap-4 relative overflow-hidden">
-              <div className="absolute inset-0 opacity-10" style={{
-                backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(255,165,0,0.3) 30px, rgba(255,165,0,0.3) 31px), repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(255,165,0,0.3) 30px, rgba(255,165,0,0.3) 31px)"
+            {/* Большой CTA */}
+            <div className="relative bg-zinc-900 border border-white/5 p-10 overflow-hidden flex flex-col justify-between min-h-80">
+              <div className="absolute inset-0 opacity-5" style={{
+                backgroundImage: "repeating-linear-gradient(-45deg, #f59e0b 0px, #f59e0b 1px, transparent 1px, transparent 12px)"
               }} />
-              <div className="relative text-center">
-                <Icon name="MapPin" size={40} className="text-orange-500 mx-auto mb-3" />
-                <p className="font-montserrat font-black text-base uppercase tracking-wide">Нижний Новгород</p>
-                <p className="text-gray-500 text-sm mt-1">и Нижегородская область</p>
-                <div className="mt-4 inline-flex flex-wrap gap-2 justify-center">
-                  {["Кстово", "Бор", "Дзержинск", "Балахна", "Арзамас"].map((city) => (
-                    <span key={city} className="bg-orange-500/10 text-orange-500 text-xs font-bold px-3 py-1 uppercase tracking-wide">{city}</span>
-                  ))}
+              <div className="relative">
+                <div className="font-black text-2xl uppercase leading-tight mb-4">
+                  Позвоните нам<br />прямо сейчас
                 </div>
+                <p className="text-zinc-400 text-sm leading-relaxed mb-8">
+                  Выезд замерщика в день обращения. Смета бесплатно. Работаем с юрлицами и физлицами.
+                </p>
+              </div>
+              <div className="relative flex flex-col gap-3">
+                <a href={PHONE_HREF}
+                  className="bg-amber-500 hover:bg-amber-400 text-black font-black text-base uppercase tracking-widest px-8 py-5 transition-all hover:scale-[1.02] active:scale-[0.98] text-center flex items-center justify-center gap-3">
+                  <Icon name="Phone" size={18} />
+                  {PHONE}
+                </a>
+                <button onClick={() => go("calc")}
+                  className="border-2 border-white/10 hover:border-amber-500 text-zinc-300 hover:text-amber-500 font-black text-xs uppercase tracking-widest px-8 py-4 transition-all text-center">
+                  Онлайн-расчёт стоимости →
+                </button>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── FOOTER ── */}
-      <footer className="border-t border-white/5 py-7 bg-[#0e0f10]">
-        <div className="max-w-7xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="font-montserrat font-black text-base tracking-tight">
-            АСФАЛЬТ<span className="text-orange-500">НН</span>
+      {/* ─── ПОДВАЛ ─── */}
+      <footer className="border-t border-white/5 py-8 bg-zinc-950">
+        <div className="max-w-screen-xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <div className="w-7 h-7 bg-amber-500 skew-x-[-8deg]" />
+              <span className="absolute inset-0 flex items-center justify-center font-black text-black text-xs">Ф</span>
+            </div>
+            <span className="font-black text-sm tracking-widest uppercase">Фаворит</span>
           </div>
-          <p className="text-gray-700 text-xs">© 2024 АсфальтНН. Дорожные работы в Нижнем Новгороде</p>
-          <button onClick={() => scrollTo("hero")} className="text-gray-600 hover:text-gray-400 text-xs transition-colors">Наверх ↑</button>
+          <p className="text-zinc-700 text-xs">© 2024 Фаворит. Асфальтирование в Нижнем Новгороде</p>
+          <button onClick={() => go("hero")} className="text-zinc-600 hover:text-zinc-400 text-xs transition-colors">Наверх ↑</button>
         </div>
       </footer>
     </div>
