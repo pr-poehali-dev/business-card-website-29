@@ -78,8 +78,8 @@ export default function HeroSection({ go }: HeroSectionProps) {
         )}
 
         {/* Градиенты */}
-        <div className="absolute inset-0" style={{ zIndex: 2, background: "linear-gradient(105deg, rgba(10,14,24,0.88) 0%, rgba(10,14,24,0.55) 60%, rgba(10,14,24,0.15) 100%)" }} />
-        <div className="absolute inset-0" style={{ zIndex: 2, background: "linear-gradient(to top, rgba(10,14,24,1) 0%, rgba(10,14,24,0.3) 40%, transparent 70%)" }} />
+        <div className="absolute inset-0" style={{ zIndex: 2, background: "linear-gradient(105deg, rgba(10,14,24,0.72) 0%, rgba(10,14,24,0.35) 55%, rgba(10,14,24,0.05) 100%)" }} />
+        <div className="absolute inset-0" style={{ zIndex: 2, background: "linear-gradient(to top, rgba(10,14,24,1) 0%, rgba(10,14,24,0.2) 35%, transparent 60%)" }} />
 
         {/* Карточка объекта — правый верхний угол */}
         <div className="absolute top-[90px] right-5 md:right-10 hidden md:block" style={{ zIndex: 10, width: 270 }}>
