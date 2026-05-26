@@ -117,7 +117,7 @@ export default function MapFooter({ go }: Props) {
             </div>
           </button>
           <p className="text-xs text-center" style={{ color: C.muted }}>
-            © 2015–2026 ООО «Фаворит» — аренда манипуляторов в Нижнем Новгороде и области
+            © 2015–2026 ООО «Фаворит» — асфальтирование в Нижнем Новгороде и области
           </p>
           <div className="flex items-center gap-5">
             <button className="text-xs transition-opacity hover:opacity-80" style={{ color: C.cyan, background: "none", border: "none", cursor: "pointer" }}>
