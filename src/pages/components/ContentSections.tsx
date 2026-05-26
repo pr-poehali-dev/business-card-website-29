@@ -319,7 +319,26 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
       <footer className="py-7 border-t" style={{ background: C.bgDark, borderColor: C.border }}>
         <div className="max-w-screen-xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <img src="/favicon.svg" alt="Фаворит" className="w-10 h-10" style={{ filter: "drop-shadow(0 1px 6px rgba(240,192,48,0.4))" }} />
+            <svg width="36" height="40" viewBox="0 0 200 220" style={{ filter: "drop-shadow(0 1px 8px rgba(240,192,48,0.4))", flexShrink: 0 }}>
+              <defs>
+                <clipPath id="fShield">
+                  <path d="M100,6 L182,40 L182,118 Q182,166 100,194 Q18,166 18,118 L18,40 Z"/>
+                </clipPath>
+                <linearGradient id="fFade" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="50%" stopColor="transparent"/>
+                  <stop offset="100%" stopColor="rgba(10,14,24,0.8)"/>
+                </linearGradient>
+              </defs>
+              <image
+                href="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/bucket/c86c5623-6496-4556-91b1-3ddf8e92b89a.jpg"
+                x="18" y="6" width="164" height="188"
+                preserveAspectRatio="xMidYMid slice"
+                clipPath="url(#fShield)"/>
+              <path d="M100,6 L182,40 L182,118 Q182,166 100,194 Q18,166 18,118 L18,40 Z"
+                fill="url(#fFade)"/>
+              <path d="M100,6 L182,40 L182,118 Q182,166 100,194 Q18,166 18,118 L18,40 Z"
+                fill="none" stroke="#f0c030" strokeWidth="4"/>
+            </svg>
             <span className="font-black text-sm tracking-wide uppercase" style={{ color: C.gold }}>ООО Фаворит</span>
           </div>
           <p className="text-xs" style={{ color: "#374151" }}>© 2024 Фаворит. Асфальтирование в Нижнем Новгороде</p>
