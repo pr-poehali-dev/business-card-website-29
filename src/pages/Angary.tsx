@@ -7,7 +7,7 @@ const data: ServicePageData = {
   titleAccent: "ангаров",
   subtitle: "Под ключ — от проекта до сдачи",
   description: "Металлокаркасные ангары для производства, склада, сельского хозяйства. Фундамент, монтаж, кровля, ворота, утепление — всё под ключ. Срок строительства от 30 дней.",
-  heroImg: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/852f827e-00ab-4280-8d10-75732ed5dbf8.jpg",
+  heroImg: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/1de63cff-802b-41e6-a693-5aa8c40f0a49.jpg",
   price: "от 4 500 ₽/м²",
   priceNote: "Стоимость зависит от размера, утепления и комплектации. Расчёт — бесплатно.",
   stats: [
