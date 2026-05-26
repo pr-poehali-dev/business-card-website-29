@@ -29,12 +29,31 @@ export default function ServicesSections() {
         </div>
       </section>
 
+      {/* ── ФОТО-РАЗДЕЛИТЕЛЬ ── */}
+      <div className="relative w-full overflow-hidden" style={{ height: 260 }}>
+        <img
+          src="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/d5302b7b-0f12-46f2-8718-081db8c572ba.jpg"
+          alt="Наша техника"
+          className="w-full h-full object-cover object-center"
+          style={{ filter: "brightness(0.45) saturate(0.8)" }}
+        />
+        <div className="absolute inset-0" style={{ background: `linear-gradient(to right, ${C.bg} 0%, transparent 18%, transparent 82%, ${C.bg} 100%)` }} />
+        <div className="absolute inset-0" style={{ background: `linear-gradient(to bottom, ${C.bg} 0%, transparent 25%, transparent 75%, ${C.bgDeep} 100%)` }} />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center">
+            <div className="text-xs font-black uppercase tracking-[0.3em] mb-2" style={{ color: C.cyan }}>Собственный парк</div>
+            <div className="font-black text-3xl md:text-5xl uppercase" style={{ textShadow: "0 2px 20px rgba(0,0,0,0.8)" }}>
+              Наша <span style={{ color: C.gold }}>техника</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* ── ТЕХНИКА ── */}
-      <section id="tech" className="py-24 relative overflow-hidden" style={{ background: C.bgDeep }}>
+      <section id="tech" className="py-16 relative overflow-hidden" style={{ background: C.bgDeep }}>
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: LINE_BG, backgroundSize: "60px 60px" }} />
         <div className="absolute bottom-0 right-0 w-[500px] h-[400px] pointer-events-none" style={{ background: `radial-gradient(ellipse at bottom right, ${C.gold}0d 0%, transparent 65%)` }} />
         <div className="max-w-screen-xl mx-auto px-5 relative">
-          <SectionTitle accent={C.gold} label="Собственный парк" title={<>Наша <span style={{ color: C.cyan }}>техника</span></>} />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {TECH.map((t, i) => (
               <Card key={i} i={i} icon="Truck" title={t.name} badge="" desc={t.cap} />
