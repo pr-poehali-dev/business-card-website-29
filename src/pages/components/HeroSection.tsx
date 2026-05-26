@@ -80,45 +80,35 @@ export default function HeroSection({ go }: HeroSectionProps) {
           />
         </div>
 
-        {/* Тёмный слой слева для читаемости текста — только десктоп */}
+        {/* Десктоп: тёмный слой слева */}
         <div className="absolute inset-0 hidden sm:block" style={{
           zIndex: 1,
           background: "linear-gradient(100deg, rgba(10,14,24,0.92) 0%, rgba(10,14,24,0.7) 40%, rgba(10,14,24,0.2) 70%, transparent 100%)",
         }} />
-        {/* Мобиль — тёмный слой снизу (где текст) */}
-        <div className="absolute inset-0 block sm:hidden" style={{
-          zIndex: 1,
-          background: "linear-gradient(to top, rgba(10,14,24,1) 0%, rgba(10,14,24,0.98) 45%, rgba(10,14,24,0.5) 70%, transparent 100%)",
-        }} />
-        {/* Тёмный слой снизу — десктоп */}
+        {/* Десктоп: тёмный слой снизу */}
         <div className="absolute inset-0 hidden sm:block" style={{
           zIndex: 1,
           background: "linear-gradient(to top, rgba(10,14,24,1) 0%, rgba(10,14,24,0.4) 25%, transparent 55%)",
         }} />
 
-
-
-        {/* Контент */}
-        <div className="relative max-w-screen-xl mx-auto px-4 sm:px-5 flex flex-col justify-end sm:justify-center"
+        {/* Десктоп: контент по центру */}
+        <div className="relative hidden sm:flex max-w-screen-xl mx-auto px-5 flex-col justify-center"
           style={{ minHeight: "calc(100svh - 70px)", paddingTop: "2rem", paddingBottom: "4rem", zIndex: 5 }}>
           <div className="max-w-2xl">
-            <div className="hidden sm:inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-7 text-xs font-bold uppercase tracking-widest"
+            <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-7 text-xs font-bold uppercase tracking-widest"
               style={{ background: "rgba(56,232,255,0.08)", border: `1px solid rgba(56,232,255,0.28)`, color: C.cyan }}>
               <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: C.cyan }} />
               Нижний Новгород и область · Работаем 24/7
             </div>
-
             <h1 className="font-black leading-[1.05] mb-5" style={{ fontSize: "clamp(1.9rem,5vw,3.4rem)", textShadow: "0 2px 20px rgba(0,0,0,0.8)" }}>
               Профессиональное<br />
               <span style={{ color: C.cyan }}>асфальтирование</span><br />
               в Нижнем Новгороде
             </h1>
-
-            <p className="text-base sm:text-lg leading-relaxed mb-5 max-w-xl" style={{ color: C.light }}>
+            <p className="text-lg leading-relaxed mb-5 max-w-xl" style={{ color: C.light }}>
               Укладка асфальта, ямочный ремонт, парковки, промзоны — под ключ.<br />Подача бригады за 24 часа. Гарантия 3 года.
             </p>
-
-            <div className="inline-flex items-center gap-3 rounded-xl px-5 py-3 mb-5 sm:mb-8"
+            <div className="inline-flex items-center gap-3 rounded-xl px-5 py-3 mb-8"
               style={{ background: "rgba(240,192,48,0.12)", border: `1px solid rgba(240,192,48,0.4)`, backdropFilter: "blur(8px)" }}>
               <Icon name="Layers" size={20} style={{ color: C.gold } as React.CSSProperties} />
               <div>
@@ -126,8 +116,7 @@ export default function HeroSection({ go }: HeroSectionProps) {
                 <div className="font-black text-2xl" style={{ color: C.gold }}>от 1 200 ₽/м²</div>
               </div>
             </div>
-
-            <div className="hidden sm:flex flex-wrap gap-x-4 gap-y-2 mb-6 sm:mb-10">
+            <div className="flex flex-wrap gap-x-4 gap-y-2 mb-10">
               {[
                 ["Clock",        "Начало работ от 1 дня"],
                 ["CalendarCheck","Мин. заказ — 200 м²"],
@@ -140,8 +129,7 @@ export default function HeroSection({ go }: HeroSectionProps) {
                 </div>
               ))}
             </div>
-
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <div className="flex gap-4">
               <a href={PHONE_HREF}
                 className="flex items-center justify-center gap-2 font-black text-sm px-8 py-4 rounded-full transition-all hover:scale-105 active:scale-95"
                 style={{ background: `linear-gradient(135deg,${C.goldDark},${C.gold})`, color: "#000", boxShadow: "0 4px 20px rgba(240,192,48,0.4)" }}>
@@ -154,6 +142,41 @@ export default function HeroSection({ go }: HeroSectionProps) {
                 Оставить заявку
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* Мобиль: текст в нижней части, фото занимает верх */}
+        <div className="sm:hidden absolute bottom-0 left-0 right-0 px-4 pb-8" style={{ zIndex: 5 }}>
+          {/* Градиент только под текстом */}
+          <div className="absolute inset-0" style={{
+            background: "linear-gradient(to top, rgba(10,14,24,1) 0%, rgba(10,14,24,0.97) 60%, rgba(10,14,24,0.6) 85%, transparent 100%)",
+            zIndex: -1,
+          }} />
+          <h1 className="font-black leading-[1.05] mb-3" style={{ fontSize: "clamp(1.7rem,8vw,2.4rem)", textShadow: "0 2px 20px rgba(0,0,0,0.9)" }}>
+            Профессиональное<br />
+            <span style={{ color: C.cyan }}>асфальтирование</span><br />
+            в Нижнем Новгороде
+          </h1>
+          <div className="inline-flex items-center gap-2.5 rounded-xl px-4 py-2.5 mb-4"
+            style={{ background: "rgba(240,192,48,0.12)", border: `1px solid rgba(240,192,48,0.4)` }}>
+            <Icon name="Layers" size={16} style={{ color: C.gold } as React.CSSProperties} />
+            <div>
+              <div className="text-[8px] font-bold uppercase tracking-widest" style={{ color: C.muted }}>Стоимость работ</div>
+              <div className="font-black text-lg" style={{ color: C.gold }}>от 1 200 ₽/м²</div>
+            </div>
+          </div>
+          <div className="flex flex-col gap-3">
+            <a href={PHONE_HREF}
+              className="flex items-center justify-center gap-2 font-black text-sm px-6 py-4 rounded-full active:scale-95"
+              style={{ background: `linear-gradient(135deg,${C.goldDark},${C.gold})`, color: "#000", boxShadow: "0 4px 20px rgba(240,192,48,0.4)" }}>
+              <Icon name="Phone" size={16} />
+              Позвонить: {PHONE}
+            </a>
+            <button onClick={() => go("form")}
+              className="font-black text-sm px-6 py-4 rounded-full border"
+              style={{ borderColor: "rgba(255,255,255,0.25)", color: "#fff", background: "rgba(255,255,255,0.07)" }}>
+              Оставить заявку
+            </button>
           </div>
         </div>
 
