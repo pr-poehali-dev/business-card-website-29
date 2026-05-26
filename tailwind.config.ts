@@ -21,6 +21,7 @@ export default {
 		fontFamily: {
 			oswald: ["Oswald", "sans-serif"],
 			roboto: ["Roboto", "sans-serif"],
+			montserrat: ["Montserrat", "sans-serif"],
 		},
 		extend: {
 			colors: {
