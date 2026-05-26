@@ -1,5 +1,5 @@
 import Icon from "@/components/ui/icon";
-import { C, SERVICES, TECH, HOW, REVIEWS, PHONE, PHONE_HREF } from "./constants";
+import { C, SERVICES, TECH, HOW, WORKS, REVIEWS, PHONE, PHONE_HREF } from "./constants";
 
 interface FormState {
   name: string;
@@ -109,6 +109,47 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── ПРИМЕРЫ РАБОТ ── */}
+      <section id="portfolio" className="py-24" style={{ background: C.bg }}>
+        <div className="max-w-screen-xl mx-auto px-5">
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="h-px w-8" style={{ background: C.cyan }} />
+              <span className="text-xs font-black uppercase tracking-[0.2em]" style={{ color: C.cyan }}>Выполненные объекты</span>
+            </div>
+            <h2 className="font-black text-4xl md:text-6xl uppercase leading-tight">
+              Примеры <span style={{ color: C.gold }}>работ</span>
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {WORKS.map((w, i) => (
+              <div key={i} className="rounded-xl border overflow-hidden group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                style={{ background: C.bgDeep, borderColor: C.border }}>
+                <div className="h-3 w-full" style={{ background: `linear-gradient(to right, ${C.cyan}, ${C.gold})` }} />
+                <div className="p-6">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider mb-4"
+                    style={{ background: "rgba(34,211,238,0.1)", color: C.cyan, border: `1px solid rgba(34,211,238,0.2)` }}>
+                    {w.tag}
+                  </div>
+                  <h3 className="font-black text-sm uppercase tracking-wide mb-2">{w.title}</h3>
+                  <p className="text-sm leading-relaxed mb-5" style={{ color: C.muted }}>{w.desc}</p>
+                  <div className="flex items-center justify-between pt-4 border-t" style={{ borderColor: C.border }}>
+                    <div className="flex items-center gap-1.5 text-xs font-bold" style={{ color: C.subtle }}>
+                      <Icon name="Maximize2" size={12} />
+                      {w.area}
+                    </div>
+                    <div className="flex items-center gap-1.5 text-xs font-bold" style={{ color: C.subtle }}>
+                      <Icon name="MapPin" size={12} />
+                      {w.city}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
