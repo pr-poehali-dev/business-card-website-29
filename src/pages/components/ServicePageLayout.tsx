@@ -6,6 +6,8 @@ import { C, PHONE, PHONE_HREF } from "./constants";
 interface Stat { label: string; value: string }
 interface Feature { icon: string; title: string; desc: string }
 interface Step { num: string; title: string; desc: string }
+interface CalcOption { label: string; value: number }
+interface FaqItem { q: string; a: string }
 
 export interface ServicePageData {
   slug: string;
@@ -19,6 +21,13 @@ export interface ServicePageData {
   steps: Step[];
   price: string;
   priceNote: string;
+  gallery?: string[];
+  faq?: FaqItem[];
+  calc?: {
+    unit: string;
+    basePrice: number;
+    options: { label: string; items: CalcOption[] }[];
+  };
 }
 
 const ACCENTS = [
@@ -35,6 +44,23 @@ function accent(i: number) { return ACCENTS[i % ACCENTS.length]; }
 export default function ServicePageLayout({ data }: { data: ServicePageData }) {
   const [form, setForm] = useState({ name: "", phone: "", comment: "" });
   const [sent, setSent] = useState(false);
+  const [lightbox, setLightbox] = useState<string | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const [calcSelections, setCalcSelections] = useState<number[]>(() =>
+    (data.calc?.options ?? []).map(() => 0)
+  );
+
+  const calcTotal = data.calc
+    ? (() => {
+        const area = data.calc.options[0]?.items[calcSelections[0]]?.value ?? 0;
+        let price = data.calc.basePrice;
+        for (let i = 1; i < (data.calc.options.length ?? 0); i++) {
+          price += data.calc.options[i]?.items[calcSelections[i]]?.value ?? 0;
+        }
+        return area * price;
+      })()
+    : 0;
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
@@ -235,8 +261,181 @@ export default function ServicePageLayout({ data }: { data: ServicePageData }) {
         </div>
       </section>
 
+      {/* ── КАЛЬКУЛЯТОР ── */}
+      {data.calc && (
+        <section className="py-20 relative overflow-hidden" style={{ background: C.bg }}>
+          <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
+          <div className="absolute top-0 left-0 w-[400px] h-[300px] pointer-events-none" style={{ background: "radial-gradient(ellipse at top left, rgba(255,209,64,0.07) 0%, transparent 65%)" }} />
+          <div className="max-w-screen-xl mx-auto px-5 relative">
+            <div className="mb-10">
+              <div className="inline-flex items-center gap-2.5 rounded-full px-4 py-1.5 mb-5"
+                style={{ background: "rgba(255,209,64,0.08)", border: "1px solid rgba(255,209,64,0.28)" }}>
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: C.gold }} />
+                <span className="text-[10px] font-black uppercase tracking-[0.25em]" style={{ color: C.gold }}>Онлайн-расчёт</span>
+              </div>
+              <h2 className="font-black text-4xl md:text-5xl uppercase leading-tight">
+                Калькулятор <span style={{ color: C.gold }}>стоимости</span>
+              </h2>
+              <p className="mt-3 text-sm" style={{ color: C.muted }}>Укажите параметры — получите ориентировочную стоимость. Точная цена — после выезда замерщика.</p>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-8 items-start">
+              <div className="space-y-6">
+                {data.calc.options.map((opt, oi) => (
+                  <div key={oi}>
+                    <div className="text-xs font-black uppercase tracking-widest mb-3" style={{ color: C.subtle }}>{opt.label}</div>
+                    <div className="flex flex-wrap gap-2">
+                      {opt.items.map((item, ii) => (
+                        <button key={ii}
+                          onClick={() => {
+                            const next = [...calcSelections];
+                            next[oi] = ii;
+                            setCalcSelections(next);
+                          }}
+                          className="px-4 py-2.5 rounded-xl text-sm font-bold transition-all"
+                          style={calcSelections[oi] === ii
+                            ? { background: `linear-gradient(135deg,${C.goldDark},${C.gold})`, color: "#000", boxShadow: "0 4px 16px rgba(240,192,48,0.3)" }
+                            : { background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: C.subtle }
+                          }>
+                          {item.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="rounded-2xl p-8 sticky top-24" style={{ background: "linear-gradient(145deg, #252b3d, #1e2438)", border: "1px solid rgba(255,209,64,0.3)" }}>
+                <div className="text-xs font-black uppercase tracking-widest mb-2" style={{ color: C.muted }}>Ориентировочная стоимость</div>
+                <div className="font-black mb-1" style={{ fontSize: "clamp(2rem,5vw,3.5rem)", color: C.gold, lineHeight: 1 }}>
+                  {calcTotal > 0 ? calcTotal.toLocaleString("ru-RU") + " ₽" : "—"}
+                </div>
+                <div className="text-xs mb-6" style={{ color: C.muted }}>
+                  {data.calc.options[0]?.items[calcSelections[0]]?.value ?? 0} {data.calc.unit} × {
+                    (() => {
+                      let p = data.calc!.basePrice;
+                      for (let i = 1; i < data.calc!.options.length; i++) {
+                        p += data.calc!.options[i]?.items[calcSelections[i]]?.value ?? 0;
+                      }
+                      return p.toLocaleString("ru-RU");
+                    })()
+                  } ₽/{data.calc.unit}
+                </div>
+                <div className="space-y-2 mb-6">
+                  {[
+                    "Итоговая цена — после замера",
+                    "Выезд замерщика бесплатно",
+                    "Смета в день обращения",
+                  ].map(t => (
+                    <div key={t} className="flex items-center gap-2 text-xs" style={{ color: C.subtle }}>
+                      <Icon name="Check" size={13} style={{ color: C.gold } as React.CSSProperties} />
+                      {t}
+                    </div>
+                  ))}
+                </div>
+                <a href={PHONE_HREF}
+                  className="flex items-center justify-center gap-2 font-black text-sm py-3.5 rounded-xl transition-all hover:scale-[1.02]"
+                  style={{ background: `linear-gradient(135deg,${C.goldDark},${C.gold})`, color: "#000" }}>
+                  <Icon name="Phone" size={15} />
+                  Уточнить у менеджера
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── ГАЛЕРЕЯ ── */}
+      {data.gallery && data.gallery.length > 0 && (
+        <section className="py-20 relative overflow-hidden" style={{ background: C.bgDeep }}>
+          <div className="max-w-screen-xl mx-auto px-5">
+            <div className="mb-10">
+              <div className="inline-flex items-center gap-2.5 rounded-full px-4 py-1.5 mb-5"
+                style={{ background: "rgba(56,232,255,0.08)", border: "1px solid rgba(56,232,255,0.25)" }}>
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: C.cyan }} />
+                <span className="text-[10px] font-black uppercase tracking-[0.25em]" style={{ color: C.cyan }}>Наши объекты</span>
+              </div>
+              <h2 className="font-black text-4xl md:text-5xl uppercase leading-tight">
+                Фото <span style={{ color: C.cyan }}>работ</span>
+              </h2>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+              {data.gallery.map((src, i) => (
+                <button key={i} onClick={() => setLightbox(src)}
+                  className="relative overflow-hidden rounded-2xl group"
+                  style={{ aspectRatio: "4/3", border: "1px solid rgba(255,255,255,0.08)" }}>
+                  <img src={src} alt="" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ background: "rgba(10,14,24,0.55)" }}>
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center"
+                      style={{ background: "rgba(56,232,255,0.2)", border: "1px solid rgba(56,232,255,0.5)" }}>
+                      <Icon name="ZoomIn" size={18} style={{ color: C.cyan } as React.CSSProperties} />
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Лайтбокс */}
+          {lightbox && (
+            <div className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+              style={{ background: "rgba(0,0,0,0.92)" }}
+              onClick={() => setLightbox(null)}>
+              <button className="absolute top-5 right-5 w-10 h-10 rounded-full flex items-center justify-center"
+                style={{ background: "rgba(255,255,255,0.1)", color: "#fff" }}>
+                <Icon name="X" size={20} />
+              </button>
+              <img src={lightbox} alt="" className="max-w-full max-h-[90vh] rounded-2xl object-contain"
+                onClick={e => e.stopPropagation()} />
+            </div>
+          )}
+        </section>
+      )}
+
+      {/* ── FAQ ── */}
+      {data.faq && data.faq.length > 0 && (
+        <section className="py-20 relative overflow-hidden" style={{ background: C.bg }}>
+          <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+          <div className="max-w-screen-xl mx-auto px-5 relative">
+            <div className="mb-10">
+              <div className="inline-flex items-center gap-2.5 rounded-full px-4 py-1.5 mb-5"
+                style={{ background: "rgba(56,232,255,0.08)", border: "1px solid rgba(56,232,255,0.25)" }}>
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: C.cyan }} />
+                <span className="text-[10px] font-black uppercase tracking-[0.25em]" style={{ color: C.cyan }}>Частые вопросы</span>
+              </div>
+              <h2 className="font-black text-4xl md:text-5xl uppercase leading-tight">
+                Вопросы и <span style={{ color: C.gold }}>ответы</span>
+              </h2>
+            </div>
+            <div className="max-w-3xl space-y-3">
+              {data.faq.map((item, i) => (
+                <div key={i} className="rounded-2xl overflow-hidden transition-all"
+                  style={{ background: "linear-gradient(145deg, #252b3d, #1e2438)", border: `1px solid ${openFaq === i ? "rgba(255,209,64,0.4)" : "rgba(255,255,255,0.08)"}` }}>
+                  <button
+                    className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
+                    onClick={() => setOpenFaq(openFaq === i ? null : i)}>
+                    <span className="font-black text-sm md:text-base leading-snug">{item.q}</span>
+                    <div className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-all"
+                      style={{ background: openFaq === i ? "rgba(255,209,64,0.15)" : "rgba(255,255,255,0.06)", border: `1px solid ${openFaq === i ? "rgba(255,209,64,0.4)" : "rgba(255,255,255,0.1)"}` }}>
+                      <Icon name={openFaq === i ? "ChevronUp" : "ChevronDown"} size={15}
+                        style={{ color: openFaq === i ? C.gold : C.muted } as React.CSSProperties} />
+                    </div>
+                  </button>
+                  {openFaq === i && (
+                    <div className="px-6 pb-5 border-t" style={{ borderColor: "rgba(255,209,64,0.15)" }}>
+                      <p className="pt-4 leading-relaxed" style={{ fontSize: 14.5, color: C.subtle }}>{item.a}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ── ФОРМА ── */}
-      <section className="py-20 relative overflow-hidden" style={{ background: C.bg }}>
+      <section className="py-20 relative overflow-hidden" style={{ background: C.bgDeep }}>
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
         <div className="max-w-screen-xl mx-auto px-5 relative">
           <div className="max-w-xl mx-auto rounded-2xl p-8" style={{ background: "linear-gradient(145deg, #252b3d, #1e2438)", border: `1px solid ${C.borderCyan}` }}>
@@ -312,7 +511,6 @@ export default function ServicePageLayout({ data }: { data: ServicePageData }) {
 
       {/* ── ПОДВАЛ ── */}
       <footer style={{ background: C.bgDark, borderTop: `1px solid ${C.border}` }}>
-        {/* Дисклеймер */}
         <div style={{ borderBottom: `1px solid ${C.border}`, padding: "10px 20px" }}>
           <div className="max-w-screen-xl mx-auto flex items-center gap-2.5">
             <Icon name="Info" size={14} style={{ color: C.muted, flexShrink: 0 } as React.CSSProperties} />
@@ -321,9 +519,7 @@ export default function ServicePageLayout({ data }: { data: ServicePageData }) {
             </p>
           </div>
         </div>
-        {/* Копирайт */}
         <div className="max-w-screen-xl mx-auto px-5 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
-          {/* Лого */}
           <Link to="/" className="flex items-center gap-2.5 shrink-0 transition-opacity hover:opacity-80" style={{ textDecoration: "none" }}>
             <svg width="42" height="47" viewBox="0 0 200 220" style={{ filter: "drop-shadow(0 2px 10px rgba(255,209,64,0.4))", flexShrink: 0 }}>
               <defs>
