@@ -1,27 +1,82 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Фон -->
-  <rect width="64" height="64" rx="12" fill="#0f1422"/>
-  <!-- Кузов катка -->
-  <rect x="8" y="18" width="40" height="16" rx="4" fill="#f0c030"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Фон квадратный для фавиконки -->
+  <rect width="200" height="200" fill="#0f1422"/>
+
+  <!-- Треугольная эмблема (верхний треугольник) -->
+  <polygon points="100,18 170,95 30,95" fill="#1a1a1a" stroke="#f0c030" stroke-width="3.5"/>
+  <!-- Треугольная эмблема (нижний треугольник / стрела вниз) -->
+  <polygon points="60,108 140,108 100,148" fill="#1a1a1a" stroke="#f0c030" stroke-width="3.5"/>
+  <!-- Горизонтальная полоса между треугольниками -->
+  <rect x="28" y="93" width="144" height="17" fill="#1a1a1a"/>
+  <!-- Обводка полосы сверху и снизу -->
+  <line x1="28" y1="93" x2="172" y2="93" stroke="#f0c030" stroke-width="3.5"/>
+  <line x1="28" y1="110" x2="172" y2="110" stroke="#f0c030" stroke-width="3.5"/>
+
+  <!-- Звезда -->
+  <polygon points="100,130 102.4,137.3 110,137.3 104,142 106.4,149.3 100,145 93.6,149.3 96,142 90,137.3 97.6,137.3"
+    fill="#f0c030" transform="scale(0.6) translate(67,88)"/>
+
+  <!-- ── КАТОК ── -->
+  <!-- Тень под катком -->
+  <ellipse cx="96" cy="90" rx="52" ry="7" fill="rgba(0,0,0,0.35)"/>
+
+  <!-- Большой передний барабан (слева) -->
+  <ellipse cx="62" cy="82" rx="21" ry="20" fill="#2a2a2a" stroke="#555" stroke-width="1.5"/>
+  <ellipse cx="62" cy="82" rx="16" ry="15" fill="#222"/>
+  <ellipse cx="62" cy="82" rx="10" ry="9" fill="#333"/>
+  <!-- Спицы барабана -->
+  <line x1="62" y1="67" x2="62" y2="97" stroke="#444" stroke-width="1.5"/>
+  <line x1="47" y1="82" x2="77" y2="82" stroke="#444" stroke-width="1.5"/>
+  <line x1="51" y1="71" x2="73" y2="93" stroke="#444" stroke-width="1.5"/>
+  <line x1="73" y1="71" x2="51" y2="93" stroke="#444" stroke-width="1.5"/>
+  <!-- Центр барабана -->
+  <circle cx="62" cy="82" r="4" fill="#555"/>
+  <!-- Блик -->
+  <ellipse cx="55" cy="73" rx="5" ry="3.5" fill="rgba(255,255,255,0.12)" transform="rotate(-30,55,73)"/>
+
+  <!-- Кузов катка (основная платформа) -->
+  <rect x="55" y="55" width="75" height="28" rx="4" fill="#e8a800"/>
+  <!-- Переход тени на кузове -->
+  <rect x="55" y="70" width="75" height="13" rx="0" fill="#c98f00" opacity="0.5"/>
+
   <!-- Кабина -->
-  <rect x="31" y="11" width="15" height="12" rx="3" fill="#d4a017"/>
-  <!-- Стекло кабины -->
-  <rect x="34" y="13" width="9" height="7" rx="2" fill="#22d3ee" opacity="0.95"/>
+  <rect x="100" y="35" width="38" height="28" rx="4" fill="#d4a017"/>
+  <!-- Крыша кабины -->
+  <rect x="97" y="32" width="44" height="7" rx="3" fill="#b8860b"/>
+  <!-- Стёкла кабины (лобовое) -->
+  <rect x="103" y="38" width="16" height="12" rx="2" fill="#87ceeb" opacity="0.85"/>
+  <!-- Стёкла кабины (боковое) -->
+  <rect x="122" y="38" width="12" height="10" rx="2" fill="#87ceeb" opacity="0.6"/>
+  <!-- Блик на лобовом стекле -->
+  <rect x="104" y="39" width="5" height="4" rx="1" fill="rgba(255,255,255,0.4)"/>
+
   <!-- Выхлопная труба -->
-  <rect x="11" y="9" width="3.5" height="11" rx="1.75" fill="#b8960c"/>
-  <ellipse cx="12.75" cy="8.5" rx="3" ry="2" fill="#22d3ee" opacity="0.6"/>
-  <!-- Большой передний барабан -->
-  <circle cx="18" cy="42" r="11" fill="#141928" stroke="#f0c030" stroke-width="2.5"/>
-  <circle cx="18" cy="42" r="6" fill="none" stroke="#f0c030" stroke-width="1" opacity="0.3"/>
-  <circle cx="18" cy="42" r="2.5" fill="#f0c030"/>
-  <!-- Задний барабан -->
-  <circle cx="44" cy="42" r="7.5" fill="#141928" stroke="#f0c030" stroke-width="2"/>
-  <circle cx="44" cy="42" r="3.5" fill="none" stroke="#f0c030" stroke-width="1" opacity="0.3"/>
-  <circle cx="44" cy="42" r="2" fill="#f0c030" opacity="0.7"/>
-  <!-- Дорога -->
-  <rect x="3" y="53" width="58" height="4" rx="2" fill="#22d3ee" opacity="0.35"/>
-  <!-- Разметка -->
-  <rect x="20" y="54.5" width="6" height="1" rx="0.5" fill="#fff" opacity="0.5"/>
-  <rect x="30" y="54.5" width="6" height="1" rx="0.5" fill="#fff" opacity="0.5"/>
-  <rect x="40" y="54.5" width="6" height="1" rx="0.5" fill="#fff" opacity="0.5"/>
+  <rect x="143" y="26" width="5" height="16" rx="2.5" fill="#888"/>
+  <ellipse cx="145.5" cy="26" rx="4" ry="2.5" fill="#666"/>
+
+  <!-- Задний барабан (маленький, справа) -->
+  <ellipse cx="128" cy="83" rx="14" ry="13" fill="#2a2a2a" stroke="#555" stroke-width="1.5"/>
+  <ellipse cx="128" cy="83" rx="9" ry="8" fill="#222"/>
+  <line x1="128" y1="74" x2="128" y2="92" stroke="#444" stroke-width="1.2"/>
+  <line x1="119" y1="83" x2="137" y2="83" stroke="#444" stroke-width="1.2"/>
+  <line x1="121" y1="76" x2="135" y2="90" stroke="#444" stroke-width="1.2"/>
+  <line x1="135" y1="76" x2="121" y2="90" stroke="#444" stroke-width="1.2"/>
+  <circle cx="128" cy="83" r="3" fill="#555"/>
+
+  <!-- Декоративная полоса на кузове -->
+  <rect x="55" y="63" width="75" height="3" rx="1" fill="#c98f00" opacity="0.7"/>
+
+  <!-- Фары -->
+  <rect x="56" y="58" width="8" height="5" rx="1.5" fill="#ffe066" opacity="0.9"/>
+  <rect x="56" y="58" width="8" height="5" rx="1.5" fill="rgba(255,255,150,0.3)"/>
+
+  <!-- НАДПИСЬ ФАВОРИТ в полосе -->
+  <text x="100" y="104.5"
+    font-family="Arial Black, Arial, sans-serif"
+    font-size="13"
+    font-weight="900"
+    fill="#f0c030"
+    text-anchor="middle"
+    letter-spacing="2"
+    dominant-baseline="middle">ФАВОРИТ</text>
 </svg>

@@ -318,11 +318,8 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
       {/* ── ПОДВАЛ ── */}
       <footer className="py-7 border-t" style={{ background: C.bgDark, borderColor: C.border }}>
         <div className="max-w-screen-xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center"
-              style={{ background: "#0f1422", border: "1px solid rgba(240,192,48,0.35)" }}>
-              <img src="/favicon.svg" alt="Фаворит" className="w-7 h-7" />
-            </div>
+          <div className="flex items-center gap-2">
+            <img src="/favicon.svg" alt="Фаворит" className="w-10 h-10" style={{ filter: "drop-shadow(0 1px 6px rgba(240,192,48,0.4))" }} />
             <span className="font-black text-sm tracking-wide uppercase" style={{ color: C.gold }}>ООО Фаворит</span>
           </div>
           <p className="text-xs" style={{ color: "#374151" }}>© 2024 Фаворит. Асфальтирование в Нижнем Новгороде</p>

@@ -13,11 +13,8 @@ export default function Header({ activeNav, menuOpen, setMenuOpen, go }: HeaderP
     <header className="fixed inset-x-0 top-0 z-50 border-b" style={{ background: "rgba(15,20,34,0.97)", borderColor: C.border, backdropFilter: "blur(16px)" }}>
       <div className="max-w-screen-xl mx-auto px-5 h-[70px] flex items-center justify-between gap-4">
 
-        <button onClick={() => go("hero")} className="flex items-center gap-3 shrink-0">
-          <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 overflow-hidden"
-            style={{ background: "#0f1422", boxShadow: "0 2px 14px rgba(240,192,48,0.35)", border: "1.5px solid rgba(240,192,48,0.4)" }}>
-            <img src="/favicon.svg" alt="Фаворит" className="w-10 h-10" />
-          </div>
+        <button onClick={() => go("hero")} className="flex items-center gap-2 shrink-0">
+          <img src="/favicon.svg" alt="Фаворит" className="w-14 h-14" style={{ filter: "drop-shadow(0 2px 10px rgba(240,192,48,0.4))" }} />
           <div className="leading-[1.2] text-left">
             <div className="text-[8px] font-bold uppercase tracking-[0.25em]" style={{ color: C.muted }}>КОМПАНИЯ · ОНЛАЙН</div>
             <div className="font-black text-[15px] tracking-wide" style={{ color: C.gold }}>ООО Фаворит</div>
