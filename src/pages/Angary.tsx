@@ -82,6 +82,12 @@ const data: ServicePageData = {
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/2af07c2d-1f65-4652-97dc-7237093a99e5.jpg",
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/03fe9781-820b-47d1-8f00-96a1fada87c3.jpg",
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/4f864de5-1495-465f-8319-91d8ce47b37d.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/c37c101a-4e87-4533-a4ec-2fb9f643f7fb.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/21263afe-890b-4bd8-b2f8-5b3c5ad8a4b3.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/9dd6df72-8100-4e06-9362-56fa363b87fb.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/371480e2-1617-478d-88e7-158db001ea5f.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/7b04dd91-64b5-43e3-bcb6-26ed73b4beae.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/ea50be3c-2287-401f-8d35-bb4828e22240.jpg",
   ],
   faq: [
     { q: "Сколько времени строится ангар?", a: "Ангар 300–500 м² — от 30 до 45 рабочих дней. Крупные объекты от 1 000 м² — 60–90 дней. Сроки фиксируются в договоре, при задержке по нашей вине — неустойка." },
