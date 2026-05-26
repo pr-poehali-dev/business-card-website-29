@@ -83,7 +83,10 @@ export default function Header({ activeNav, menuOpen, setMenuOpen, go }: HeaderP
             </button>
 
             {servicesOpen && (
-              <div className="absolute top-full right-0 mt-2 w-64 rounded-2xl overflow-hidden shadow-2xl border"
+              <div className="absolute top-full right-0 pt-1 w-64"
+                onMouseEnter={() => setServicesOpen(true)}
+                onMouseLeave={() => setServicesOpen(false)}>
+              <div className="rounded-2xl overflow-hidden shadow-2xl border"
                 style={{ background: "rgba(30,36,56,0.99)", borderColor: C.borderCyan, backdropFilter: "blur(24px)" }}>
                 <div className="p-2">
                   {SERVICES_MENU.map((s) => (
@@ -112,6 +115,7 @@ export default function Header({ activeNav, menuOpen, setMenuOpen, go }: HeaderP
                     Получить расчёт →
                   </button>
                 </div>
+              </div>
               </div>
             )}
           </div>
