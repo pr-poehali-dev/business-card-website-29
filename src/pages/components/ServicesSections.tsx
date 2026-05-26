@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import { C, SERVICES, TECH, HOW, WORKS } from "./constants";
-import { accent, Card, SectionTitle, PhotoDivider, DOT_BG, LINE_BG } from "./SharedUI";
+import { accent, Card, SectionTitle, PhotoDivider, GridShelf, DOT_BG, LINE_BG } from "./SharedUI";
 
 export default function ServicesSections() {
   return (
@@ -12,20 +12,22 @@ export default function ServicesSections() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none" style={{ background: `radial-gradient(ellipse, ${C.cyanDim}0a 0%, transparent 70%)` }} />
         <div className="max-w-screen-xl mx-auto px-5 relative">
           <SectionTitle accent={C.cyan} label="Что мы делаем" title={<>Наши <span style={{ color: C.gold }}>услуги</span></>} />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {SERVICES.map((s, i) => (
-              <Card key={i} i={i} icon={s.icon} title={s.title} badge={s.price} desc={s.desc}
-                extra={s.href ? (
-                  <Link to={s.href}
-                    className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest transition-all hover:gap-2.5"
-                    style={{ color: C.cyan, textDecoration: "none" }}>
-                    Подробнее
-                    <Icon name="ArrowRight" size={12} />
-                  </Link>
-                ) : undefined}
-              />
-            ))}
-          </div>
+          <GridShelf accentColor={C.cyan}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {SERVICES.map((s, i) => (
+                <Card key={i} i={i} icon={s.icon} title={s.title} badge={s.price} desc={s.desc}
+                  extra={s.href ? (
+                    <Link to={s.href}
+                      className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest transition-all hover:gap-2.5"
+                      style={{ color: C.cyan, textDecoration: "none" }}>
+                      Подробнее
+                      <Icon name="ArrowRight" size={12} />
+                    </Link>
+                  ) : undefined}
+                />
+              ))}
+            </div>
+          </GridShelf>
         </div>
       </section>
 
@@ -54,11 +56,13 @@ export default function ServicesSections() {
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: LINE_BG, backgroundSize: "60px 60px" }} />
         <div className="absolute bottom-0 right-0 w-[500px] h-[400px] pointer-events-none" style={{ background: `radial-gradient(ellipse at bottom right, ${C.gold}0d 0%, transparent 65%)` }} />
         <div className="max-w-screen-xl mx-auto px-5 relative">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {TECH.map((t, i) => (
-              <Card key={i} i={i} icon="Truck" title={t.name} badge="" desc={t.cap} />
-            ))}
-          </div>
+          <GridShelf accentColor={C.gold}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {TECH.map((t, i) => (
+                <Card key={i} i={i} icon="Truck" title={t.name} badge="" desc={t.cap} />
+              ))}
+            </div>
+          </GridShelf>
         </div>
       </section>
 
@@ -75,11 +79,13 @@ export default function ServicesSections() {
         <div className="absolute top-1/2 -translate-y-1/2 left-0 w-[400px] h-[400px] pointer-events-none" style={{ background: `radial-gradient(circle, ${C.cyanDim}08 0%, transparent 70%)` }} />
         <div className="max-w-screen-xl mx-auto px-5 relative">
           <SectionTitle accent={C.cyan} label="Просто и прозрачно" title={<>Как это <span style={{ color: C.gold }}>работает</span></>} />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-            {HOW.map((h, i) => (
-              <Card key={i} i={i} icon="ArrowRight" title={h.title} badge={h.num} desc={h.desc} />
-            ))}
-          </div>
+          <GridShelf accentColor={C.cyan}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+              {HOW.map((h, i) => (
+                <Card key={i} i={i} icon="ArrowRight" title={h.title} badge={h.num} desc={h.desc} />
+              ))}
+            </div>
+          </GridShelf>
         </div>
       </section>
 
@@ -95,6 +101,7 @@ export default function ServicesSections() {
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: LINE_BG, backgroundSize: "50px 50px" }} />
         <div className="max-w-screen-xl mx-auto px-5 relative">
           <SectionTitle accent={C.cyan} label="Выполненные объекты" title={<>Примеры <span style={{ color: C.gold }}>работ</span></>} />
+          <GridShelf accentColor={C.gold}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {WORKS.map((w, i) => {
               const a = accent(i);
@@ -144,6 +151,7 @@ export default function ServicesSections() {
               );
             })}
           </div>
+          </GridShelf>
         </div>
       </section>
     </>

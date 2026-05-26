@@ -80,6 +80,39 @@ export function Card({
   );
 }
 
+export function GridShelf({ children, accentColor = C.cyan }: { children: React.ReactNode; accentColor?: string }) {
+  return (
+    <div className="relative rounded-3xl p-5 md:p-7"
+      style={{
+        background: "linear-gradient(160deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)",
+        border: "1px solid rgba(255,255,255,0.06)",
+        boxShadow: `inset 0 1px 0 rgba(255,255,255,0.06), 0 0 60px rgba(0,0,0,0.4)`,
+      }}>
+      {/* угловые акценты */}
+      <div className="absolute top-0 left-0 w-16 h-16 pointer-events-none rounded-tl-3xl overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-px" style={{ background: `linear-gradient(to right, ${accentColor}60, transparent)` }} />
+        <div className="absolute top-0 left-0 h-full w-px" style={{ background: `linear-gradient(to bottom, ${accentColor}60, transparent)` }} />
+      </div>
+      <div className="absolute top-0 right-0 w-16 h-16 pointer-events-none rounded-tr-3xl overflow-hidden">
+        <div className="absolute top-0 right-0 w-full h-px" style={{ background: `linear-gradient(to left, ${accentColor}60, transparent)` }} />
+        <div className="absolute top-0 right-0 h-full w-px" style={{ background: `linear-gradient(to bottom, ${accentColor}60, transparent)` }} />
+      </div>
+      <div className="absolute bottom-0 left-0 w-16 h-16 pointer-events-none rounded-bl-3xl overflow-hidden">
+        <div className="absolute bottom-0 left-0 w-full h-px" style={{ background: `linear-gradient(to right, ${accentColor}40, transparent)` }} />
+        <div className="absolute bottom-0 left-0 h-full w-px" style={{ background: `linear-gradient(to top, ${accentColor}40, transparent)` }} />
+      </div>
+      <div className="absolute bottom-0 right-0 w-16 h-16 pointer-events-none rounded-br-3xl overflow-hidden">
+        <div className="absolute bottom-0 right-0 w-full h-px" style={{ background: `linear-gradient(to left, ${accentColor}40, transparent)` }} />
+        <div className="absolute bottom-0 right-0 h-full w-px" style={{ background: `linear-gradient(to top, ${accentColor}40, transparent)` }} />
+      </div>
+      {/* центральное свечение сверху */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px pointer-events-none"
+        style={{ background: `linear-gradient(to right, transparent, ${accentColor}50, transparent)` }} />
+      <div className="relative">{children}</div>
+    </div>
+  );
+}
+
 export function PhotoDivider({ img, label, sublabel, bgFrom = C.bg, bgTo = C.bgDeep }: {
   img: string; label: string; sublabel?: string; bgFrom?: string; bgTo?: string;
 }) {

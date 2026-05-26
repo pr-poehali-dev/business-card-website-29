@@ -1,6 +1,6 @@
 import Icon from "@/components/ui/icon";
 import { C, REVIEWS, PHONE, PHONE_HREF } from "./constants";
-import { accent, ACCENTS, Card, SectionTitle, PhotoDivider, DOT_BG, LINE_BG, FormState } from "./SharedUI";
+import { accent, ACCENTS, Card, SectionTitle, PhotoDivider, GridShelf, DOT_BG, LINE_BG, FormState } from "./SharedUI";
 
 interface Props {
   form: FormState;
@@ -25,6 +25,7 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] pointer-events-none" style={{ background: `radial-gradient(ellipse, ${C.gold}07 0%, transparent 65%)` }} />
         <div className="max-w-screen-xl mx-auto px-5 relative">
           <SectionTitle accent={C.cyan} label="Клиенты о нас" title={<>От<span style={{ color: C.gold }}>зывы</span></>} />
+          <GridShelf accentColor={C.gold}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {REVIEWS.map((r, i) => {
               const a = accent(i);
@@ -68,6 +69,7 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
               );
             })}
           </div>
+          </GridShelf>
         </div>
       </section>
 
@@ -195,6 +197,7 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: DOT_BG, backgroundSize: "26px 26px", opacity: 0.7 }} />
         <div className="max-w-screen-xl mx-auto px-5 relative">
           <SectionTitle accent={C.gold} label="Связаться" title={<>Конта<span style={{ color: C.cyan }}>кты</span></>} />
+          <GridShelf accentColor={C.cyan}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <div className="space-y-4">
               {[
@@ -272,6 +275,7 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
               </div>
             </div>
           </div>
+          </GridShelf>
         </div>
       </section>
     </>
