@@ -88,6 +88,7 @@ const data: ServicePageData = {
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/371480e2-1617-478d-88e7-158db001ea5f.jpg",
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/7b04dd91-64b5-43e3-bcb6-26ed73b4beae.jpg",
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/ea50be3c-2287-401f-8d35-bb4828e22240.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/171fed61-4cbb-483a-abad-bc2a26959399.jpg",
   ],
   faq: [
     { q: "Сколько времени строится ангар?", a: "Ангар 300–500 м² — от 30 до 45 рабочих дней. Крупные объекты от 1 000 м² — 60–90 дней. Сроки фиксируются в договоре, при задержке по нашей вине — неустойка." },
