@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { jsPDF } from "jspdf";
 import Icon from "@/components/ui/icon";
 import { C, REVIEWS, PHONE, PHONE_HREF } from "./constants";
 import { accent, ACCENTS, SectionTitle, PhotoDivider, FormState } from "./SharedUI";
@@ -34,39 +33,30 @@ const REQ_ITEMS = [
   { icon: "ScanLine", label: "БИК", value: "044525593" },
 ];
 
-function makePdf(title: string, lines: string[][]): jsPDF {
-  const doc = new jsPDF({ unit: "mm", format: "a4" });
-  doc.setFont("helvetica");
-
-  doc.setFontSize(16);
-  doc.setTextColor(30, 30, 30);
-  doc.text(title, 20, 24);
-
-  doc.setDrawColor(34, 211, 238);
-  doc.setLineWidth(0.5);
-  doc.line(20, 28, 190, 28);
-
-  let y = 38;
-  for (const [label, value] of lines) {
-    doc.setFontSize(8);
-    doc.setTextColor(120, 140, 160);
-    doc.text(label.toUpperCase(), 20, y);
-    y += 5;
-    doc.setFontSize(11);
-    doc.setTextColor(20, 20, 20);
-    const wrapped = doc.splitTextToSize(value, 170);
-    doc.text(wrapped, 20, y);
-    y += wrapped.length * 6 + 4;
-    doc.setDrawColor(220, 230, 240);
-    doc.setLineWidth(0.2);
-    doc.line(20, y, 190, y);
-    y += 6;
-  }
-
-  doc.setFontSize(8);
-  doc.setTextColor(160, 160, 160);
-  doc.text("ООО «ФАВОРИТ» — официальные реквизиты", 20, 285);
-  return doc;
+function printHtml(html: string, title: string) {
+  const w = window.open("", "_blank");
+  if (!w) return;
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>${title}</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; color: #1a1a1a; font-size: 13px; }
+    h1 { font-size: 18px; margin-bottom: 4px; }
+    h2 { font-size: 13px; font-weight: normal; color: #555; margin-top: 0; margin-bottom: 24px; }
+    .line { border: none; border-top: 2px solid #22d3ee; margin-bottom: 24px; }
+    .row { margin-bottom: 14px; border-bottom: 1px solid #e5e7eb; padding-bottom: 14px; }
+    .label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.12em; color: #6b7280; margin-bottom: 3px; }
+    .value { font-size: 13px; font-weight: 600; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; }
+    .full { grid-column: 1 / -1; }
+    .section-title { font-size: 12px; font-weight: bold; margin: 18px 0 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .sign { display: flex; justify-content: space-between; margin-top: 40px; }
+    .sign-block { width: 45%; }
+    .sign-line { border-top: 1px solid #333; margin-top: 40px; font-size: 11px; color: #555; padding-top: 4px; }
+    .footer { margin-top: 40px; font-size: 9px; color: #9ca3af; border-top: 1px solid #e5e7eb; padding-top: 10px; }
+    @media print { body { margin: 20px; } }
+  </style></head><body>${html}
+  <script>window.onload = function(){ window.print(); }</` + `</script>
+  </body></html>`);
+  w.document.close();
 }
 
 function RequisitesCard() {
@@ -88,73 +78,54 @@ function RequisitesCard() {
   }
 
   function downloadPdf() {
-    const doc = makePdf("Реквизиты ООО «ФАВОРИТ»", REQ_ITEMS.map(r => [r.label, r.value]));
-    doc.save("Реквизиты_ООО_Фаворит.pdf");
+    const rows = REQ_ITEMS.map(r =>
+      `<div class="row ${r.full ? 'full' : ''}"><div class="label">${r.label}</div><div class="value">${r.value}</div></div>`
+    ).join("");
+    const html = `
+      <h1>Реквизиты ООО «ФАВОРИТ»</h1>
+      <hr class="line"/>
+      <div class="grid">${rows}</div>
+      <div class="footer">ООО «ФАВОРИТ» — официальные реквизиты для расчётов и оформления документов</div>
+    `;
+    printHtml(html, "Реквизиты ООО ФАВОРИТ");
   }
 
   function downloadContract() {
-    const lines = [
-      "ДОГОВОР-ЗАЯВКА",
-      "",
-      "на оказание услуг по уборке помещений",
-      "",
-      `г. Нижний Новгород                                   «___» _________ 2024 г.`,
-      "",
-      "ООО «ФАВОРИТ», именуемое в дальнейшем «Исполнитель», в лице директора",
-      "Мкртчяна Саргиса Варужановича, действующего на основании Устава,",
-      "и ________________________________, именуемый(ая) в дальнейшем «Заказчик»,",
-      "заключили настоящий договор о нижеследующем:",
-      "",
-      "1. ПРЕДМЕТ ДОГОВОРА",
-      "Исполнитель оказывает услуги по профессиональной уборке помещений",
-      "по адресу: _____________________________________________",
-      "Площадь объекта: ______ м²",
-      "",
-      "2. СТОИМОСТЬ И ПОРЯДОК ОПЛАТЫ",
-      "Стоимость услуг: ____________ руб.",
-      "Оплата производится: ___________________",
-      "",
-      "3. РЕКВИЗИТЫ ИСПОЛНИТЕЛЯ",
-      ...REQ_ITEMS.map(r => `${r.label}: ${r.value}`),
-      "",
-      "4. ПОДПИСИ СТОРОН",
-      "",
-      "Исполнитель: _____________________  /Мкртчян С.В./",
-      "Заказчик:    _____________________  /____________/",
-    ];
+    const reqRows = REQ_ITEMS.map(r =>
+      `<div class="row"><div class="label">${r.label}</div><div class="value">${r.value}</div></div>`
+    ).join("");
+    const html = `
+      <h1>ДОГОВОР-ЗАЯВКА</h1>
+      <h2>на оказание услуг по профессиональной уборке помещений</h2>
+      <hr class="line"/>
+      <p>г. Нижний Новгород &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; «___» _____________ 2025 г.</p>
+      <p>ООО «ФАВОРИТ», именуемое в дальнейшем «Исполнитель», в лице директора Мкртчяна Саргиса Варужановича, действующего на основании Устава, и ________________________________, именуемый(ая) в дальнейшем «Заказчик», заключили настоящий договор о нижеследующем:</p>
 
-    const doc = new jsPDF({ unit: "mm", format: "a4" });
-    doc.setFont("helvetica");
-    doc.setFontSize(14);
-    doc.setTextColor(30, 30, 30);
-    doc.text("ДОГОВОР-ЗАЯВКА", 105, 20, { align: "center" });
-    doc.setFontSize(11);
-    doc.text("на оказание услуг по уборке помещений", 105, 28, { align: "center" });
-    doc.setDrawColor(240, 192, 48);
-    doc.setLineWidth(0.6);
-    doc.line(20, 32, 190, 32);
+      <div class="section-title">1. Предмет договора</div>
+      <p>Исполнитель оказывает услуги по профессиональной уборке помещений по адресу:<br>
+      _______________________________________________________________<br>
+      Площадь объекта: ______ м²&nbsp;&nbsp;&nbsp; Вид уборки: _______________________</p>
 
-    let y = 42;
-    doc.setFontSize(10);
-    doc.setTextColor(40, 40, 40);
-    for (let i = 2; i < lines.length; i++) {
-      if (y > 270) { doc.addPage(); y = 20; }
-      if (lines[i] === "" ) { y += 4; continue; }
-      if (lines[i].match(/^\d\./)) {
-        doc.setFontSize(11);
-        doc.setTextColor(20, 20, 20);
-        y += 2;
-        doc.text(lines[i], 20, y);
-        y += 7;
-        doc.setFontSize(10);
-        doc.setTextColor(60, 60, 60);
-      } else {
-        const wrapped = doc.splitTextToSize(lines[i], 170);
-        doc.text(wrapped, 20, y);
-        y += wrapped.length * 5.5 + 1;
-      }
-    }
-    doc.save("Договор_ООО_Фаворит.pdf");
+      <div class="section-title">2. Стоимость и порядок оплаты</div>
+      <p>Стоимость услуг: ____________ руб. (______________________________________)<br>
+      Оплата производится: &nbsp;&nbsp; □ наличными &nbsp;&nbsp; □ по безналичному расчёту<br>
+      Срок выполнения работ: с «___» _________ по «___» _________ 2025 г.</p>
+
+      <div class="section-title">3. Реквизиты исполнителя</div>
+      ${reqRows}
+
+      <div class="section-title">4. Подписи сторон</div>
+      <div class="sign">
+        <div class="sign-block">
+          <div class="sign-line">Исполнитель: Мкртчян С.В. / ООО «ФАВОРИТ»</div>
+        </div>
+        <div class="sign-block">
+          <div class="sign-line">Заказчик: _______________________________</div>
+        </div>
+      </div>
+      <div class="footer">Документ сформирован на сайте ООО «ФАВОРИТ»</div>
+    `;
+    printHtml(html, "Договор ООО ФАВОРИТ");
   }
 
   return (
