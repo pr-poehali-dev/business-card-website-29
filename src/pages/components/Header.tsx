@@ -22,8 +22,19 @@ export default function Header({ activeNav, menuOpen, setMenuOpen, go }: HeaderP
   const [servicesOpen, setServicesOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b" style={{ background: "rgba(24,29,46,0.97)", borderColor: "rgba(255,255,255,0.1)", backdropFilter: "blur(20px)" }}>
-      <div className="max-w-screen-xl mx-auto px-5 h-[70px] flex items-center justify-between gap-4">
+    <header className="fixed inset-x-0 top-0 z-50" style={{ borderBottom: "1px solid rgba(240,192,48,0.25)" }}>
+      {/* Фото-подложка */}
+      <div className="absolute inset-0 overflow-hidden" style={{ zIndex: 0 }}>
+        <img
+          src="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/58857beb-7868-45cc-a054-534e6722a2be.jpg"
+          alt="" className="w-full h-full object-cover object-center"
+          style={{ filter: "brightness(0.35) saturate(0.6)", transform: "scaleX(-1)" }}
+        />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(10,14,24,0.98) 0%, rgba(10,14,24,0.82) 50%, rgba(10,14,24,0.7) 100%)" }} />
+        <div className="absolute bottom-0 left-0 right-0 h-[2px]" style={{ background: `linear-gradient(90deg, ${C.gold} 0%, rgba(240,192,48,0.3) 60%, transparent 100%)` }} />
+        <div className="absolute inset-0" style={{ backdropFilter: "blur(2px)" }} />
+      </div>
+      <div className="relative max-w-screen-xl mx-auto px-5 h-[70px] flex items-center justify-between gap-4" style={{ zIndex: 1 }}>
 
         <button onClick={() => go("hero")} className="flex items-center gap-2 shrink-0">
           <svg width="52" height="58" viewBox="0 0 200 220" style={{ filter: "drop-shadow(0 2px 12px rgba(240,192,48,0.45))", flexShrink: 0 }}>
@@ -121,7 +132,7 @@ export default function Header({ activeNav, menuOpen, setMenuOpen, go }: HeaderP
 
       {/* Мобильное меню */}
       {menuOpen && (
-        <div className="lg:hidden px-5 py-5 flex flex-col gap-3 border-t" style={{ background: "#181d2e", borderColor: "rgba(255,255,255,0.1)" }}>
+        <div className="lg:hidden relative px-5 py-5 flex flex-col gap-3 border-t" style={{ background: "rgba(10,14,24,0.97)", borderColor: "rgba(240,192,48,0.2)", zIndex: 1 }}>
           {NAV.map(([id, label]) => (
             <button key={id} onClick={() => go(id)} className="text-left text-sm font-bold uppercase tracking-widest py-1" style={{ color: C.subtle }}>{label}</button>
           ))}
