@@ -7,7 +7,7 @@ const data: ServicePageData = {
   titleAccent: "рование",
   subtitle: "Дороги, дворы, парковки",
   description: "Укладка горячего и холодного асфальта для дорог, дворовых территорий, парковок и промышленных площадок. Гарантия 3 года. Собственная техника, без посредников.",
-  heroImg: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/743ebb95-8d22-4310-82df-925fc56f822a.jpg",
+  heroImg: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/63eaa6e7-9174-48c8-a25b-f5b8688465e0.jpg",
   price: "от 1 200 ₽/м²",
   priceNote: "Выезд замерщика — бесплатно. Смета в день обращения. Работаем с НДС.",
   stats: [
@@ -38,25 +38,33 @@ const data: ServicePageData = {
       {
         label: "Площадь объекта",
         items: [
-          { label: "до 200 м²", value: 200 },
+          { label: "до 200 м²", value: 150 },
           { label: "200–500 м²", value: 350 },
-          { label: "500–1000 м²", value: 750 },
-          { label: "1000–3000 м²", value: 2000 },
-          { label: "от 3000 м²", value: 4000 },
+          { label: "500–1 000 м²", value: 750 },
+          { label: "1 000–3 000 м²", value: 2000 },
+          { label: "от 3 000 м²", value: 4000 },
+        ],
+      },
+      {
+        label: "Тип объекта",
+        items: [
+          { label: "Двор / парковка", value: 0 },
+          { label: "Дорога с разметкой", value: 150 },
+          { label: "Промплощадка (тяжёлая нагрузка)", value: 300 },
         ],
       },
       {
         label: "Тип покрытия",
         items: [
-          { label: "Стандарт (мелкозернистый)", value: 0 },
-          { label: "Крупнозернистый", value: -100 },
+          { label: "Мелкозернистый (стандарт)", value: 0 },
+          { label: "Крупнозернистый (нижний слой)", value: -100 },
           { label: "Цветной асфальт", value: 400 },
         ],
       },
       {
         label: "Подготовка основания",
         items: [
-          { label: "Без подготовки", value: 0 },
+          { label: "Основание готово", value: 0 },
           { label: "Щебёночная подготовка", value: 300 },
           { label: "Полная (выемка + щебень)", value: 700 },
         ],
@@ -64,10 +72,12 @@ const data: ServicePageData = {
     ],
   },
   gallery: [
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/63eaa6e7-9174-48c8-a25b-f5b8688465e0.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/97c634f7-9d08-47e1-b54d-43c004450d83.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/a0db16d8-3ff3-40f8-aa02-71eb417c312e.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/bf7c5966-3e98-472f-aacf-9cb1179f8628.jpg",
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/743ebb95-8d22-4310-82df-925fc56f822a.jpg",
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/58857beb-7868-45cc-a054-534e6722a2be.jpg",
-    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/5eaf8366-b7a6-49b4-8d8c-7c9aea756113.jpg",
-    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/0b22a741-82c2-4e99-8a52-2d71a6bbdc24.jpg",
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/3cb4a87a-75d7-48d5-b35d-8c98f534f48e.jpg",
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/f78516b0-d44e-4cb7-8f78-f2e979bce31e.jpg",
   ],

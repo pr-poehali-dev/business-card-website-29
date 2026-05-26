@@ -7,7 +7,7 @@ const data: ServicePageData = {
   titleAccent: "ангаров",
   subtitle: "Под ключ — от проекта до сдачи",
   description: "Металлокаркасные ангары для производства, склада, сельского хозяйства. Фундамент, монтаж, кровля, ворота, утепление — всё под ключ. Срок строительства от 30 дней.",
-  heroImg: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/4f864de5-1495-465f-8319-91d8ce47b37d.jpg",
+  heroImg: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/852f827e-00ab-4280-8d10-75732ed5dbf8.jpg",
   price: "от 4 500 ₽/м²",
   priceNote: "Стоимость зависит от размера, утепления и комплектации. Расчёт — бесплатно.",
   stats: [
@@ -38,10 +38,20 @@ const data: ServicePageData = {
       {
         label: "Площадь ангара",
         items: [
-          { label: "до 300 м²", value: 200 },
-          { label: "300–600 м²", value: 450 },
-          { label: "600–1200 м²", value: 900 },
-          { label: "от 1200 м²", value: 1500 },
+          { label: "до 200 м²", value: 150 },
+          { label: "200–500 м²", value: 350 },
+          { label: "500–1 000 м²", value: 750 },
+          { label: "1 000–2 000 м²", value: 1500 },
+          { label: "от 2 000 м²", value: 2500 },
+        ],
+      },
+      {
+        label: "Назначение",
+        items: [
+          { label: "Склад / хранение", value: 0 },
+          { label: "Производство / цех", value: 300 },
+          { label: "Сельхоз (ангар для техники)", value: 200 },
+          { label: "Автосервис / бокс", value: 500 },
         ],
       },
       {
@@ -55,18 +65,19 @@ const data: ServicePageData = {
       {
         label: "Ворота",
         items: [
-          { label: "Распашные", value: 0 },
+          { label: "Распашные (в цене)", value: 0 },
           { label: "Откатные", value: 300 },
-          { label: "Секционные (автоматика)", value: 800 },
+          { label: "Секционные с автоматикой", value: 800 },
         ],
       },
     ],
   },
   gallery: [
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/852f827e-00ab-4280-8d10-75732ed5dbf8.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/5d497008-e8f0-40d0-8c60-3cb006fe4d35.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/22a84fa4-a261-4564-9fcc-0a2ad527413b.jpg",
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/4f864de5-1495-465f-8319-91d8ce47b37d.jpg",
-    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/743ebb95-8d22-4310-82df-925fc56f822a.jpg",
-    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/58857beb-7868-45cc-a054-534e6722a2be.jpg",
-    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/683dc952-4c0a-44d7-99cb-bc437d0fdbb8.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/63eaa6e7-9174-48c8-a25b-f5b8688465e0.jpg",
   ],
   faq: [
     { q: "Сколько времени строится ангар?", a: "Ангар 300–500 м² — от 30 до 45 рабочих дней. Крупные объекты от 1 000 м² — 60–90 дней. Сроки фиксируются в договоре, при задержке по нашей вине — неустойка." },

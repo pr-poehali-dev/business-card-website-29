@@ -7,7 +7,7 @@ const data: ServicePageData = {
   titleAccent: "ремонт",
   subtitle: "Быстро, круглый год",
   description: "Заделка выбоин, трещин и просадок на дорогах, дворах и парковках. Выезд за 24 часа. Работаем горячим и холодным асфальтом в любое время года.",
-  heroImg: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/5eaf8366-b7a6-49b4-8d8c-7c9aea756113.jpg",
+  heroImg: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/9149764f-6741-471e-8c7f-0f402a4e45a7.jpg",
   price: "от 800 ₽/м²",
   priceNote: "Цена зависит от объёма и способа ремонта. Замер и расчёт — бесплатно.",
   stats: [
@@ -36,29 +36,39 @@ const data: ServicePageData = {
     basePrice: 800,
     options: [
       {
-        label: "Общая площадь ям",
+        label: "Суммарная площадь ям",
         items: [
-          { label: "до 20 м²", value: 15 },
-          { label: "20–50 м²", value: 35 },
-          { label: "50–100 м²", value: 75 },
-          { label: "100–300 м²", value: 200 },
-          { label: "от 300 м²", value: 400 },
+          { label: "до 10 м²", value: 8 },
+          { label: "10–30 м²", value: 20 },
+          { label: "30–80 м²", value: 55 },
+          { label: "80–200 м²", value: 140 },
+          { label: "от 200 м²", value: 300 },
         ],
       },
       {
-        label: "Способ ремонта",
+        label: "Технология ремонта",
         items: [
           { label: "Холодный асфальт", value: 0 },
           { label: "Горячий асфальт", value: 200 },
           { label: "Фрезерование + горячий", value: 500 },
         ],
       },
+      {
+        label: "Срочность",
+        items: [
+          { label: "Стандарт (1–2 дня)", value: 0 },
+          { label: "Срочно (в тот же день)", value: 300 },
+        ],
+      },
     ],
   },
   gallery: [
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/9149764f-6741-471e-8c7f-0f402a4e45a7.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/2afaf9f7-2ad7-434a-a483-31a902ff9031.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/eaa2e7e8-6ec1-42eb-858e-c249027fb2c2.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/97c634f7-9d08-47e1-b54d-43c004450d83.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/a0db16d8-3ff3-40f8-aa02-71eb417c312e.jpg",
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/5eaf8366-b7a6-49b4-8d8c-7c9aea756113.jpg",
-    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/743ebb95-8d22-4310-82df-925fc56f822a.jpg",
-    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/58857beb-7868-45cc-a054-534e6722a2be.jpg",
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/0b22a741-82c2-4e99-8a52-2d71a6bbdc24.jpg",
   ],
   faq: [
