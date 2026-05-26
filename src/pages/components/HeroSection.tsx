@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Icon from "@/components/ui/icon";
 import { C, HERO_IMG, PHONE, PHONE_HREF, WORKS } from "./constants";
 
@@ -6,84 +6,116 @@ interface HeroSectionProps {
   go: (id: string) => void;
 }
 
-const SLIDES = [{ img: HERO_IMG, tag: "", title: "" }, ...WORKS];
+const SLIDES = [{ img: HERO_IMG, tag: "", title: "", area: "", city: "" }, ...WORKS];
+const INTERVAL = 5000;
+const FADE_MS = 800;
 
 export default function HeroSection({ go }: HeroSectionProps) {
   const [cur, setCur] = useState(0);
-  const [prev, setPrev] = useState<number | null>(null);
-  const [fading, setFading] = useState(false);
+  const [next, setNext] = useState<number | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  useEffect(() => {
-    const id = setInterval(() => switchTo((c) => (c + 1) % SLIDES.length), 5000);
-    return () => clearInterval(id);
-  }, []);
-
-  function switchTo(nextFn: (c: number) => number) {
-    setFading(true);
-    setTimeout(() => {
+  function startTimer() {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
       setCur((c) => {
-        const n = nextFn(c);
-        setPrev(c);
-        return n;
+        const n = (c + 1) % SLIDES.length;
+        setNext(n);
+        setTimeout(() => { setCur(n); setNext(null); }, FADE_MS);
+        return c;
       });
-      setFading(false);
-    }, 600);
+    }, INTERVAL);
   }
 
+  useEffect(() => {
+    startTimer();
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, []);
+
   function goTo(i: number) {
-    if (i === cur) return;
-    setFading(true);
-    setTimeout(() => {
-      setPrev(cur);
-      setCur(i);
-      setFading(false);
-    }, 600);
+    if (i === cur || next !== null) return;
+    setNext(i);
+    setTimeout(() => { setCur(i); setNext(null); }, FADE_MS);
+    startTimer();
+  }
+
+  function advance(dir: number) {
+    if (next !== null) return;
+    const n = (cur + dir + SLIDES.length) % SLIDES.length;
+    setNext(n);
+    setTimeout(() => { setCur(n); setNext(null); }, FADE_MS);
+    startTimer();
   }
 
   const slide = SLIDES[cur];
+  const nextSlide = next !== null ? SLIDES[next] : null;
 
   return (
     <>
       {/* ── ГЕРОЙ ── */}
       <section id="hero" className="relative overflow-hidden pt-[70px]" style={{ minHeight: "100svh" }}>
 
-        {/* Предыдущий слайд (уходит) */}
-        {prev !== null && (
-          <div className="absolute inset-0 transition-opacity duration-600" style={{ opacity: fading ? 1 : 0, zIndex: 0 }}>
-            <img src={SLIDES[prev].img} alt="" className="w-full h-full object-cover" style={{ filter: "saturate(1.2) contrast(1.05)" }} />
+        {/* Текущий слайд — уходит */}
+        <div className="absolute inset-0" style={{ zIndex: 0 }}>
+          <img
+            src={slide.img}
+            alt=""
+            className="w-full h-full object-cover"
+            style={{ filter: "saturate(1.2) contrast(1.05)", transition: `opacity ${FADE_MS}ms ease`, opacity: next !== null ? 0 : 1 }}
+          />
+        </div>
+
+        {/* Следующий слайд — появляется */}
+        {nextSlide && (
+          <div className="absolute inset-0" style={{ zIndex: 1 }}>
+            <img
+              src={nextSlide.img}
+              alt=""
+              className="w-full h-full object-cover"
+              style={{ filter: "saturate(1.2) contrast(1.05)", animation: `heroFadeIn ${FADE_MS}ms ease forwards` }}
+            />
           </div>
         )}
 
-        {/* Текущий слайд (приходит) */}
-        <div className="absolute inset-0 transition-opacity duration-600" style={{ opacity: fading ? 0 : 1, zIndex: 1 }}>
-          <img src={slide.img} alt="" className="w-full h-full object-cover" style={{ filter: "saturate(1.2) contrast(1.05)" }} />
-        </div>
-
-        {/* Градиенты поверх */}
+        {/* Градиенты */}
         <div className="absolute inset-0" style={{ zIndex: 2, background: "linear-gradient(105deg, rgba(10,14,24,0.88) 0%, rgba(10,14,24,0.55) 60%, rgba(10,14,24,0.15) 100%)" }} />
         <div className="absolute inset-0" style={{ zIndex: 2, background: "linear-gradient(to top, rgba(10,14,24,1) 0%, rgba(10,14,24,0.3) 40%, transparent 70%)" }} />
 
-        {/* Тег текущего слайда */}
-        {slide.tag && (
-          <div className="absolute top-[90px] right-5 md:right-10 z-10 transition-opacity duration-600" style={{ opacity: fading ? 0 : 1 }}>
-            <div className="rounded-xl overflow-hidden border" style={{ borderColor: "rgba(34,211,238,0.25)", backdropFilter: "blur(10px)", background: "rgba(10,14,24,0.65)", maxWidth: 260 }}>
-              <div className="h-1 w-full" style={{ background: `linear-gradient(to right, ${C.cyan}, ${C.gold})` }} />
-              <div className="px-4 py-3">
-                <div className="text-[9px] font-black uppercase tracking-widest mb-1" style={{ color: C.cyan }}>{slide.tag}</div>
-                <div className="font-black text-xs uppercase leading-tight">{slide.title}</div>
-                {"area" in slide && (
-                  <div className="flex items-center gap-3 mt-2">
-                    <span className="text-[10px] font-bold" style={{ color: C.muted }}>{"area" in slide ? (slide as typeof WORKS[0]).area : ""}</span>
-                    <span className="text-[10px] font-bold" style={{ color: C.muted }}>{"city" in slide ? (slide as typeof WORKS[0]).city : ""}</span>
-                  </div>
-                )}
+        {/* Карточка объекта — правый верхний угол */}
+        <div className="absolute top-[90px] right-5 md:right-10 hidden md:block" style={{ zIndex: 10, width: 270 }}>
+          <div style={{
+            borderRadius: 14, overflow: "hidden",
+            border: "1px solid rgba(34,211,238,0.25)",
+            backdropFilter: "blur(12px)",
+            background: "rgba(10,14,24,0.70)",
+            transition: `opacity ${FADE_MS}ms ease`,
+            opacity: slide.tag ? 1 : 0,
+          }}>
+            <div style={{ height: 3, background: `linear-gradient(to right, ${C.cyan}, ${C.gold})` }} />
+            <div style={{ padding: "12px 16px" }}>
+              <div style={{ fontSize: 9, fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.15em", color: C.cyan, marginBottom: 4 }}>
+                {slide.tag}
+              </div>
+              <div style={{ fontWeight: 900, fontSize: 13, textTransform: "uppercase", lineHeight: 1.3, marginBottom: 8 }}>
+                {slide.title}
+              </div>
+              <div style={{ display: "flex", gap: 16 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, fontWeight: 700, color: C.muted }}>
+                  <Icon name="Maximize2" size={11} style={{ color: C.muted } as React.CSSProperties} />
+                  {slide.area}
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, fontWeight: 700, color: C.muted }}>
+                  <Icon name="MapPin" size={11} style={{ color: C.muted } as React.CSSProperties} />
+                  {slide.city}
+                </div>
               </div>
             </div>
           </div>
-        )}
+        </div>
 
         {/* Контент */}
-        <div className="relative max-w-screen-xl mx-auto px-5 flex flex-col justify-center" style={{ minHeight: "calc(100svh - 70px)", paddingTop: "3rem", paddingBottom: "5rem", zIndex: 3 }}>
+        <div className="relative max-w-screen-xl mx-auto px-5 flex flex-col justify-center"
+          style={{ minHeight: "calc(100svh - 70px)", paddingTop: "3rem", paddingBottom: "6rem", zIndex: 3 }}>
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-7 text-xs font-bold uppercase tracking-widest"
               style={{ background: "rgba(34,211,238,0.08)", border: `1px solid rgba(34,211,238,0.25)`, color: C.cyan }}>
@@ -140,16 +172,27 @@ export default function HeroSection({ go }: HeroSectionProps) {
           </div>
         </div>
 
-        {/* Точки-индикаторы */}
-        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        {/* Стрелки */}
+        <button onClick={() => advance(-1)}
+          className="absolute left-4 top-1/2 -translate-y-1/2 hidden md:flex items-center justify-center rounded-full transition-all hover:scale-110 active:scale-95"
+          style={{ zIndex: 10, width: 44, height: 44, background: "rgba(10,14,24,0.55)", border: "1px solid rgba(255,255,255,0.15)", backdropFilter: "blur(8px)", color: "#fff" }}>
+          <Icon name="ChevronLeft" size={20} />
+        </button>
+        <button onClick={() => advance(1)}
+          className="absolute right-4 top-1/2 -translate-y-1/2 hidden md:flex items-center justify-center rounded-full transition-all hover:scale-110 active:scale-95"
+          style={{ zIndex: 10, width: 44, height: 44, background: "rgba(10,14,24,0.55)", border: "1px solid rgba(255,255,255,0.15)", backdropFilter: "blur(8px)", color: "#fff" }}>
+          <Icon name="ChevronRight" size={20} />
+        </button>
+
+        {/* Точки */}
+        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex items-center gap-2" style={{ zIndex: 10 }}>
           {SLIDES.map((_, i) => (
-            <button key={i} onClick={() => goTo(i)}
-              className="rounded-full transition-all duration-300"
-              style={{
-                width: i === cur ? 24 : 6,
-                height: 6,
-                background: i === cur ? C.cyan : "rgba(255,255,255,0.25)",
-              }} />
+            <button key={i} onClick={() => goTo(i)} style={{
+              height: 6, borderRadius: 3, border: "none", cursor: "pointer", padding: 0,
+              transition: "width 0.35s ease, background 0.35s ease",
+              width: i === cur ? 28 : 6,
+              background: i === cur ? C.cyan : "rgba(255,255,255,0.22)",
+            }} />
           ))}
         </div>
 
@@ -157,6 +200,8 @@ export default function HeroSection({ go }: HeroSectionProps) {
           <div className="text-[10px] font-bold uppercase tracking-widest" style={{ color: C.muted }}>Листайте</div>
           <Icon name="ChevronDown" size={20} style={{ color: C.cyan } as React.CSSProperties} />
         </div>
+
+        <style>{`@keyframes heroFadeIn { from { opacity: 0; } to { opacity: 1; } }`}</style>
       </section>
 
       {/* ── СТАТЫ ── */}
