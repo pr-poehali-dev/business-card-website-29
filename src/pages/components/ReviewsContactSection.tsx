@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Icon from "@/components/ui/icon";
 import { C, REVIEWS, PHONE, PHONE_HREF } from "./constants";
 import { accent, ACCENTS, SectionTitle, PhotoDivider, FormState } from "./SharedUI";
@@ -17,6 +18,104 @@ function SectionBg({ img }: { img: string }) {
     <div className="absolute inset-0 pointer-events-none">
       <img src={img} alt="" className="w-full h-full object-cover object-center" style={{ filter: "brightness(1.0) saturate(0.9)" }} />
       <div className="absolute inset-0" style={{ background: BG_OVERLAY }} />
+    </div>
+  );
+}
+
+const REQ_ITEMS = [
+  { icon: "Building2", label: "Полное название", value: "Общество с ограниченной ответственностью «ФАВОРИТ»", full: true },
+  { icon: "Hash", label: "ИНН / КПП", value: "5250077990 / 525001001" },
+  { icon: "Fingerprint", label: "ОГРН", value: "1235200013531" },
+  { icon: "MapPin", label: "Юридический адрес", value: "607657, Нижегородская обл., Кстовский М.О., г. Кстово, 6-й м-он, д. 2, офис 13", full: true },
+  { icon: "CreditCard", label: "Расчётный счёт", value: "40702810316020000009" },
+  { icon: "Landmark", label: "Банк", value: "АО «АЛЬФА-БАНК»" },
+  { icon: "Wallet", label: "Корр. счёт", value: "30101810200000000593" },
+  { icon: "ScanLine", label: "БИК", value: "044525593" },
+];
+
+function RequisitesCard() {
+  const [copied, setCopied] = useState<string | null>(null);
+
+  function copyAll() {
+    const text = REQ_ITEMS.map(r => `${r.label}: ${r.value}`).join("\n");
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied("__all__");
+      setTimeout(() => setCopied(null), 1800);
+    });
+  }
+
+  function copyItem(value: string, label: string) {
+    navigator.clipboard.writeText(value).then(() => {
+      setCopied(label);
+      setTimeout(() => setCopied(null), 1500);
+    });
+  }
+
+  return (
+    <div className="rounded-2xl overflow-hidden mt-10" style={{ background: "rgba(20,27,45,0.92)", border: `1px solid rgba(34,211,238,0.18)`, backdropFilter: "blur(14px)" }}>
+      {/* Header */}
+      <div className="flex items-center justify-between px-6 py-5 border-b" style={{ borderColor: "rgba(34,211,238,0.12)" }}>
+        <div className="flex items-center gap-4">
+          <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ background: "rgba(34,211,238,0.1)", border: "1px solid rgba(34,211,238,0.2)" }}>
+            <Icon name="ShieldCheck" size={20} style={{ color: C.cyan } as React.CSSProperties} />
+          </div>
+          <div>
+            <div className="text-[10px] font-black uppercase tracking-[0.2em] mb-0.5" style={{ color: C.cyan }}>Официальные реквизиты</div>
+            <div className="font-black text-lg" style={{ color: C.gold }}>ООО «ФАВОРИТ»</div>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <button onClick={copyAll}
+            className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-wider px-3 py-2 rounded-lg transition-all"
+            style={{ background: copied === "__all__" ? "rgba(74,222,128,0.15)" : "rgba(255,255,255,0.06)", color: copied === "__all__" ? "#4ade80" : "#94a3b8", border: `1px solid ${copied === "__all__" ? "rgba(74,222,128,0.3)" : "rgba(255,255,255,0.1)"}` }}>
+            <Icon name={copied === "__all__" ? "Check" : "Copy"} size={12} />
+            {copied === "__all__" ? "Скопировано" : "Скопировать"}
+          </button>
+          <button
+            onClick={() => {
+              const lines = REQ_ITEMS.map(r => `${r.label}: ${r.value}`).join("\n");
+              const blob = new Blob([lines], { type: "text/plain" });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url; a.download = "Реквизиты_ООО_Фаворит.txt"; a.click();
+              URL.revokeObjectURL(url);
+            }}
+            className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-wider px-3 py-2 rounded-lg transition-all"
+            style={{ background: "rgba(255,255,255,0.06)", color: "#94a3b8", border: "1px solid rgba(255,255,255,0.1)" }}>
+            <Icon name="Download" size={12} />
+            PDF
+          </button>
+          <button
+            className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-wider px-4 py-2 rounded-lg transition-all"
+            style={{ background: `linear-gradient(135deg,${C.goldDark},${C.gold})`, color: "#000" }}>
+            <Icon name="FileText" size={12} />
+            Договор
+          </button>
+        </div>
+      </div>
+
+      {/* Grid */}
+      <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+        {REQ_ITEMS.map(({ icon, label, value, full }) => (
+          <button key={label}
+            onClick={() => copyItem(value, label)}
+            className={`flex items-center gap-4 rounded-xl px-5 py-4 text-left transition-all group ${full ? "md:col-span-2" : ""}`}
+            style={{ background: copied === label ? "rgba(34,211,238,0.07)" : "rgba(255,255,255,0.03)", border: `1px solid ${copied === label ? "rgba(34,211,238,0.3)" : "rgba(255,255,255,0.07)"}` }}
+            onMouseEnter={e => { if (copied !== label) { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.06)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(34,211,238,0.2)"; }}}
+            onMouseLeave={e => { if (copied !== label) { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.03)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)"; }}}>
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ background: "rgba(34,211,238,0.08)", border: "1px solid rgba(34,211,238,0.15)" }}>
+              <Icon name={icon} fallback="Info" size={15} style={{ color: copied === label ? "#4ade80" : C.cyan } as React.CSSProperties} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-[9px] font-black uppercase tracking-[0.18em] mb-1" style={{ color: "#64748b" }}>{label}</div>
+              <div className="font-semibold text-sm truncate" style={{ color: copied === label ? "#4ade80" : "#e2e8f0" }}>{value}</div>
+            </div>
+            <div className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+              <Icon name={copied === label ? "Check" : "Copy"} size={13} style={{ color: copied === label ? "#4ade80" : "#64748b" } as React.CSSProperties} />
+            </div>
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
@@ -281,6 +380,7 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
               </div>
 
           </div>
+          <RequisitesCard />
         </div>
       </section>
     </>
