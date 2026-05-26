@@ -1,121 +1,120 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import Icon from "@/components/ui/icon";
-import { C, HERO_IMG, PHONE, PHONE_HREF, WORKS } from "./constants";
+import { C, PHONE, PHONE_HREF, WORKS } from "./constants";
 
 interface HeroSectionProps {
   go: (id: string) => void;
 }
 
-const SLIDES = [{ img: HERO_IMG, tag: "", title: "", area: "", city: "" }, ...WORKS];
-const INTERVAL = 5000;
-const FADE_MS = 800;
+const PHOTOS = WORKS.slice(0, 6).map(w => ({ img: w.img, tag: w.tag, title: w.title }));
+
+const POSITIONS = [
+  { top: "8%",  right: "2%",  w: 220, h: 155, rotate: 2,   delay: 0.1 },
+  { top: "5%",  right: "28%", w: 195, h: 140, rotate: -2,  delay: 0.25 },
+  { top: "38%", right: "0%",  w: 240, h: 165, rotate: 1.5, delay: 0.4 },
+  { top: "36%", right: "30%", w: 210, h: 150, rotate: -1,  delay: 0.55 },
+  { top: "68%", right: "5%",  w: 200, h: 140, rotate: -2,  delay: 0.7 },
+  { top: "66%", right: "28%", w: 185, h: 135, rotate: 2.5, delay: 0.85 },
+];
 
 export default function HeroSection({ go }: HeroSectionProps) {
-  const [cur, setCur] = useState(0);
-  const [next, setNext] = useState<number | null>(null);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  function startTimer() {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => {
-      setCur((c) => {
-        const n = (c + 1) % SLIDES.length;
-        setNext(n);
-        setTimeout(() => { setCur(n); setNext(null); }, FADE_MS);
-        return c;
-      });
-    }, INTERVAL);
-  }
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    startTimer();
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+    const t = setTimeout(() => setVisible(true), 80);
+    return () => clearTimeout(t);
   }, []);
-
-  function goTo(i: number) {
-    if (i === cur || next !== null) return;
-    setNext(i);
-    setTimeout(() => { setCur(i); setNext(null); }, FADE_MS);
-    startTimer();
-  }
-
-  function advance(dir: number) {
-    if (next !== null) return;
-    const n = (cur + dir + SLIDES.length) % SLIDES.length;
-    setNext(n);
-    setTimeout(() => { setCur(n); setNext(null); }, FADE_MS);
-    startTimer();
-  }
-
-  const slide = SLIDES[cur];
-  const nextSlide = next !== null ? SLIDES[next] : null;
 
   return (
     <>
+      <style>{`
+        @keyframes photoIn {
+          from { opacity: 0; transform: scale(0.82) translateY(22px); }
+          to   { opacity: 1; transform: scale(1)    translateY(0); }
+        }
+        @keyframes photoFloat {
+          0%, 100% { transform: translateY(0px) rotate(var(--r)); }
+          50%       { transform: translateY(-6px) rotate(var(--r)); }
+        }
+      `}</style>
+
       {/* ── ГЕРОЙ ── */}
-      <section id="hero" className="relative overflow-hidden pt-[70px]" style={{ minHeight: "100svh" }}>
+      <section id="hero" className="relative overflow-hidden pt-[70px]"
+        style={{ minHeight: "100svh", background: C.bgDark }}>
 
-        {/* Текущий слайд — уходит */}
-        <div className="absolute inset-0" style={{ zIndex: 0 }}>
-          <img
-            src={slide.img}
-            alt=""
-            className="w-full h-full object-cover"
-            style={{ filter: "saturate(1.2) contrast(1.05)", transition: `opacity ${FADE_MS}ms ease`, opacity: next !== null ? 0 : 1 }}
-          />
-        </div>
+        {/* Фоновый паттерн */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: "radial-gradient(circle at 20% 50%, rgba(34,211,238,0.04) 0%, transparent 60%), radial-gradient(circle at 80% 20%, rgba(240,192,48,0.04) 0%, transparent 50%)",
+          zIndex: 0,
+        }} />
 
-        {/* Следующий слайд — появляется */}
-        {nextSlide && (
-          <div className="absolute inset-0" style={{ zIndex: 1 }}>
-            <img
-              src={nextSlide.img}
-              alt=""
-              className="w-full h-full object-cover"
-              style={{ filter: "saturate(1.2) contrast(1.05)", animation: `heroFadeIn ${FADE_MS}ms ease forwards` }}
-            />
-          </div>
-        )}
+        {/* Сетка */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: "linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+          zIndex: 0,
+        }} />
 
-        {/* Градиенты */}
-        <div className="absolute inset-0" style={{ zIndex: 2, background: "linear-gradient(105deg, rgba(10,14,24,0.72) 0%, rgba(10,14,24,0.35) 55%, rgba(10,14,24,0.05) 100%)" }} />
-        <div className="absolute inset-0" style={{ zIndex: 2, background: "linear-gradient(to top, rgba(10,14,24,1) 0%, rgba(10,14,24,0.2) 35%, transparent 60%)" }} />
+        {/* Коллаж фото — правая половина */}
+        <div className="absolute inset-0 hidden lg:block" style={{ zIndex: 1 }}>
+          {PHOTOS.map((p, i) => {
+            const pos = POSITIONS[i];
+            return (
+              <div key={i} style={{
+                position: "absolute",
+                top: pos.top,
+                right: pos.right,
+                width: pos.w,
+                height: pos.h,
+                borderRadius: 14,
+                overflow: "hidden",
+                border: "2px solid rgba(255,255,255,0.10)",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.55)",
+                animation: visible
+                  ? `photoIn 0.65s cubic-bezier(0.22,1,0.36,1) ${pos.delay}s both, photoFloat 5s ease-in-out ${pos.delay + 1}s infinite`
+                  : "none",
+                ["--r" as string]: `${pos.rotate}deg`,
+                opacity: visible ? undefined : 0,
+                zIndex: i === 0 || i === 2 || i === 4 ? 3 : 2,
+              }}>
+                <img src={p.img} alt={p.title}
+                  className="w-full h-full object-cover"
+                  style={{ filter: "saturate(1.15) contrast(1.05)" }} />
+                <div style={{
+                  position: "absolute", inset: 0,
+                  background: "linear-gradient(to top, rgba(10,14,24,0.75) 0%, transparent 50%)",
+                }} />
+                <div style={{
+                  position: "absolute", bottom: 8, left: 10, right: 10,
+                  fontSize: 9, fontWeight: 900, textTransform: "uppercase",
+                  letterSpacing: "0.1em", color: "#fff", lineHeight: 1.3,
+                  textShadow: "0 1px 4px rgba(0,0,0,0.8)",
+                }}>
+                  <span style={{ color: C.cyan, marginRight: 4 }}>●</span>{p.tag}
+                </div>
+              </div>
+            );
+          })}
 
-        {/* Карточка объекта — правый верхний угол */}
-        <div className="absolute top-[90px] right-5 md:right-10 hidden md:block" style={{ zIndex: 10, width: 270 }}>
+          {/* Тень слева от коллажа — плавный переход к тексту */}
           <div style={{
-            borderRadius: 14, overflow: "hidden",
-            border: "1px solid rgba(34,211,238,0.25)",
-            backdropFilter: "blur(12px)",
-            background: "rgba(10,14,24,0.70)",
-            transition: `opacity ${FADE_MS}ms ease`,
-            opacity: slide.tag ? 1 : 0,
-          }}>
-            <div style={{ height: 3, background: `linear-gradient(to right, ${C.cyan}, ${C.gold})` }} />
-            <div style={{ padding: "12px 16px" }}>
-              <div style={{ fontSize: 9, fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.15em", color: C.cyan, marginBottom: 4 }}>
-                {slide.tag}
-              </div>
-              <div style={{ fontWeight: 900, fontSize: 13, textTransform: "uppercase", lineHeight: 1.3, marginBottom: 8 }}>
-                {slide.title}
-              </div>
-              <div style={{ display: "flex", gap: 16 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, fontWeight: 700, color: C.muted }}>
-                  <Icon name="Maximize2" size={11} style={{ color: C.muted } as React.CSSProperties} />
-                  {slide.area}
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, fontWeight: 700, color: C.muted }}>
-                  <Icon name="MapPin" size={11} style={{ color: C.muted } as React.CSSProperties} />
-                  {slide.city}
-                </div>
-              </div>
-            </div>
-          </div>
+            position: "absolute", inset: 0,
+            background: "linear-gradient(to right, rgba(10,14,24,1) 0%, rgba(10,14,24,0.85) 35%, rgba(10,14,24,0.3) 60%, transparent 100%)",
+            zIndex: 4,
+            pointerEvents: "none",
+          }} />
         </div>
+
+        {/* Градиент снизу */}
+        <div className="absolute inset-0" style={{
+          zIndex: 5,
+          background: "linear-gradient(to top, rgba(10,14,24,1) 0%, rgba(10,14,24,0.15) 30%, transparent 55%)",
+          pointerEvents: "none",
+        }} />
 
         {/* Контент */}
         <div className="relative max-w-screen-xl mx-auto px-5 flex flex-col justify-center"
-          style={{ minHeight: "calc(100svh - 70px)", paddingTop: "3rem", paddingBottom: "6rem", zIndex: 3 }}>
+          style={{ minHeight: "calc(100svh - 70px)", paddingTop: "3rem", paddingBottom: "6rem", zIndex: 6 }}>
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-7 text-xs font-bold uppercase tracking-widest"
               style={{ background: "rgba(34,211,238,0.08)", border: `1px solid rgba(34,211,238,0.25)`, color: C.cyan }}>
@@ -172,54 +171,16 @@ export default function HeroSection({ go }: HeroSectionProps) {
           </div>
         </div>
 
-        {/* Стрелки */}
-        <button onClick={() => advance(-1)}
-          className="absolute left-4 top-1/2 -translate-y-1/2 hidden md:flex items-center justify-center rounded-full transition-all hover:scale-110 active:scale-95"
-          style={{ zIndex: 10, width: 44, height: 44, background: "rgba(10,14,24,0.55)", border: "1px solid rgba(255,255,255,0.15)", backdropFilter: "blur(8px)", color: "#fff" }}>
-          <Icon name="ChevronLeft" size={20} />
-        </button>
-        <button onClick={() => advance(1)}
-          className="absolute right-4 top-1/2 -translate-y-1/2 hidden md:flex items-center justify-center rounded-full transition-all hover:scale-110 active:scale-95"
-          style={{ zIndex: 10, width: 44, height: 44, background: "rgba(10,14,24,0.55)", border: "1px solid rgba(255,255,255,0.15)", backdropFilter: "blur(8px)", color: "#fff" }}>
-          <Icon name="ChevronRight" size={20} />
-        </button>
-
-        {/* Точки */}
-        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex items-center gap-2" style={{ zIndex: 10 }}>
-          {SLIDES.map((_, i) => (
-            <button key={i} onClick={() => goTo(i)} style={{
-              height: 6, borderRadius: 3, border: "none", cursor: "pointer", padding: 0,
-              transition: "width 0.35s ease, background 0.35s ease",
-              width: i === cur ? 28 : 6,
-              background: i === cur ? C.cyan : "rgba(255,255,255,0.22)",
-            }} />
-          ))}
+        {/* Скролл вниз */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2" style={{ zIndex: 7 }}>
+          <button onClick={() => go("services")}
+            className="flex flex-col items-center gap-1.5 transition-opacity hover:opacity-70"
+            style={{ color: C.muted }}>
+            <span className="text-[9px] font-bold uppercase tracking-widest">Смотреть ниже</span>
+            <Icon name="ChevronDown" size={18} />
+          </button>
         </div>
-
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce" style={{ zIndex: 10 }}>
-          <div className="text-[10px] font-bold uppercase tracking-widest" style={{ color: C.muted }}>Листайте</div>
-          <Icon name="ChevronDown" size={20} style={{ color: C.cyan } as React.CSSProperties} />
-        </div>
-
-        <style>{`@keyframes heroFadeIn { from { opacity: 0; } to { opacity: 1; } }`}</style>
       </section>
-
-      {/* ── СТАТЫ ── */}
-      <div style={{ background: C.bgDark, borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}` }}>
-        <div className="max-w-screen-xl mx-auto px-5 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 divide-x" style={{ borderColor: C.border }}>
-          {[
-            { val: "350+", label: "Объектов сдано" },
-            { val: "800к м²", label: "Уложено асфальта" },
-            { val: "11 лет", label: "На рынке НН" },
-            { val: "24 ч", label: "Выезд на замер" },
-          ].map((s) => (
-            <div key={s.label} className="text-center px-4">
-              <div className="font-black text-3xl" style={{ color: C.cyan }}>{s.val}</div>
-              <div className="text-[10px] uppercase tracking-widest mt-1" style={{ color: C.muted }}>{s.label}</div>
-            </div>
-          ))}
-        </div>
-      </div>
     </>
   );
 }
