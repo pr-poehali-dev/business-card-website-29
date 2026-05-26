@@ -88,15 +88,28 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
               <p className="leading-relaxed mb-8" style={{ fontSize: 16, color: "#a8b3c7" }}>
                 Перезвоним за 5 минут, рассчитаем стоимость и подберём бригаду. Выезд замерщика — бесплатно.
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-3">
                 {[
-                  { icon: "Clock", text: "Ответим за 5 минут", badge: "БЫСТРО" },
-                  { icon: "MapPin", text: "Замерщик — бесплатно", badge: "0 ₽" },
-                  { icon: "FileText", text: "Смета в день обращения", badge: "СЕГОДНЯ" },
-                  { icon: "ShieldCheck", text: "Фиксированная цена", badge: "ДОГОВОР" },
-                ].map(({ icon, text, badge }, i) => (
-                  <Card key={i} i={i} icon={icon} title={text} badge={badge} desc="" />
-                ))}
+                  { img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/9e7d4986-f95c-402b-91f0-8c6e71aca8ef.jpg", label: "Замерщик бесплатно", badge: "0 ₽" },
+                  { img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/4fac4d37-02ce-4216-96af-3a2a158f4d6b.jpg", label: "Договор и гарантия", badge: "ДОГОВОР" },
+                  { img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/5eaf8366-b7a6-49b4-8d8c-7c9aea756113.jpg", label: "Смета в день звонка", badge: "СЕГОДНЯ" },
+                  { img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/743ebb95-8d22-4310-82df-925fc56f822a.jpg", label: "Ответим за 5 минут", badge: "БЫСТРО" },
+                ].map(({ img, label, badge }, i) => {
+                  const a = accent(i);
+                  return (
+                    <div key={i} className="relative rounded-2xl overflow-hidden" style={{ height: 130, border: `1px solid ${a.border}` }}>
+                      <img src={img} alt={label} className="w-full h-full object-cover" />
+                      <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,14,24,0.85) 40%, transparent)" }} />
+                      <div className="absolute bottom-0 left-0 right-0 px-3 pb-2.5 flex items-end justify-between gap-1">
+                        <span className="text-[10px] font-black uppercase leading-tight" style={{ color: "#fff" }}>{label}</span>
+                        <span className="text-[8px] font-black uppercase tracking-widest px-2 py-1 rounded-full shrink-0"
+                          style={{ background: a.glow, color: a.color, border: `1px solid ${a.border}`, backdropFilter: "blur(6px)" }}>
+                          {badge}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
