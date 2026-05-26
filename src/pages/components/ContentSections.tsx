@@ -463,8 +463,34 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
           </div>
         </div>
         {/* Копирайт */}
-        <div className="max-w-screen-xl mx-auto px-5 py-5 flex flex-col md:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-center md:text-left" style={{ color: C.muted }}>
+        <div className="max-w-screen-xl mx-auto px-5 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
+          {/* Лого */}
+          <button onClick={() => go("hero")} className="flex items-center gap-2.5 shrink-0 transition-opacity hover:opacity-80">
+            <svg width="42" height="47" viewBox="0 0 200 220" style={{ filter: "drop-shadow(0 2px 10px rgba(255,209,64,0.4))", flexShrink: 0 }}>
+              <defs>
+                <clipPath id="footShield">
+                  <path d="M100,6 L182,40 L182,118 Q182,166 100,194 Q18,166 18,118 L18,40 Z"/>
+                </clipPath>
+                <linearGradient id="footFade" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="50%" stopColor="transparent"/>
+                  <stop offset="100%" stopColor="rgba(10,14,24,0.7)"/>
+                </linearGradient>
+              </defs>
+              <image
+                href="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/bucket/c86c5623-6496-4556-91b1-3ddf8e92b89a.jpg"
+                x="18" y="6" width="164" height="188"
+                preserveAspectRatio="xMidYMid slice"
+                clipPath="url(#footShield)"/>
+              <path d="M100,6 L182,40 L182,118 Q182,166 100,194 Q18,166 18,118 L18,40 Z" fill="url(#footFade)"/>
+              <path d="M100,6 L182,40 L182,118 Q182,166 100,194 Q18,166 18,118 L18,40 Z" fill="none" stroke="#ffd140" strokeWidth="4"/>
+            </svg>
+            <div className="leading-[1.2] text-left">
+              <div className="text-[8px] font-bold uppercase tracking-[0.22em]" style={{ color: C.muted }}>КОМПАНИЯ · ОНЛАЙН</div>
+              <div className="font-black text-[14px] tracking-wide" style={{ color: C.gold }}>ООО Фаворит</div>
+              <div className="text-[8px] font-semibold uppercase tracking-[0.12em]" style={{ color: C.muted }}>АСФАЛЬТИРОВАНИЕ НН</div>
+            </div>
+          </button>
+          <p className="text-xs text-center" style={{ color: C.muted }}>
             © 2015–2026 ООО «Фаворит» — аренда манипуляторов в Нижнем Новгороде и области
           </p>
           <div className="flex items-center gap-5">
