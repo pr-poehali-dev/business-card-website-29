@@ -82,6 +82,9 @@ const data: ServicePageData = {
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/8b8a83a6-afa2-4cc1-9950-1d0d315f01c7.jpg",
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/e262ac4b-a0bd-45c5-9f1c-d9c64aff480f.jpg",
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/ba2fccb5-754c-49fe-809c-720bd2103736.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/2fb123dc-fede-43e5-a990-bf59191f85c5.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/1cf2e9c3-b73c-4b3a-a1bf-c3fc21fcf148.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/f4c8e2d1-d1b7-4c14-a72e-0aeef2114863.jpg",
   ],
   faq: [
     { q: "Что входит в комплексное благоустройство?", a: "Стандартный комплекс: дорожки, газон, освещение, дренаж, детская площадка, парковка. Мы беремся за всё под ключ — один договор, одна бригада, один подрядчик." },
