@@ -1,6 +1,6 @@
 import Icon from "@/components/ui/icon";
 import { C, REVIEWS, PHONE, PHONE_HREF } from "./constants";
-import { accent, ACCENTS, Card, SectionTitle, PhotoDivider, GridShelf, DOT_BG, LINE_BG, FormState } from "./SharedUI";
+import { accent, ACCENTS, SectionTitle, PhotoDivider, FormState } from "./SharedUI";
 
 interface Props {
   form: FormState;
@@ -10,9 +10,20 @@ interface Props {
   go: (id: string) => void;
 }
 
+const BG_OVERLAY = `linear-gradient(to bottom, rgba(10,14,24,0.82) 0%, rgba(10,14,24,0.72) 50%, rgba(10,14,24,0.88) 100%)`;
+
+function SectionBg({ img }: { img: string }) {
+  return (
+    <div className="absolute inset-0 pointer-events-none">
+      <img src={img} alt="" className="w-full h-full object-cover object-center" style={{ filter: "brightness(0.55) saturate(0.7)" }} />
+      <div className="absolute inset-0" style={{ background: BG_OVERLAY }} />
+    </div>
+  );
+}
+
 export default function ReviewsContactSection({ form, setForm, sent, setSent, go }: Props) {
   const inputStyle = {
-    background: "rgba(255,255,255,0.05)",
+    background: "rgba(255,255,255,0.07)",
     border: `1px solid ${C.borderCyan}`,
     color: "#fff",
   };
@@ -20,19 +31,17 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
   return (
     <>
       {/* ── ОТЗЫВЫ ── */}
-      <section id="reviews" className="py-24 relative overflow-hidden" style={{ background: C.bg }}>
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: DOT_BG, backgroundSize: "24px 24px", opacity: 0.7 }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] pointer-events-none" style={{ background: `radial-gradient(ellipse, ${C.gold}07 0%, transparent 65%)` }} />
+      <section id="reviews" className="py-24 relative overflow-hidden">
+        <SectionBg img="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/99e7f943-818a-4bc9-a5f6-b90a6889755f.jpg" />
         <div className="max-w-screen-xl mx-auto px-5 relative">
           <SectionTitle accent={C.cyan} label="Клиенты о нас" title={<>От<span style={{ color: C.gold }}>зывы</span></>} />
-          <GridShelf accentColor={C.gold}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {REVIEWS.map((r, i) => {
               const a = accent(i);
               return (
                 <div key={i}
                   className="relative rounded-2xl p-7 overflow-hidden transition-all duration-300 hover:-translate-y-1.5"
-                  style={{ background: `linear-gradient(145deg, #252b3d, #1e2438)`, border: `1px solid ${a.border}` }}
+                  style={{ background: `linear-gradient(145deg, rgba(37,43,61,0.9), rgba(30,36,56,0.9))`, border: `1px solid ${a.border}`, backdropFilter: "blur(8px)" }}
                   onMouseEnter={e => {
                     e.currentTarget.style.boxShadow = `0 12px 40px ${a.glow}`;
                     e.currentTarget.style.borderColor = a.color;
@@ -41,7 +50,6 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
                     e.currentTarget.style.boxShadow = "none";
                     e.currentTarget.style.borderColor = a.border;
                   }}>
-                  {/* Большая кавычка */}
                   <div className="absolute right-4 top-0 font-black select-none pointer-events-none leading-none"
                     style={{ fontSize: "7rem", color: a.border, fontFamily: "Georgia, serif" }}>
                     "
@@ -69,7 +77,6 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
               );
             })}
           </div>
-          </GridShelf>
         </div>
       </section>
 
@@ -81,9 +88,8 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
       />
 
       {/* ── ФОРМА ЗАЯВКИ ── */}
-      <section id="form" className="py-16 relative overflow-hidden" style={{ background: C.bgDeep }}>
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: LINE_BG, backgroundSize: "55px 55px" }} />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[400px] pointer-events-none" style={{ background: `radial-gradient(ellipse at bottom left, ${C.cyanDim}09 0%, transparent 65%)` }} />
+      <section id="form" className="py-24 relative overflow-hidden">
+        <SectionBg img="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/c044d8db-6cca-4aa4-9ab7-7f0ccc8c8d40.jpg" />
         <div className="max-w-screen-xl mx-auto px-5 relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -122,7 +128,7 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
               </div>
             </div>
 
-            <div className="rounded-2xl p-8" style={{ background: "linear-gradient(145deg, #252b3d, #1e2438)", border: `1px solid ${C.borderCyan}` }}>
+            <div className="rounded-2xl p-8" style={{ background: "rgba(37,43,61,0.85)", border: `1px solid ${C.borderCyan}`, backdropFilter: "blur(12px)" }}>
               {sent ? (
                 <div className="py-12 text-center flex flex-col items-center gap-4">
                   <div className="w-20 h-20 rounded-2xl flex items-center justify-center" style={{ background: "rgba(34,211,238,0.12)", border: `1px solid ${C.borderCyan}` }}>
@@ -193,11 +199,10 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
       />
 
       {/* ── КОНТАКТЫ ── */}
-      <section id="contacts" className="py-16 relative overflow-hidden" style={{ background: C.bg }}>
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: DOT_BG, backgroundSize: "26px 26px", opacity: 0.7 }} />
+      <section id="contacts" className="py-24 relative overflow-hidden">
+        <SectionBg img="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/f703c39b-47e7-430c-9935-13763dc5fc81.jpg" />
         <div className="max-w-screen-xl mx-auto px-5 relative">
           <SectionTitle accent={C.gold} label="Связаться" title={<>Конта<span style={{ color: C.cyan }}>кты</span></>} />
-          <GridShelf accentColor={C.cyan}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <div className="space-y-4">
               {[
@@ -209,7 +214,7 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
                 return (
                   <a key={c.label} href={c.href}
                     className="flex items-center gap-5 rounded-2xl p-5 transition-all duration-300 block"
-                    style={{ background: `linear-gradient(145deg, #252b3d, #1e2438)`, border: `1px solid ${a.border}`, textDecoration: "none" }}
+                    style={{ background: `rgba(37,43,61,0.85)`, border: `1px solid ${a.border}`, textDecoration: "none", backdropFilter: "blur(8px)" }}
                     onMouseEnter={e => {
                       (e.currentTarget as HTMLElement).style.boxShadow = `0 10px 30px ${a.glow}`;
                       (e.currentTarget as HTMLElement).style.borderColor = a.color;
@@ -234,7 +239,7 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
                   </a>
                 );
               })}
-              <div className="rounded-2xl p-5" style={{ background: `linear-gradient(145deg, #252b3d, #1e2438)`, border: `1px solid ${ACCENTS[3].border}` }}>
+              <div className="rounded-2xl p-5" style={{ background: `rgba(37,43,61,0.85)`, border: `1px solid ${ACCENTS[3].border}`, backdropFilter: "blur(8px)" }}>
                 <div className="text-[10px] font-black uppercase tracking-widest mb-3" style={{ color: C.muted }}>Работаем в городах</div>
                 <div className="flex flex-wrap gap-2">
                   {["НН","Кстово","Бор","Дзержинск","Балахна","Арзамас","Выкса","Павлово"].map((city, i) => {
@@ -251,7 +256,7 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
             </div>
 
             <div className="rounded-2xl p-10 flex flex-col justify-between gap-8 relative overflow-hidden"
-              style={{ background: `linear-gradient(135deg, #252b3d 0%, #1a1f30 100%)`, border: `1px solid ${C.borderGold}` }}>
+              style={{ background: `rgba(37,43,61,0.85)`, border: `1px solid ${C.borderGold}`, backdropFilter: "blur(12px)" }}>
               <div className="absolute -right-8 -top-8 w-52 h-52 rounded-full pointer-events-none" style={{ background: `radial-gradient(circle, ${C.gold}18 0%, transparent 70%)` }} />
               <div className="absolute -left-8 -bottom-8 w-40 h-40 rounded-full pointer-events-none" style={{ background: `radial-gradient(circle, ${C.cyanDim}12 0%, transparent 70%)` }} />
               <div className="relative">
@@ -275,7 +280,6 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
               </div>
             </div>
           </div>
-          </GridShelf>
         </div>
       </section>
     </>

@@ -1,68 +1,61 @@
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import { C, SERVICES, TECH, HOW, WORKS } from "./constants";
-import { accent, Card, SectionTitle, PhotoDivider, GridShelf, DOT_BG, LINE_BG } from "./SharedUI";
+import { accent, Card, SectionTitle, PhotoDivider } from "./SharedUI";
+
+const BG_OVERLAY = `linear-gradient(to bottom, rgba(10,14,24,0.82) 0%, rgba(10,14,24,0.72) 50%, rgba(10,14,24,0.88) 100%)`;
+
+function SectionBg({ img }: { img: string }) {
+  return (
+    <div className="absolute inset-0 pointer-events-none">
+      <img src={img} alt="" className="w-full h-full object-cover object-center" style={{ filter: "brightness(0.55) saturate(0.7)" }} />
+      <div className="absolute inset-0" style={{ background: BG_OVERLAY }} />
+    </div>
+  );
+}
 
 export default function ServicesSections() {
   return (
     <>
       {/* ── УСЛУГИ ── */}
-      <section id="works" className="py-24 relative overflow-hidden" style={{ background: C.bg }}>
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: DOT_BG, backgroundSize: "28px 28px", opacity: 0.8 }} />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none" style={{ background: `radial-gradient(ellipse, ${C.cyanDim}0a 0%, transparent 70%)` }} />
+      <section id="works" className="py-24 relative overflow-hidden">
+        <SectionBg img="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/2ec06ac1-15ac-4c4a-b880-302a0aeb3a54.jpg" />
         <div className="max-w-screen-xl mx-auto px-5 relative">
           <SectionTitle accent={C.cyan} label="Что мы делаем" title={<>Наши <span style={{ color: C.gold }}>услуги</span></>} />
-          <GridShelf accentColor={C.cyan}>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {SERVICES.map((s, i) => (
-                <Card key={i} i={i} icon={s.icon} title={s.title} badge={s.price} desc={s.desc}
-                  extra={s.href ? (
-                    <Link to={s.href}
-                      className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest transition-all hover:gap-2.5"
-                      style={{ color: C.cyan, textDecoration: "none" }}>
-                      Подробнее
-                      <Icon name="ArrowRight" size={12} />
-                    </Link>
-                  ) : undefined}
-                />
-              ))}
-            </div>
-          </GridShelf>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {SERVICES.map((s, i) => (
+              <Card key={i} i={i} icon={s.icon} title={s.title} badge={s.price} desc={s.desc}
+                extra={s.href ? (
+                  <Link to={s.href}
+                    className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest transition-all hover:gap-2.5"
+                    style={{ color: C.cyan, textDecoration: "none" }}>
+                    Подробнее
+                    <Icon name="ArrowRight" size={12} />
+                  </Link>
+                ) : undefined}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ── ФОТО-РАЗДЕЛИТЕЛЬ ── */}
-      <div className="relative w-full overflow-hidden" style={{ height: 260 }}>
-        <img
-          src="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/d5302b7b-0f12-46f2-8718-081db8c572ba.jpg"
-          alt="Наша техника"
-          className="w-full h-full object-cover object-center"
-          style={{ filter: "brightness(0.45) saturate(0.8)" }}
-        />
-        <div className="absolute inset-0" style={{ background: `linear-gradient(to right, ${C.bg} 0%, transparent 18%, transparent 82%, ${C.bg} 100%)` }} />
-        <div className="absolute inset-0" style={{ background: `linear-gradient(to bottom, ${C.bg} 0%, transparent 25%, transparent 75%, ${C.bgDeep} 100%)` }} />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <div className="text-xs font-black uppercase tracking-[0.3em] mb-2" style={{ color: C.cyan }}>Собственный парк</div>
-            <div className="font-black text-3xl md:text-5xl uppercase" style={{ textShadow: "0 2px 20px rgba(0,0,0,0.8)" }}>
-              Наша <span style={{ color: C.gold }}>техника</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PhotoDivider
+        img="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/d5302b7b-0f12-46f2-8718-081db8c572ba.jpg"
+        label='Наша <span style="color:#ffd140">техника</span>'
+        sublabel="Собственный парк"
+        bgFrom={C.bg} bgTo={C.bgDeep}
+      />
 
       {/* ── ТЕХНИКА ── */}
-      <section id="tech" className="py-16 relative overflow-hidden" style={{ background: C.bgDeep }}>
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: LINE_BG, backgroundSize: "60px 60px" }} />
-        <div className="absolute bottom-0 right-0 w-[500px] h-[400px] pointer-events-none" style={{ background: `radial-gradient(ellipse at bottom right, ${C.gold}0d 0%, transparent 65%)` }} />
+      <section id="tech" className="py-24 relative overflow-hidden">
+        <SectionBg img="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/b30d6621-8b71-49bd-a023-b57ed513ef98.jpg" />
         <div className="max-w-screen-xl mx-auto px-5 relative">
-          <GridShelf accentColor={C.gold}>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {TECH.map((t, i) => (
-                <Card key={i} i={i} icon="Truck" title={t.name} badge="" desc={t.cap} />
-              ))}
-            </div>
-          </GridShelf>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {TECH.map((t, i) => (
+              <Card key={i} i={i} icon="Truck" title={t.name} badge="" desc={t.cap} />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -74,18 +67,15 @@ export default function ServicesSections() {
       />
 
       {/* ── КАК РАБОТАЕТ ── */}
-      <section id="services" className="py-16 relative overflow-hidden" style={{ background: C.bg }}>
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: DOT_BG, backgroundSize: "22px 22px", opacity: 0.6 }} />
-        <div className="absolute top-1/2 -translate-y-1/2 left-0 w-[400px] h-[400px] pointer-events-none" style={{ background: `radial-gradient(circle, ${C.cyanDim}08 0%, transparent 70%)` }} />
+      <section id="services" className="py-24 relative overflow-hidden">
+        <SectionBg img="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/8a2044f9-1f3d-402b-bc04-723fcffaee4f.jpg" />
         <div className="max-w-screen-xl mx-auto px-5 relative">
           <SectionTitle accent={C.cyan} label="Просто и прозрачно" title={<>Как это <span style={{ color: C.gold }}>работает</span></>} />
-          <GridShelf accentColor={C.cyan}>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-              {HOW.map((h, i) => (
-                <Card key={i} i={i} icon="ArrowRight" title={h.title} badge={h.num} desc={h.desc} />
-              ))}
-            </div>
-          </GridShelf>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+            {HOW.map((h, i) => (
+              <Card key={i} i={i} icon="ArrowRight" title={h.title} badge={h.num} desc={h.desc} />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -97,11 +87,10 @@ export default function ServicesSections() {
       />
 
       {/* ── ПРИМЕРЫ РАБОТ ── */}
-      <section id="portfolio" className="py-16 relative overflow-hidden" style={{ background: C.bgDeep }}>
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: LINE_BG, backgroundSize: "50px 50px" }} />
+      <section id="portfolio" className="py-24 relative overflow-hidden">
+        <SectionBg img="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/d60c5334-4db9-40cc-9968-5af6d8eb6616.jpg" />
         <div className="max-w-screen-xl mx-auto px-5 relative">
           <SectionTitle accent={C.cyan} label="Выполненные объекты" title={<>Примеры <span style={{ color: C.gold }}>работ</span></>} />
-          <GridShelf accentColor={C.gold}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {WORKS.map((w, i) => {
               const a = accent(i);
@@ -118,19 +107,16 @@ export default function ServicesSections() {
                     e.currentTarget.style.borderColor = a.border;
                   }}>
 
-                  {/* Фото */}
                   <div className="relative h-52 overflow-hidden">
                     <img src={w.img} alt={w.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108" />
                     <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 35%, rgba(18,22,36,0.95))" }} />
-                    {/* Бейдж */}
                     <div className="absolute top-3 left-3">
                       <span className="text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full"
                         style={{ background: a.glow, color: a.color, border: `1px solid ${a.border}`, backdropFilter: "blur(8px)" }}>
                         {w.tag}
                       </span>
                     </div>
-                    {/* Площадь поверх фото */}
                     <div className="absolute bottom-3 right-3 flex items-center gap-1 text-xs font-black"
                       style={{ color: "#fff", textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}>
                       <Icon name="Maximize2" size={11} />
@@ -151,7 +137,6 @@ export default function ServicesSections() {
               );
             })}
           </div>
-          </GridShelf>
         </div>
       </section>
     </>
