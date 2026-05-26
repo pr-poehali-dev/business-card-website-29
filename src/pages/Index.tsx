@@ -1,440 +1,417 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Icon from "@/components/ui/icon";
 
-const HERO_IMG = "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/fd91c0c7-8bb2-4659-bd63-cab84f331cb2.jpg";
-const PHONE = "+7 (960) 169-09-90";
+const HERO_IMG = "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/bdbb7a43-0a9b-498f-9c0b-eaf9cd276494.jpg";
+const PHONE = "+7 960 169-09-90";
 const PHONE_HREF = "tel:+79601690990";
 
-const SERVICES = [
-  { icon: "Layers", num: "01", title: "Укладка асфальта", desc: "Горячий и холодный асфальт для дорог, дворов, парковок любой площади. Гарантия — 3 года." },
-  { icon: "Hammer", num: "02", title: "Ямочный ремонт", desc: "Ликвидируем выбоины и трещины за 24 часа. Литой и щебёночный асфальтобетон." },
-  { icon: "Warehouse", num: "03", title: "Промышленные площадки", desc: "Заводские территории, логистика, склады. Усиленное основание под тяжёлую технику." },
-  { icon: "Car", num: "04", title: "Парковки", desc: "Полный цикл: разметка, дренаж, бордюры, освещение. До 500 машино-мест." },
-  { icon: "TreePine", num: "05", title: "Благоустройство", desc: "Пешеходные зоны, тротуары, велодорожки. Тротуарная плитка и мелкозернистый асфальт." },
-  { icon: "FileText", num: "06", title: "Документация", desc: "Геодезические изыскания, проект, согласование с администрацией НН и области." },
+const NAV = [
+  ["services", "Преимущества"],
+  ["tech", "Техника"],
+  ["works", "Услуги"],
+  ["how", "Как это работает"],
+  ["contacts", "Контакты"],
 ];
 
-const WORKS = [
-  { title: "ЖК «Новинки Smart City»", area: "12 000", type: "Двор + парковка", year: "2024" },
-  { title: "Завод ГАЗ, склад №4", area: "8 500", type: "Промплощадка", year: "2024" },
-  { title: "ТЦ «Небо», ул. Родионова", area: "5 200", type: "Открытая парковка", year: "2023" },
-  { title: "Московское шоссе, 10 км", area: "3 400", type: "Ямочный ремонт", year: "2024" },
-  { title: "ЖК «Анкудиновский Парк»", area: "9 800", type: "Двор и дорожки", year: "2023" },
-  { title: "Логопарк «Бор»", area: "22 000", type: "Промплощадка", year: "2024" },
+const SERVICES = [
+  { icon: "Layers", title: "Укладка асфальта", desc: "Горячий и холодный асфальт для дорог, дворов и парковок. Гарантия 3 года.", price: "от 1 200 ₽/м²" },
+  { icon: "Hammer", title: "Ямочный ремонт", desc: "Заделка выбоин и трещин. Выезд за 24 часа. Работаем круглый год.", price: "от 800 ₽/м²" },
+  { icon: "Warehouse", title: "Промышленные площадки", desc: "Заводы, склады, логистика. Усиленное основание под тяжёлую технику.", price: "от 1 050 ₽/м²" },
+  { icon: "Car", title: "Парковки", desc: "Полный цикл: разметка, дренаж, бордюры. До 500 машино-мест.", price: "от 1 100 ₽/м²" },
+  { icon: "TreePine", title: "Благоустройство", desc: "Тротуары, дорожки, велосипедные зоны. Тротуарная плитка и асфальт.", price: "от 900 ₽/м²" },
+  { icon: "FileText", title: "Проектирование", desc: "Геодезия, документация, согласование с администрацией НН.", price: "по запросу" },
+];
+
+const TECH = [
+  { name: "Асфальтоукладчик Vogele 1800-3", cap: "Ширина укладки до 9 м", count: "2 ед." },
+  { name: "Каток Hamm HD 120", cap: "Рабочая масса 12 т", count: "3 ед." },
+  { name: "Автосамосвал МАЗ-6501", cap: "Грузоподъёмность 20 т", count: "6 ед." },
+  { name: "Фреза дорожная Wirtgen", cap: "Глубина фрезерования 30 см", count: "1 ед." },
+  { name: "Мини-каток Ammann ARX 23", cap: "Для узких мест и дворов", count: "2 ед." },
+  { name: "Автогудронатор ДС-142Б", cap: "Объём 7 000 л", count: "1 ед." },
+];
+
+const HOW = [
+  { num: "01", title: "Заявка", desc: "Оставьте заявку или позвоните — ответим за 30 минут" },
+  { num: "02", title: "Замер", desc: "Приедем на объект, сделаем замеры и расчёт — бесплатно" },
+  { num: "03", title: "Договор", desc: "Фиксируем цену, сроки и условия в договоре" },
+  { num: "04", title: "Работы", desc: "Выполняем в срок своей техникой и бригадой" },
+  { num: "05", title: "Сдача", desc: "Подписываем акт, выдаём гарантийный талон на 3 года" },
 ];
 
 const REVIEWS = [
-  { name: "Сергей Никонов", role: "УК «Уют», Нижний Новгород", text: "Заасфальтировали 4 двора в нашем ЖК. Работали аккуратно, без задержек. Жители в восторге!", stars: 5 },
-  { name: "Алёна Кузьмина", role: "ИП, автостоянка «Центральная»", text: "Парковка на 80 мест — ровная, красивая. Зиму пережило без единой трещины. Всё по договору.", stars: 5 },
-  { name: "Роман Третьяков", role: "Директор ООО «ПромСтрой НН»", text: "Работаем на всех объектах только с Фаворитом. Соблюдают сроки, всё по смете, без сюрпризов.", stars: 5 },
-  { name: "Наталья Берёзова", role: "Администрация МО Кстово", text: "Ямочный ремонт 18 км. Отличное качество, сдали раньше срока. Сотрудничество продолжаем.", stars: 5 },
+  { name: "Сергей Никонов", role: "УК «Уют», Н. Новгород", text: "Заасфальтировали 4 двора. Работали аккуратно, жители довольны. Рекомендуем!", stars: 5 },
+  { name: "Алёна Кузьмина", role: "ИП, автостоянка", text: "Парковка на 80 мест — ровная, зиму пережила без трещин. Всё по договору.", stars: 5 },
+  { name: "Роман Третьяков", role: "ООО «ПромСтрой НН»", text: "Работаем только с Фаворитом. Сроки соблюдают, смета не меняется.", stars: 5 },
+  { name: "Наталья Берёзова", role: "Администрация МО Кстово", text: "Ямочный ремонт 18 км. Сдали раньше срока. Продолжаем сотрудничество.", stars: 5 },
 ];
 
-const PRICE_TIERS: { label: string; range: string; price: number }[] = [
-  { label: "Мини", range: "до 500 м²", price: 1800 },
-  { label: "Стандарт", range: "500–2000 м²", price: 1550 },
-  { label: "Бизнес", range: "2000–5000 м²", price: 1300 },
-  { label: "Крупный", range: "от 5000 м²", price: 1050 },
-];
-
-function useInView() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(false);
-  useEffect(() => {
-    const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true); }, { threshold: 0.4 });
-    if (ref.current) o.observe(ref.current);
-    return () => o.disconnect();
-  }, []);
-  return { ref, inView };
-}
-
-function Counter({ to, suffix = "", dur = 1800 }: { to: number; suffix?: string; dur?: number }) {
-  const { ref, inView } = useInView();
-  const [val, setVal] = useState(0);
-  useEffect(() => {
-    if (!inView) return;
-    let t: number;
-    const start = performance.now();
-    const tick = (now: number) => {
-      const p = Math.min((now - start) / dur, 1);
-      setVal(Math.floor(p * to));
-      if (p < 1) t = requestAnimationFrame(tick);
-    };
-    t = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(t);
-  }, [inView, to, dur]);
-  return <span ref={ref}>{val}{suffix}</span>;
-}
+const C = {
+  bg: "#1a1f2e",
+  bgDeep: "#141928",
+  bgDark: "#0f1422",
+  cyan: "#22d3ee",
+  gold: "#f0c030",
+  goldDark: "#d4a017",
+  muted: "#6b7280",
+  subtle: "#94a3b8",
+  light: "#cbd5e1",
+  border: "rgba(255,255,255,0.07)",
+  borderCyan: "rgba(34,211,238,0.2)",
+  borderGold: "rgba(240,192,48,0.25)",
+};
 
 export default function Index() {
-  const [nav, setNav] = useState("hero");
-  const [open, setOpen] = useState(false);
-  const [area, setArea] = useState(1000);
-  const [form, setForm] = useState({ name: "", phone: "", obj: "" });
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [form, setForm] = useState({ name: "", phone: "", address: "", area: "", comment: "" });
   const [sent, setSent] = useState(false);
-
-  const tier = PRICE_TIERS.find((t, i) => {
-    if (i === 0 && area < 500) return true;
-    if (i === 1 && area >= 500 && area < 2000) return true;
-    if (i === 2 && area >= 2000 && area < 5000) return true;
-    if (i === 3 && area >= 5000) return true;
-    return false;
-  }) ?? PRICE_TIERS[0];
-
-  const total = area * tier.price;
+  const [activeNav, setActiveNav] = useState("hero");
 
   const go = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    setOpen(false);
+    setMenuOpen(false);
   };
 
   useEffect(() => {
-    const ids = ["hero", "services", "works", "calc", "reviews", "contacts"];
+    const ids = ["hero", "services", "tech", "works", "how", "reviews", "contacts"];
     const ob = new IntersectionObserver(
-      (es) => es.forEach((e) => { if (e.isIntersecting) setNav(e.target.id); }),
-      { threshold: 0.3 }
+      (es) => es.forEach((e) => { if (e.isIntersecting) setActiveNav(e.target.id); }),
+      { threshold: 0.2 }
     );
     ids.forEach((id) => { const el = document.getElementById(id); if (el) ob.observe(el); });
     return () => ob.disconnect();
   }, []);
 
+  const cardStyle = { background: "rgba(255,255,255,0.03)", border: `1px solid ${C.border}` };
+
   return (
-    <div className="bg-white text-zinc-900 min-h-screen font-montserrat overflow-x-hidden selection:bg-amber-400 selection:text-black">
+    <div className="min-h-screen font-montserrat overflow-x-hidden" style={{ background: C.bg, color: "#fff" }}>
 
-      {/* ─── ШАПКА ─── */}
-      <header className="fixed inset-x-0 top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-zinc-200 shadow-sm">
-        <div className="max-w-screen-xl mx-auto px-5 h-[68px] flex items-center justify-between gap-6">
+      {/* ── ШАПКА ── */}
+      <header className="fixed inset-x-0 top-0 z-50 border-b" style={{ background: "rgba(15,20,34,0.97)", borderColor: C.border, backdropFilter: "blur(16px)" }}>
+        <div className="max-w-screen-xl mx-auto px-5 h-[70px] flex items-center justify-between gap-4">
 
-          {/* Лого */}
           <button onClick={() => go("hero")} className="flex items-center gap-3 shrink-0">
-            <div className="relative">
-              <div className="w-9 h-9 bg-amber-500 skew-x-[-8deg]" />
-              <span className="absolute inset-0 flex items-center justify-center font-black text-black text-sm tracking-tighter">Ф</span>
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+              style={{ background: "linear-gradient(135deg,#b8960c,#f0c030)", boxShadow: "0 2px 14px rgba(240,192,48,0.35)" }}>
+              <Icon name="Shield" size={22} className="text-black" />
             </div>
-            <div className="leading-none">
-              <div className="font-black text-base tracking-[0.08em] uppercase text-zinc-900">Фаворит</div>
-              <div className="text-[9px] text-zinc-400 uppercase tracking-[0.15em]">Асфальтирование НН</div>
+            <div className="leading-[1.2] text-left">
+              <div className="text-[8px] font-bold uppercase tracking-[0.25em]" style={{ color: C.muted }}>КОМПАНИЯ · ОНЛАЙН</div>
+              <div className="font-black text-[15px] tracking-wide" style={{ color: C.gold }}>ООО Фаворит</div>
+              <div className="text-[8px] font-semibold uppercase tracking-[0.12em]" style={{ color: C.muted }}>Асфальтирование НН</div>
             </div>
           </button>
 
-          {/* Навигация */}
-          <nav className="hidden lg:flex items-center gap-8">
-            {[["hero","Главная"],["services","Услуги"],["works","Объекты"],["calc","Цены"],["reviews","Отзывы"],["contacts","Контакты"]].map(([id, label]) => (
+          <nav className="hidden lg:flex items-center gap-6">
+            {NAV.map(([id, label]) => (
               <button key={id} onClick={() => go(id)}
-                className={`relative text-[11px] font-bold uppercase tracking-[0.15em] transition-colors pb-0.5 ${nav === id ? "text-amber-500" : "text-zinc-400 hover:text-zinc-900"}`}>
+                className="text-[11px] font-bold uppercase tracking-wider transition-colors"
+                style={{ color: activeNav === id ? C.cyan : C.muted }}>
                 {label}
-                {nav === id && <span className="absolute -bottom-0.5 left-0 right-0 h-px bg-amber-500" />}
               </button>
             ))}
+            <button onClick={() => go("contacts")}
+              className="text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-md flex items-center gap-2"
+              style={{ background: "rgba(220,38,38,0.85)", color: "#fff" }}>
+              Асфальтирование
+              <span className="px-1.5 py-0.5 rounded text-[9px] font-black" style={{ background: C.cyan, color: "#000" }}>NEW</span>
+            </button>
           </nav>
 
-          {/* Телефон + кнопка */}
-          <div className="hidden md:flex items-center gap-5 shrink-0">
-            <a href={PHONE_HREF} className="text-sm font-black tracking-tight text-zinc-900 hover:text-amber-500 transition-colors flex items-center gap-2">
-              <span className="w-6 h-6 bg-amber-500/15 rounded-sm flex items-center justify-center">
-                <Icon name="Phone" size={12} className="text-amber-500" />
-              </span>
-              {PHONE}
-            </a>
-            <button onClick={() => go("contacts")}
-              className="bg-amber-500 hover:bg-amber-400 text-black font-black text-[11px] uppercase tracking-[0.15em] px-5 py-2.5 transition-all hover:scale-105 active:scale-95 skew-x-[-4deg]">
-              Заявка
-            </button>
-          </div>
+          <a href={PHONE_HREF}
+            className="hidden md:flex items-center gap-2 font-black text-sm rounded-full px-4 py-2 border transition-all hover:scale-105"
+            style={{ borderColor: C.gold, color: C.gold }}>
+            <Icon name="Phone" size={13} />
+            {PHONE}
+          </a>
 
-          <button className="lg:hidden text-zinc-700" onClick={() => setOpen(!open)}>
-            <Icon name={open ? "X" : "Menu"} size={22} />
+          <button className="lg:hidden" onClick={() => setMenuOpen(!menuOpen)} style={{ color: C.muted }}>
+            <Icon name={menuOpen ? "X" : "Menu"} size={22} />
           </button>
         </div>
 
-        {open && (
-          <div className="lg:hidden bg-white border-t border-zinc-100 px-5 py-5 flex flex-col gap-4 shadow-lg">
-            {[["hero","Главная"],["services","Услуги"],["works","Объекты"],["calc","Цены"],["reviews","Отзывы"],["contacts","Контакты"]].map(([id, label]) => (
-              <button key={id} onClick={() => go(id)} className="text-left font-bold text-sm uppercase tracking-widest text-zinc-600 hover:text-amber-500 transition-colors">{label}</button>
+        {menuOpen && (
+          <div className="lg:hidden px-5 py-5 flex flex-col gap-4 border-t" style={{ background: C.bgDeep, borderColor: C.border }}>
+            {NAV.map(([id, label]) => (
+              <button key={id} onClick={() => go(id)} className="text-left text-sm font-bold uppercase tracking-widest" style={{ color: C.subtle }}>{label}</button>
             ))}
-            <a href={PHONE_HREF} className="text-amber-500 font-black text-sm mt-1">{PHONE}</a>
+            <a href={PHONE_HREF} className="font-black text-base mt-1" style={{ color: C.gold }}>{PHONE}</a>
           </div>
         )}
       </header>
 
-      {/* ─── ГЕРОЙ ─── */}
-      <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
+      {/* ── ГЕРОЙ ── */}
+      <section id="hero" className="relative overflow-hidden pt-[70px]" style={{ minHeight: "100svh" }}>
         <div className="absolute inset-0">
-          <img src={HERO_IMG} alt="Асфальтирование Фаворит НН" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-white/20" />
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white/50" />
+          <img src={HERO_IMG} alt="Асфальтирование Фаворит" className="w-full h-full object-cover" />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(10,14,24,0.93) 40%, rgba(10,14,24,0.6) 75%, rgba(10,14,24,0.2))" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,14,24,1) 0%, transparent 45%)" }} />
         </div>
 
-        {/* Диагональные полосы */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
-          {[0,1,2,3].map(i => (
-            <div key={i} className="absolute h-full w-px bg-gradient-to-b from-transparent via-amber-500 to-transparent"
-              style={{ left: `${20 + i * 22}%`, transform: "skewX(-15deg)" }} />
-          ))}
-        </div>
+        <div className="relative max-w-screen-xl mx-auto px-5 py-14 flex flex-col lg:flex-row gap-10 items-start">
 
-        <div className="relative max-w-screen-xl mx-auto px-5 pt-24 pb-52 w-full">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-3 mb-8 bg-amber-500/10 border border-amber-500/30 px-4 py-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shrink-0" />
-              <span className="text-amber-600 text-[10px] font-black uppercase tracking-[0.25em]">Нижний Новгород и область · Работаем с 2013</span>
+          {/* Текст */}
+          <div className="flex-1 max-w-xl">
+            <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-6 text-xs font-bold uppercase tracking-widest"
+              style={{ background: "rgba(34,211,238,0.08)", border: `1px solid rgba(34,211,238,0.25)`, color: C.cyan }}>
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: C.cyan }} />
+              Асфальтирование в Нижнем Новгороде
             </div>
 
-            <h1 className="font-black text-[clamp(2.4rem,8vw,5.8rem)] leading-[0.92] uppercase tracking-tight mb-7 text-zinc-900">
-              Асфаль-<br />тируем<br /><span className="text-amber-500 italic">Фаворит</span>
+            <h1 className="font-black leading-[1.05] mb-5" style={{ fontSize: "clamp(2rem,5vw,3.8rem)" }}>
+              Профессиональное<br />
+              <span style={{ color: C.cyan }}>асфальтирование</span><br />
+              в Нижнем Новгороде
             </h1>
 
-            <p className="text-zinc-500 text-lg leading-relaxed mb-10 max-w-lg">
-              Дороги, дворы, парковки, промзоны — берём любые объекты под ключ. Более 350 сданных объектов по НН и области.
+            <p className="text-base leading-relaxed mb-6" style={{ color: C.light }}>
+              Укладка асфальта, ямочный ремонт, парковки, промзоны — под ключ. Подача бригады от 24 часов, работаем 24/7 по НН и области.
             </p>
 
-            <div className="flex flex-wrap gap-4 mb-12">
-              <button onClick={() => go("calc")}
-                className="group bg-amber-500 hover:bg-amber-400 text-black font-black text-sm uppercase tracking-widest px-8 py-4 transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
-                Рассчитать цену
-                <Icon name="ArrowRight" size={16} className="group-hover:translate-x-1 transition-transform" />
-              </button>
-              <a href={PHONE_HREF}
-                className="border-2 border-zinc-300 hover:border-amber-500 text-zinc-700 hover:text-amber-500 font-black text-sm uppercase tracking-widest px-8 py-4 transition-all flex items-center gap-2">
-                <Icon name="Phone" size={15} />
-                {PHONE}
-              </a>
+            {/* Цена */}
+            <div className="inline-flex items-center gap-3 rounded-xl px-5 py-3 mb-6"
+              style={{ background: "rgba(240,192,48,0.12)", border: `1px solid rgba(240,192,48,0.35)` }}>
+              <Icon name="Layers" size={18} style={{ color: C.gold } as React.CSSProperties} />
+              <div>
+                <div className="text-[9px] font-bold uppercase tracking-widest" style={{ color: C.muted }}>Стоимость работ</div>
+                <div className="font-black text-xl" style={{ color: C.gold }}>от 1 200 ₽/м²</div>
+              </div>
             </div>
 
-            <div className="flex flex-wrap gap-6">
-              {[["ShieldCheck","Гарантия 3 года"], ["Clock","Выезд за 24 ч"], ["BadgeCheck","Своя техника"]].map(([icon, text]) => (
-                <div key={text} className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider">
-                  <Icon name={icon} fallback="Check" size={14} className="text-amber-500" />
+            {/* Факты */}
+            <div className="flex flex-wrap gap-x-5 gap-y-2 mb-8">
+              {[
+                ["Clock", "Начало работ от 1 дня"],
+                ["CalendarCheck", "Мин. заказ — 200 м²"],
+                ["Users", "Собственная бригада"],
+                ["Receipt", "Работаем с НДС"],
+              ].map(([icon, text]) => (
+                <div key={text} className="flex items-center gap-2 text-xs font-semibold" style={{ color: C.subtle }}>
+                  <Icon name={icon} fallback="Check" size={13} style={{ color: C.cyan } as React.CSSProperties} />
                   {text}
                 </div>
               ))}
             </div>
-          </div>
-        </div>
 
-        {/* Счётчики */}
-        <div className="absolute bottom-0 inset-x-0 bg-zinc-900 border-t border-zinc-800">
-          <div className="max-w-screen-xl mx-auto px-5 py-7 grid grid-cols-2 md:grid-cols-4 gap-6 divide-x divide-white/10">
-            {[
-              { to: 350, suffix: "+", label: "Объектов сдано" },
-              { to: 800, suffix: "к м²", label: "Уложено асфальта" },
-              { to: 11, suffix: " лет", label: "На рынке НН" },
-              { to: 24, suffix: " ч", label: "Выезд на замер" },
-            ].map((s) => (
-              <div key={s.label} className="text-center px-4">
-                <div className="font-black text-4xl text-amber-400 tabular-nums">
-                  <Counter to={s.to} suffix={s.suffix} />
-                </div>
-                <div className="text-zinc-400 text-[10px] uppercase tracking-widest mt-1">{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── ПРЕИМУЩЕСТВА ─── */}
-      <section className="py-16 bg-zinc-50 border-b border-zinc-100">
-        <div className="max-w-screen-xl mx-auto px-5">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-zinc-200">
-            {[
-              { icon: "ShieldCheck", title: "Гарантия 3 года", desc: "Письменный договор и гарантийный талон на каждый объект" },
-              { icon: "Zap", title: "Выезд за 24 часа", desc: "Замер и коммерческое предложение в день обращения" },
-              { icon: "BadgeCheck", title: "Своя техника", desc: "Весь парк — наш. Никаких субподрядчиков и переплат" },
-            ].map((item) => (
-              <div key={item.title} className="bg-zinc-50 hover:bg-white p-8 flex gap-5 transition-colors group">
-                <div className="w-12 h-12 bg-amber-500/10 flex items-center justify-center flex-shrink-0 group-hover:bg-amber-500/20 transition-colors">
-                  <Icon name={item.icon} fallback="Check" size={22} className="text-amber-500" />
-                </div>
-                <div>
-                  <h3 className="font-black text-sm uppercase tracking-wide mb-2 text-zinc-900">{item.title}</h3>
-                  <p className="text-zinc-500 text-sm leading-relaxed">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── УСЛУГИ ─── */}
-      <section id="services" className="py-28 bg-white">
-        <div className="max-w-screen-xl mx-auto px-5">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-            <div>
-              <p className="text-amber-500 text-[10px] font-black uppercase tracking-[0.25em] mb-4">— Что мы делаем</p>
-              <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight text-zinc-900">
-                Наши<br /><span className="text-amber-500">услуги</span>
-              </h2>
+            <div className="flex flex-wrap gap-4">
+              <a href={PHONE_HREF}
+                className="flex items-center gap-2 font-black text-sm px-7 py-4 rounded-full transition-all hover:scale-105 active:scale-95"
+                style={{ background: `linear-gradient(135deg,${C.goldDark},${C.gold})`, color: "#000" }}>
+                <Icon name="Phone" size={16} />
+                Позвонить: {PHONE}
+              </a>
+              <button onClick={() => go("works")}
+                className="font-black text-sm px-7 py-4 rounded-full border transition-all hover:scale-105"
+                style={{ borderColor: "rgba(255,255,255,0.2)", color: "#fff", background: "rgba(255,255,255,0.06)" }}>
+                Наши услуги
+              </button>
             </div>
-            <p className="text-zinc-400 text-sm max-w-sm leading-relaxed md:text-right">
-              Полный цикл дорожных работ от проекта до сдачи объекта с исполнительной документацией
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {SERVICES.map((s, i) => (
-              <div key={i}
-                className="group border border-zinc-100 hover:border-amber-400/50 p-8 transition-all duration-300 hover:bg-amber-50/40 cursor-pointer relative overflow-hidden hover:shadow-md">
-                <div className="absolute top-5 right-5 font-black text-5xl text-zinc-100 group-hover:text-amber-400/20 transition-colors leading-none select-none">
-                  {s.num}
+          {/* Форма */}
+          <div className="w-full lg:w-[390px] shrink-0 rounded-2xl p-7 border"
+            style={{ background: "rgba(15,20,34,0.9)", borderColor: C.borderCyan, backdropFilter: "blur(20px)" }}>
+            {sent ? (
+              <div className="py-10 text-center flex flex-col items-center gap-4">
+                <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: "rgba(34,211,238,0.12)" }}>
+                  <Icon name="CheckCircle" size={32} style={{ color: C.cyan } as React.CSSProperties} />
                 </div>
-                <div className="w-11 h-11 bg-amber-500/10 group-hover:bg-amber-500/20 flex items-center justify-center mb-6 transition-colors skew-x-[-4deg]">
-                  <Icon name={s.icon} fallback="Layers" size={20} className="text-amber-500" />
-                </div>
-                <h3 className="font-black text-base uppercase tracking-wide mb-3 text-zinc-900 group-hover:text-amber-600 transition-colors">{s.title}</h3>
-                <p className="text-zinc-500 text-sm leading-relaxed">{s.desc}</p>
+                <h3 className="font-black text-xl">Заявка принята!</h3>
+                <p className="text-sm" style={{ color: C.muted }}>Перезвоним в течение 5 минут</p>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── ОБЪЕКТЫ ─── */}
-      <section id="works" className="py-28 bg-zinc-50">
-        <div className="max-w-screen-xl mx-auto px-5">
-          <div className="mb-16">
-            <p className="text-amber-500 text-[10px] font-black uppercase tracking-[0.25em] mb-4">— Выполненные проекты</p>
-            <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight text-zinc-900">
-              Наши<br /><span className="text-amber-500">объекты</span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {WORKS.map((w, i) => (
-              <div key={i}
-                className="group bg-white hover:bg-amber-50/60 border border-zinc-100 hover:border-amber-400/40 p-7 transition-all duration-300 relative overflow-hidden hover:shadow-md">
-                <div className="absolute top-0 right-0 w-0 h-0 border-l-[40px] border-l-transparent border-t-[40px] border-t-amber-400/20 group-hover:border-t-amber-400/40 transition-colors" />
-                <div className="flex items-start justify-between mb-5">
-                  <span className="inline-block bg-amber-500/10 text-amber-600 text-[9px] font-black uppercase tracking-[0.2em] px-2.5 py-1">{w.type}</span>
-                  <span className="text-zinc-400 text-xs font-bold">{w.year}</span>
-                </div>
-                <h3 className="font-black text-base uppercase tracking-tight mb-3 text-zinc-900 group-hover:text-amber-600 transition-colors leading-tight">{w.title}</h3>
-                <div className="flex items-center gap-2 text-zinc-400 text-sm">
-                  <Icon name="Maximize2" size={12} className="text-amber-500 shrink-0" />
-                  <span className="font-bold">{parseInt(w.area).toLocaleString("ru")} м²</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── КАЛЬКУЛЯТОР ─── */}
-      <section id="calc" className="py-28 bg-white">
-        <div className="max-w-screen-xl mx-auto px-5">
-          <div className="mb-16">
-            <p className="text-amber-500 text-[10px] font-black uppercase tracking-[0.25em] mb-4">— Онлайн-расчёт</p>
-            <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight text-zinc-900">
-              Стои-<br /><span className="text-amber-500">мость</span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-            <div className="lg:col-span-3 space-y-8">
-              <div className="bg-zinc-50 border border-zinc-200 p-8">
-                <div className="flex items-end justify-between mb-6">
-                  <span className="text-zinc-400 text-xs font-bold uppercase tracking-widest">Площадь объекта</span>
-                  <span className="font-black text-4xl text-zinc-900 tabular-nums">{area.toLocaleString("ru")} <span className="text-xl text-zinc-400">м²</span></span>
-                </div>
-                <input type="range" min={50} max={10000} step={50} value={area}
-                  onChange={(e) => setArea(Number(e.target.value))}
-                  className="w-full cursor-pointer accent-amber-500 h-1" />
-                <div className="flex justify-between text-zinc-400 text-xs mt-3 font-bold">
-                  <span>50 м²</span><span>10 000 м²</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                {PRICE_TIERS.map((t) => {
-                  const active = tier.label === t.label;
-                  return (
-                    <div key={t.label}
-                      className={`p-5 border transition-all ${active ? "border-amber-500 bg-amber-50" : "border-zinc-200 bg-zinc-50 hover:border-zinc-300"}`}>
-                      <div className={`text-xs font-black uppercase tracking-widest mb-1 ${active ? "text-amber-500" : "text-zinc-400"}`}>{t.label}</div>
-                      <div className={`font-black text-2xl mb-1 ${active ? "text-zinc-900" : "text-zinc-600"}`}>{t.price.toLocaleString("ru")} ₽</div>
-                      <div className="text-zinc-400 text-xs">{t.range}</div>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div className="bg-amber-500 p-6 flex items-center justify-between">
-                <div>
-                  <div className="text-black/60 text-xs font-bold uppercase tracking-widest mb-1">Итого от</div>
-                  <div className="font-black text-4xl text-black">{total.toLocaleString("ru")} ₽</div>
-                  <div className="text-black/50 text-xs mt-1">* без учёта подготовки основания</div>
-                </div>
-                <Icon name="Calculator" size={48} className="text-black/20" />
-              </div>
-            </div>
-
-            {/* Форма */}
-            <div className="lg:col-span-2 bg-zinc-50 border border-zinc-200 p-8">
-              {sent ? (
-                <div className="h-full flex flex-col items-center justify-center text-center py-12 gap-4">
-                  <div className="w-16 h-16 bg-amber-500/20 flex items-center justify-center">
-                    <Icon name="CheckCircle" size={32} className="text-amber-500" />
-                  </div>
-                  <h3 className="font-black text-xl uppercase text-zinc-900">Заявка отправлена!</h3>
-                  <p className="text-zinc-400 text-sm">Перезвоним в течение 30 минут в рабочее время</p>
-                </div>
-              ) : (
-                <>
-                  <h3 className="font-black text-lg uppercase mb-1 text-zinc-900">Вызвать замерщика</h3>
-                  <p className="text-zinc-400 text-sm mb-7 leading-relaxed">Приедем, замерим, дадим точную смету — бесплатно</p>
-                  <div className="space-y-4">
-                    {[
-                      { key: "name", label: "Ваше имя", ph: "Иван Петров" },
-                      { key: "phone", label: "Телефон", ph: "+7 (___) ___-__-__" },
-                      { key: "obj", label: "Адрес объекта", ph: "ул. Горького 12, НН" },
-                    ].map(({ key, label, ph }) => (
-                      <div key={key}>
-                        <label className="text-zinc-400 text-[10px] uppercase tracking-widest block mb-2">{label}</label>
-                        <input
-                          className="w-full bg-white border border-zinc-200 focus:border-amber-500 text-zinc-900 px-4 py-3 text-sm outline-none transition-colors placeholder-zinc-300"
-                          placeholder={ph}
-                          value={form[key as keyof typeof form]}
-                          onChange={(e) => setForm({ ...form, [key]: e.target.value })}
-                        />
+            ) : (
+              <>
+                <p className="text-center text-xs font-bold mb-5 leading-relaxed" style={{ color: C.muted }}>
+                  Перезвоним за 5 минут · рассчитаем цену · подберём бригаду
+                </p>
+                <div className="space-y-3">
+                  {[
+                    { key: "name", ph: "Имя или компания", icon: "User" },
+                    { key: "phone", ph: "Телефон +7 (___) ___-__-__", icon: "Phone" },
+                    { key: "address", ph: "Адрес объекта", icon: "MapPin" },
+                    { key: "area", ph: "Площадь (м²)", icon: "Maximize2" },
+                  ].map(({ key, ph, icon }) => (
+                    <div key={key} className="relative">
+                      <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                        <Icon name={icon} fallback="Info" size={14} style={{ color: C.cyan } as React.CSSProperties} />
                       </div>
-                    ))}
-                    <button
-                      onClick={() => { if (form.name && form.phone) setSent(true); }}
-                      className="w-full bg-amber-500 hover:bg-amber-400 text-black font-black text-xs uppercase tracking-[0.2em] py-4 transition-all hover:scale-[1.02] active:scale-[0.98]">
-                      Отправить заявку →
-                    </button>
-                    <p className="text-zinc-300 text-[10px] text-center leading-relaxed">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
+                      <input
+                        className="w-full pl-9 pr-4 py-3 rounded-lg text-sm outline-none transition-all"
+                        style={{ background: "rgba(255,255,255,0.05)", border: `1px solid ${C.borderCyan}`, color: "#fff" }}
+                        onFocus={e => (e.target.style.borderColor = C.cyan)}
+                        onBlur={e => (e.target.style.borderColor = C.borderCyan)}
+                        placeholder={ph}
+                        value={form[key as keyof typeof form]}
+                        onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+                      />
+                    </div>
+                  ))}
+                  <div className="relative">
+                    <div className="absolute left-3 top-3.5 pointer-events-none">
+                      <Icon name="MessageSquare" size={14} style={{ color: C.cyan } as React.CSSProperties} />
+                    </div>
+                    <textarea rows={2}
+                      className="w-full pl-9 pr-4 py-3 rounded-lg text-sm outline-none transition-all resize-none"
+                      style={{ background: "rgba(255,255,255,0.05)", border: `1px solid ${C.borderCyan}`, color: "#fff" }}
+                      onFocus={e => (e.target.style.borderColor = C.cyan)}
+                      onBlur={e => (e.target.style.borderColor = C.borderCyan)}
+                      placeholder="Тип работ, особенности объекта"
+                      value={form.comment}
+                      onChange={(e) => setForm({ ...form, comment: e.target.value })}
+                    />
                   </div>
-                </>
-              )}
+                  <button
+                    onClick={() => { if (form.name && form.phone) setSent(true); }}
+                    className="w-full font-black text-sm py-4 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
+                    style={{ background: `linear-gradient(135deg,${C.goldDark},${C.gold})`, color: "#000" }}>
+                    Оставить заявку →
+                  </button>
+                  <p className="text-center text-[10px]" style={{ color: "#374151" }}>
+                    Нажимая кнопку, вы соглашаетесь с обработкой персональных данных
+                  </p>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ── СТАТЫ ── */}
+      <div style={{ background: C.bgDark, borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}` }}>
+        <div className="max-w-screen-xl mx-auto px-5 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 divide-x" style={{ borderColor: C.border }}>
+          {[
+            { val: "350+", label: "Объектов сдано" },
+            { val: "800к м²", label: "Уложено асфальта" },
+            { val: "11 лет", label: "На рынке НН" },
+            { val: "24 ч", label: "Выезд на замер" },
+          ].map((s) => (
+            <div key={s.label} className="text-center px-4">
+              <div className="font-black text-3xl" style={{ color: C.cyan }}>{s.val}</div>
+              <div className="text-[10px] uppercase tracking-widest mt-1" style={{ color: C.muted }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── УСЛУГИ ── */}
+      <section id="works" className="py-24" style={{ background: C.bg }}>
+        <div className="max-w-screen-xl mx-auto px-5">
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="h-px w-8" style={{ background: C.cyan }} />
+              <span className="text-xs font-black uppercase tracking-[0.2em]" style={{ color: C.cyan }}>Что мы делаем</span>
+            </div>
+            <h2 className="font-black text-4xl md:text-6xl uppercase leading-tight">
+              Наши <span style={{ color: C.gold }}>услуги</span>
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {SERVICES.map((s, i) => (
+              <div key={i} className="rounded-xl p-6 border transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:shadow-xl"
+                style={cardStyle}
+                onMouseEnter={e => (e.currentTarget.style.borderColor = C.borderCyan.replace("0.2", "0.4"))}
+                onMouseLeave={e => (e.currentTarget.style.borderColor = C.border)}>
+                <div className="w-11 h-11 rounded-lg flex items-center justify-center mb-5" style={{ background: "rgba(34,211,238,0.08)" }}>
+                  <Icon name={s.icon} fallback="Layers" size={20} style={{ color: C.cyan } as React.CSSProperties} />
+                </div>
+                <h3 className="font-black text-sm uppercase tracking-wide mb-2">{s.title}</h3>
+                <p className="text-sm leading-relaxed mb-4" style={{ color: C.muted }}>{s.desc}</p>
+                <div className="font-black text-sm" style={{ color: C.gold }}>{s.price}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── ТЕХНИКА ── */}
+      <section id="tech" className="py-24" style={{ background: C.bgDeep }}>
+        <div className="max-w-screen-xl mx-auto px-5">
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="h-px w-8" style={{ background: C.gold }} />
+              <span className="text-xs font-black uppercase tracking-[0.2em]" style={{ color: C.gold }}>Собственный парк</span>
+            </div>
+            <h2 className="font-black text-4xl md:text-6xl uppercase leading-tight">
+              Наша <span style={{ color: C.cyan }}>техника</span>
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {TECH.map((t, i) => (
+              <div key={i} className="flex items-start gap-4 rounded-xl p-5 border" style={cardStyle}>
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style={{ background: "rgba(240,192,48,0.1)" }}>
+                  <Icon name="Truck" size={18} style={{ color: C.gold } as React.CSSProperties} />
+                </div>
+                <div>
+                  <div className="font-black text-sm mb-1">{t.name}</div>
+                  <div className="text-xs mb-1" style={{ color: C.muted }}>{t.cap}</div>
+                  <div className="text-xs font-bold" style={{ color: C.cyan }}>{t.count}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── КАК РАБОТАЕТ ── */}
+      <section id="services" className="py-24" style={{ background: C.bg }}>
+        <div className="max-w-screen-xl mx-auto px-5">
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="h-px w-8" style={{ background: C.cyan }} />
+              <span className="text-xs font-black uppercase tracking-[0.2em]" style={{ color: C.cyan }}>Просто и прозрачно</span>
+            </div>
+            <h2 className="font-black text-4xl md:text-6xl uppercase leading-tight">
+              Как это <span style={{ color: C.gold }}>работает</span>
+            </h2>
+          </div>
+          <div className="relative">
+            <div className="absolute top-8 left-8 right-8 h-px hidden lg:block" style={{ background: `linear-gradient(to right, ${C.cyan}, rgba(34,211,238,0.05))` }} />
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 relative">
+              {HOW.map((h) => (
+                <div key={h.num} className="flex flex-col items-start lg:items-center text-left lg:text-center gap-4">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center font-black text-xl shrink-0 border-2 transition-all"
+                    style={{ background: C.bgDeep, borderColor: C.cyan, color: C.cyan }}>
+                    {h.num}
+                  </div>
+                  <div>
+                    <div className="font-black text-sm uppercase mb-2">{h.title}</div>
+                    <div className="text-xs leading-relaxed" style={{ color: C.muted }}>{h.desc}</div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* ─── ОТЗЫВЫ ─── */}
-      <section id="reviews" className="py-28 bg-zinc-50">
+      {/* ── ОТЗЫВЫ ── */}
+      <section id="reviews" className="py-24" style={{ background: C.bgDeep }}>
         <div className="max-w-screen-xl mx-auto px-5">
-          <div className="mb-16">
-            <p className="text-amber-500 text-[10px] font-black uppercase tracking-[0.25em] mb-4">— Клиенты о нас</p>
-            <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight text-zinc-900">
-              От<span className="text-amber-500">зывы</span>
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="h-px w-8" style={{ background: C.cyan }} />
+              <span className="text-xs font-black uppercase tracking-[0.2em]" style={{ color: C.cyan }}>Клиенты о нас</span>
+            </div>
+            <h2 className="font-black text-4xl md:text-6xl uppercase leading-tight">
+              От<span style={{ color: C.gold }}>зывы</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {REVIEWS.map((r, i) => (
-              <div key={i} className="bg-white border border-zinc-100 hover:border-amber-300/50 p-8 transition-all relative group overflow-hidden hover:shadow-md">
-                <div className="absolute -right-2 -top-4 font-black text-[9rem] text-zinc-100 group-hover:text-amber-400/20 transition-colors select-none leading-none">"</div>
-                <div className="flex gap-1 mb-5">
-                  {Array.from({ length: r.stars }).map((_, j) => <Icon key={j} name="Star" size={13} className="text-amber-500" />)}
+              <div key={i} className="rounded-xl p-7 border relative overflow-hidden" style={cardStyle}>
+                <div className="absolute -right-3 -top-5 font-black select-none leading-none" style={{ fontSize: "7rem", color: "rgba(34,211,238,0.05)" }}>"</div>
+                <div className="flex gap-1 mb-4">
+                  {Array.from({ length: r.stars }).map((_, j) => <Icon key={j} name="Star" size={13} style={{ color: C.gold } as React.CSSProperties} />)}
                 </div>
-                <p className="text-zinc-600 text-sm leading-relaxed mb-7 italic relative">«{r.text}»</p>
+                <p className="text-sm leading-relaxed mb-6 italic relative" style={{ color: C.light }}>«{r.text}»</p>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-amber-500/10 flex items-center justify-center shrink-0 skew-x-[-4deg]">
-                    <Icon name="User" size={14} className="text-amber-500" />
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ background: "rgba(34,211,238,0.08)" }}>
+                    <Icon name="User" size={14} style={{ color: C.cyan } as React.CSSProperties} />
                   </div>
                   <div>
-                    <div className="font-black text-xs uppercase tracking-wide text-zinc-900">{r.name}</div>
-                    <div className="text-zinc-400 text-xs mt-0.5">{r.role}</div>
+                    <div className="font-black text-xs uppercase tracking-wide">{r.name}</div>
+                    <div className="text-xs mt-0.5" style={{ color: C.muted }}>{r.role}</div>
                   </div>
                 </div>
               </div>
@@ -443,69 +420,71 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ─── КОНТАКТЫ ─── */}
-      <section id="contacts" className="py-28 bg-white">
+      {/* ── КОНТАКТЫ ── */}
+      <section id="contacts" className="py-24" style={{ background: C.bg }}>
         <div className="max-w-screen-xl mx-auto px-5">
-          <div className="mb-16">
-            <p className="text-amber-500 text-[10px] font-black uppercase tracking-[0.25em] mb-4">— Связаться</p>
-            <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight text-zinc-900">
-              Конта<span className="text-amber-500">кты</span>
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="h-px w-8" style={{ background: C.gold }} />
+              <span className="text-xs font-black uppercase tracking-[0.2em]" style={{ color: C.gold }}>Связаться</span>
+            </div>
+            <h2 className="font-black text-4xl md:text-6xl uppercase leading-tight">
+              Конта<span style={{ color: C.cyan }}>кты</span>
             </h2>
           </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <div className="space-y-4">
               {[
-                { icon: "Phone", label: "Телефон", val: PHONE, sub: "Звоните в любое время", href: PHONE_HREF },
+                { icon: "Phone", label: "Телефон", val: PHONE, sub: "Звонки — круглосуточно", href: PHONE_HREF },
                 { icon: "MapPin", label: "Город", val: "Нижний Новгород", sub: "Работаем по всей области", href: undefined },
-                { icon: "Clock", label: "Режим", val: "Пн–Пт 8:00–19:00", sub: "Приём заявок — круглосуточно", href: undefined },
+                { icon: "Clock", label: "Офис", val: "Пн–Пт 8:00–19:00", sub: "Заявки принимаем 24/7", href: undefined },
               ].map((c) => (
-                <a key={c.label}
-                  href={c.href}
-                  className="flex items-start gap-5 group p-5 bg-zinc-50 border border-zinc-100 hover:border-amber-400/40 hover:bg-amber-50/40 transition-colors">
-                  <div className="w-11 h-11 bg-amber-500/10 group-hover:bg-amber-500/20 flex items-center justify-center shrink-0 transition-colors">
-                    <Icon name={c.icon} fallback="Info" size={17} className="text-amber-500" />
+                <a key={c.label} href={c.href}
+                  className="flex items-center gap-5 rounded-xl p-5 border transition-all"
+                  style={cardStyle}
+                  onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(34,211,238,0.3)")}
+                  onMouseLeave={e => (e.currentTarget.style.borderColor = C.border)}>
+                  <div className="w-11 h-11 rounded-lg flex items-center justify-center shrink-0" style={{ background: "rgba(34,211,238,0.08)" }}>
+                    <Icon name={c.icon} fallback="Info" size={18} style={{ color: C.cyan } as React.CSSProperties} />
                   </div>
                   <div>
-                    <div className="text-zinc-400 text-[10px] font-black uppercase tracking-[0.15em] mb-0.5">{c.label}</div>
-                    <div className="font-black text-base text-zinc-900">{c.val}</div>
-                    <div className="text-zinc-400 text-xs mt-0.5">{c.sub}</div>
+                    <div className="text-[10px] font-black uppercase tracking-widest mb-0.5" style={{ color: C.muted }}>{c.label}</div>
+                    <div className="font-black text-base">{c.val}</div>
+                    <div className="text-xs mt-0.5" style={{ color: C.muted }}>{c.sub}</div>
                   </div>
                 </a>
               ))}
-
-              <div className="p-5 bg-zinc-50 border border-zinc-100">
-                <div className="text-zinc-400 text-[10px] font-black uppercase tracking-[0.15em] mb-3">Работаем в городах</div>
+              <div className="rounded-xl p-5 border" style={cardStyle}>
+                <div className="text-[10px] font-black uppercase tracking-widest mb-3" style={{ color: C.muted }}>Работаем в городах</div>
                 <div className="flex flex-wrap gap-2">
                   {["НН","Кстово","Бор","Дзержинск","Балахна","Арзамас","Выкса","Павлово"].map((city) => (
-                    <span key={city} className="bg-amber-500/10 text-amber-600 text-[10px] font-black uppercase tracking-widest px-3 py-1.5">{city}</span>
+                    <span key={city} className="text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full"
+                      style={{ background: "rgba(34,211,238,0.08)", color: C.cyan }}>{city}</span>
                   ))}
                 </div>
               </div>
             </div>
 
-            {/* CTA */}
-            <div className="relative bg-zinc-900 p-10 overflow-hidden flex flex-col justify-between min-h-80">
-              <div className="absolute inset-0 opacity-5" style={{
-                backgroundImage: "repeating-linear-gradient(-45deg, #f59e0b 0px, #f59e0b 1px, transparent 1px, transparent 12px)"
-              }} />
+            <div className="rounded-2xl p-10 flex flex-col justify-between gap-8 relative overflow-hidden"
+              style={{ background: `linear-gradient(135deg, ${C.bgDark}, ${C.bgDeep})`, border: `1px solid ${C.borderGold}` }}>
+              <div className="absolute -right-10 -top-10 w-48 h-48 rounded-full opacity-10" style={{ background: `radial-gradient(circle, ${C.gold}, transparent)` }} />
               <div className="relative">
-                <div className="font-black text-2xl uppercase leading-tight mb-4 text-white">
-                  Позвоните нам<br />прямо сейчас
-                </div>
-                <p className="text-zinc-400 text-sm leading-relaxed mb-8">
-                  Выезд замерщика в день обращения. Смета бесплатно. Работаем с юрлицами и физлицами.
+                <div className="font-black text-2xl uppercase leading-snug mb-3">Нужен расчёт<br />стоимости?</div>
+                <p className="text-sm leading-relaxed" style={{ color: C.muted }}>
+                  Выезд замерщика — бесплатно. Смета в день обращения. Работаем с физ. и юр. лицами, НДС.
                 </p>
               </div>
-              <div className="relative flex flex-col gap-3">
+              <div className="flex flex-col gap-3 relative">
                 <a href={PHONE_HREF}
-                  className="bg-amber-500 hover:bg-amber-400 text-black font-black text-base uppercase tracking-widest px-8 py-5 transition-all hover:scale-[1.02] active:scale-[0.98] text-center flex items-center justify-center gap-3">
+                  className="flex items-center justify-center gap-2 font-black text-base py-4 rounded-full transition-all hover:scale-[1.02]"
+                  style={{ background: `linear-gradient(135deg,${C.goldDark},${C.gold})`, color: "#000" }}>
                   <Icon name="Phone" size={18} />
                   {PHONE}
                 </a>
-                <button onClick={() => go("calc")}
-                  className="border-2 border-white/10 hover:border-amber-500 text-zinc-300 hover:text-amber-500 font-black text-xs uppercase tracking-widest px-8 py-4 transition-all text-center">
-                  Онлайн-расчёт стоимости →
+                <button onClick={() => go("hero")}
+                  className="font-black text-xs py-3 rounded-full border transition-all"
+                  style={{ borderColor: "rgba(255,255,255,0.12)", color: C.muted }}>
+                  Заполнить заявку онлайн →
                 </button>
               </div>
             </div>
@@ -513,18 +492,17 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ─── ПОДВАЛ ─── */}
-      <footer className="border-t border-zinc-100 py-8 bg-zinc-50">
+      {/* ── ПОДВАЛ ── */}
+      <footer className="py-7 border-t" style={{ background: C.bgDark, borderColor: C.border }}>
         <div className="max-w-screen-xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="relative">
-              <div className="w-7 h-7 bg-amber-500 skew-x-[-8deg]" />
-              <span className="absolute inset-0 flex items-center justify-center font-black text-black text-xs">Ф</span>
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: `linear-gradient(135deg,#b8960c,${C.gold})` }}>
+              <Icon name="Shield" size={14} className="text-black" />
             </div>
-            <span className="font-black text-sm tracking-widest uppercase text-zinc-900">Фаворит</span>
+            <span className="font-black text-sm tracking-wide uppercase" style={{ color: C.gold }}>ООО Фаворит</span>
           </div>
-          <p className="text-zinc-400 text-xs">© 2024 Фаворит. Асфальтирование в Нижнем Новгороде</p>
-          <button onClick={() => go("hero")} className="text-zinc-400 hover:text-zinc-600 text-xs transition-colors">Наверх ↑</button>
+          <p className="text-xs" style={{ color: "#374151" }}>© 2024 Фаворит. Асфальтирование в Нижнем Новгороде</p>
+          <button onClick={() => go("hero")} className="text-xs transition-colors" style={{ color: "#374151" }}>Наверх ↑</button>
         </div>
       </footer>
     </div>
