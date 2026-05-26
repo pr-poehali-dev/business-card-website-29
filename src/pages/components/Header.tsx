@@ -22,7 +22,7 @@ export default function Header({ activeNav, menuOpen, setMenuOpen, go }: HeaderP
   const [servicesOpen, setServicesOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b" style={{ background: "rgba(15,20,34,0.97)", borderColor: C.border, backdropFilter: "blur(16px)" }}>
+    <header className="fixed inset-x-0 top-0 z-50 border-b" style={{ background: "rgba(24,29,46,0.97)", borderColor: "rgba(255,255,255,0.1)", backdropFilter: "blur(20px)" }}>
       <div className="max-w-screen-xl mx-auto px-5 h-[70px] flex items-center justify-between gap-4">
 
         <button onClick={() => go("hero")} className="flex items-center gap-2 shrink-0">
@@ -42,7 +42,7 @@ export default function Header({ activeNav, menuOpen, setMenuOpen, go }: HeaderP
               preserveAspectRatio="xMidYMid slice"
               clipPath="url(#hShield)"/>
             <path d="M100,6 L182,40 L182,118 Q182,166 100,194 Q18,166 18,118 L18,40 Z" fill="url(#hFade)"/>
-            <path d="M100,6 L182,40 L182,118 Q182,166 100,194 Q18,166 18,118 L18,40 Z" fill="none" stroke="#f0c030" strokeWidth="4"/>
+            <path d="M100,6 L182,40 L182,118 Q182,166 100,194 Q18,166 18,118 L18,40 Z" fill="none" stroke="#ffd140" strokeWidth="4"/>
           </svg>
           <div className="leading-[1.2] text-left">
             <div className="text-[8px] font-bold uppercase tracking-[0.25em]" style={{ color: C.muted }}>КОМПАНИЯ · ОНЛАЙН</div>
@@ -74,7 +74,7 @@ export default function Header({ activeNav, menuOpen, setMenuOpen, go }: HeaderP
 
             {servicesOpen && (
               <div className="absolute top-full right-0 mt-2 w-64 rounded-2xl overflow-hidden shadow-2xl border"
-                style={{ background: "rgba(15,20,34,0.98)", borderColor: "rgba(34,211,238,0.2)", backdropFilter: "blur(20px)" }}>
+                style={{ background: "rgba(30,36,56,0.99)", borderColor: C.borderCyan, backdropFilter: "blur(24px)" }}>
                 <div className="p-2">
                   {SERVICES_MENU.map((s) => (
                     <Link key={s.to} to={s.to}
@@ -121,7 +121,7 @@ export default function Header({ activeNav, menuOpen, setMenuOpen, go }: HeaderP
 
       {/* Мобильное меню */}
       {menuOpen && (
-        <div className="lg:hidden px-5 py-5 flex flex-col gap-3 border-t" style={{ background: C.bgDeep, borderColor: C.border }}>
+        <div className="lg:hidden px-5 py-5 flex flex-col gap-3 border-t" style={{ background: "#181d2e", borderColor: "rgba(255,255,255,0.1)" }}>
           {NAV.map(([id, label]) => (
             <button key={id} onClick={() => go(id)} className="text-left text-sm font-bold uppercase tracking-widest py-1" style={{ color: C.subtle }}>{label}</button>
           ))}

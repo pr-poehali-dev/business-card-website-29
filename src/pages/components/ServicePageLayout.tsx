@@ -22,12 +22,12 @@ export interface ServicePageData {
 }
 
 const ACCENTS = [
-  { border: "rgba(34,211,238,0.45)",  icon: "rgba(34,211,238,0.12)",  color: "#22d3ee" },
-  { border: "rgba(240,192,48,0.45)",  icon: "rgba(240,192,48,0.12)",  color: "#f0c030" },
-  { border: "rgba(99,102,241,0.45)",  icon: "rgba(99,102,241,0.12)",  color: "#818cf8" },
-  { border: "rgba(239,68,68,0.45)",   icon: "rgba(239,68,68,0.12)",   color: "#f87171" },
-  { border: "rgba(34,197,94,0.45)",   icon: "rgba(34,197,94,0.12)",   color: "#4ade80" },
-  { border: "rgba(168,85,247,0.45)",  icon: "rgba(168,85,247,0.12)",  color: "#c084fc" },
+  { border: "rgba(56,232,255,0.4)",   icon: "rgba(56,232,255,0.10)",  color: "#38e8ff",  glow: "rgba(56,232,255,0.15)" },
+  { border: "rgba(255,209,64,0.4)",   icon: "rgba(255,209,64,0.10)",  color: "#ffd140",  glow: "rgba(255,209,64,0.15)" },
+  { border: "rgba(129,140,248,0.4)",  icon: "rgba(129,140,248,0.10)", color: "#a5b4fc",  glow: "rgba(129,140,248,0.15)" },
+  { border: "rgba(251,146,60,0.4)",   icon: "rgba(251,146,60,0.10)",  color: "#fb923c",  glow: "rgba(251,146,60,0.15)" },
+  { border: "rgba(74,222,128,0.4)",   icon: "rgba(74,222,128,0.10)",  color: "#4ade80",  glow: "rgba(74,222,128,0.15)" },
+  { border: "rgba(232,121,249,0.4)",  icon: "rgba(232,121,249,0.10)", color: "#e879f9",  glow: "rgba(232,121,249,0.15)" },
 ];
 
 function accent(i: number) { return ACCENTS[i % ACCENTS.length]; }
@@ -42,7 +42,7 @@ export default function ServicePageLayout({ data }: { data: ServicePageData }) {
     <div className="min-h-screen overflow-x-hidden" style={{ background: C.bg, color: "#fff" }}>
 
       {/* ── ШАПКА ── */}
-      <header className="fixed inset-x-0 top-0 z-50 border-b" style={{ background: "rgba(15,20,34,0.97)", borderColor: C.border, backdropFilter: "blur(16px)" }}>
+      <header className="fixed inset-x-0 top-0 z-50 border-b" style={{ background: "rgba(24,29,46,0.97)", borderColor: "rgba(255,255,255,0.1)", backdropFilter: "blur(20px)" }}>
         <div className="max-w-screen-xl mx-auto px-5 h-[70px] flex items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-2 shrink-0">
             <svg width="42" height="47" viewBox="0 0 200 220" style={{ filter: "drop-shadow(0 2px 12px rgba(240,192,48,0.45))", flexShrink: 0 }}>
@@ -61,7 +61,7 @@ export default function ServicePageLayout({ data }: { data: ServicePageData }) {
                 preserveAspectRatio="xMidYMid slice"
                 clipPath="url(#spShield)"/>
               <path d="M100,6 L182,40 L182,118 Q182,166 100,194 Q18,166 18,118 L18,40 Z" fill="url(#spFade)"/>
-              <path d="M100,6 L182,40 L182,118 Q182,166 100,194 Q18,166 18,118 L18,40 Z" fill="none" stroke="#f0c030" strokeWidth="4"/>
+              <path d="M100,6 L182,40 L182,118 Q182,166 100,194 Q18,166 18,118 L18,40 Z" fill="none" stroke="#ffd140" strokeWidth="4"/>
             </svg>
             <div className="leading-[1.2]">
               <div className="font-black text-[15px] tracking-wide" style={{ color: C.gold }}>ООО Фаворит</div>
@@ -123,13 +123,13 @@ export default function ServicePageLayout({ data }: { data: ServicePageData }) {
       </section>
 
       {/* ── СТАТИСТИКА ── */}
-      <section className="py-12 border-y" style={{ background: C.bgDeep, borderColor: C.border }}>
+      <section className="py-12 border-y" style={{ background: C.bgDeep, borderColor: "rgba(255,255,255,0.08)" }}>
         <div className="max-w-screen-xl mx-auto px-5">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {data.stats.map((s, i) => {
               const a = accent(i);
               return (
-                <div key={i} className="text-center rounded-2xl p-5" style={{ background: "rgba(20,25,40,0.9)", border: `1px solid ${a.border}` }}>
+                <div key={i} className="text-center rounded-2xl p-5" style={{ background: "linear-gradient(145deg, #252b3d, #1e2438)", border: `1px solid ${a.border}` }}>
                   <div className="font-black text-3xl md:text-4xl mb-1" style={{ color: a.color }}>{s.value}</div>
                   <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: C.muted }}>{s.label}</div>
                 </div>
@@ -140,12 +140,15 @@ export default function ServicePageLayout({ data }: { data: ServicePageData }) {
       </section>
 
       {/* ── ПРЕИМУЩЕСТВА ── */}
-      <section className="py-20" style={{ background: C.bg }}>
-        <div className="max-w-screen-xl mx-auto px-5">
+      <section className="py-20 relative overflow-hidden" style={{ background: C.bg }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+        <div className="absolute top-0 right-0 w-[500px] h-[300px] pointer-events-none" style={{ background: `radial-gradient(ellipse at top right, rgba(56,232,255,0.06) 0%, transparent 65%)` }} />
+        <div className="max-w-screen-xl mx-auto px-5 relative">
           <div className="mb-12">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="h-px w-8" style={{ background: C.cyan }} />
-              <span className="text-xs font-black uppercase tracking-[0.2em]" style={{ color: C.cyan }}>Почему выбирают нас</span>
+            <div className="inline-flex items-center gap-2.5 rounded-full px-4 py-1.5 mb-5"
+              style={{ background: "rgba(56,232,255,0.08)", border: "1px solid rgba(56,232,255,0.25)" }}>
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: C.cyan }} />
+              <span className="text-[10px] font-black uppercase tracking-[0.25em]" style={{ color: C.cyan }}>Почему выбирают нас</span>
             </div>
             <h2 className="font-black text-4xl md:text-5xl uppercase leading-tight">
               Наши <span style={{ color: C.gold }}>преимущества</span>
@@ -156,10 +159,16 @@ export default function ServicePageLayout({ data }: { data: ServicePageData }) {
               const a = accent(i);
               return (
                 <div key={i}
-                  className="rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1"
-                  style={{ background: "rgba(20,25,40,0.9)", border: `1px solid ${a.border}` }}
-                  onMouseEnter={e => (e.currentTarget.style.boxShadow = `0 8px 32px ${a.border}`)}
-                  onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}>
+                  className="rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1.5"
+                  style={{ background: "linear-gradient(145deg, #252b3d, #1e2438)", border: `1px solid ${a.border}` }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.boxShadow = `0 12px 40px ${a.glow}`;
+                    e.currentTarget.style.borderColor = a.color;
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.boxShadow = "none";
+                    e.currentTarget.style.borderColor = a.border;
+                  }}>
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
                       style={{ background: a.icon, border: `1px solid ${a.border}` }}>
@@ -167,8 +176,8 @@ export default function ServicePageLayout({ data }: { data: ServicePageData }) {
                     </div>
                     <h3 className="font-black text-sm uppercase leading-snug">{f.title}</h3>
                   </div>
-                  <div className="h-px mb-4 w-10" style={{ background: a.border }} />
-                  <p className="leading-relaxed" style={{ fontSize: 14.5, color: "#a8b3c7" }}>{f.desc}</p>
+                  <div className="h-0.5 mb-4 w-10 rounded-full" style={{ background: `linear-gradient(to right, ${a.color}, transparent)` }} />
+                  <p className="leading-relaxed" style={{ fontSize: 14.5, color: C.subtle }}>{f.desc}</p>
                 </div>
               );
             })}
@@ -177,12 +186,15 @@ export default function ServicePageLayout({ data }: { data: ServicePageData }) {
       </section>
 
       {/* ── КАК РАБОТАЕМ ── */}
-      <section className="py-20" style={{ background: C.bgDeep }}>
-        <div className="max-w-screen-xl mx-auto px-5">
+      <section className="py-20 relative overflow-hidden" style={{ background: C.bgDeep }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none" style={{ background: `radial-gradient(ellipse at bottom, rgba(255,209,64,0.07) 0%, transparent 65%)` }} />
+        <div className="max-w-screen-xl mx-auto px-5 relative">
           <div className="mb-12">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="h-px w-8" style={{ background: C.gold }} />
-              <span className="text-xs font-black uppercase tracking-[0.2em]" style={{ color: C.gold }}>Просто и прозрачно</span>
+            <div className="inline-flex items-center gap-2.5 rounded-full px-4 py-1.5 mb-5"
+              style={{ background: "rgba(255,209,64,0.08)", border: "1px solid rgba(255,209,64,0.28)" }}>
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: C.gold }} />
+              <span className="text-[10px] font-black uppercase tracking-[0.25em]" style={{ color: C.gold }}>Просто и прозрачно</span>
             </div>
             <h2 className="font-black text-4xl md:text-5xl uppercase leading-tight">
               Как мы <span style={{ color: C.cyan }}>работаем</span>
@@ -193,8 +205,16 @@ export default function ServicePageLayout({ data }: { data: ServicePageData }) {
               const a = accent(i);
               return (
                 <div key={i}
-                  className="rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1"
-                  style={{ background: "rgba(20,25,40,0.9)", border: `1px solid ${a.border}` }}>
+                  className="rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1.5"
+                  style={{ background: "linear-gradient(145deg, #252b3d, #1e2438)", border: `1px solid ${a.border}` }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.boxShadow = `0 12px 40px ${a.glow}`;
+                    e.currentTarget.style.borderColor = a.color;
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.boxShadow = "none";
+                    e.currentTarget.style.borderColor = a.border;
+                  }}>
                   <div className="flex items-center justify-between mb-4">
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center font-black text-lg"
                       style={{ background: a.icon, border: `1px solid ${a.border}`, color: a.color }}>
@@ -205,9 +225,9 @@ export default function ServicePageLayout({ data }: { data: ServicePageData }) {
                       ШАГ {s.num}
                     </span>
                   </div>
-                  <div className="h-px mb-3 w-10" style={{ background: a.border }} />
+                  <div className="h-0.5 mb-3 w-10 rounded-full" style={{ background: `linear-gradient(to right, ${a.color}, transparent)` }} />
                   <div className="font-black text-sm uppercase mb-2">{s.title}</div>
-                  <p style={{ fontSize: 13.5, color: "#a8b3c7", lineHeight: 1.6 }}>{s.desc}</p>
+                  <p style={{ fontSize: 13.5, color: C.subtle, lineHeight: 1.6 }}>{s.desc}</p>
                 </div>
               );
             })}
@@ -216,16 +236,17 @@ export default function ServicePageLayout({ data }: { data: ServicePageData }) {
       </section>
 
       {/* ── ФОРМА ── */}
-      <section className="py-20" style={{ background: C.bg }}>
-        <div className="max-w-screen-xl mx-auto px-5">
-          <div className="max-w-xl mx-auto rounded-2xl p-8 border" style={{ background: "rgba(15,20,34,0.9)", borderColor: C.borderCyan }}>
+      <section className="py-20 relative overflow-hidden" style={{ background: C.bg }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
+        <div className="max-w-screen-xl mx-auto px-5 relative">
+          <div className="max-w-xl mx-auto rounded-2xl p-8" style={{ background: "linear-gradient(145deg, #252b3d, #1e2438)", border: `1px solid ${C.borderCyan}` }}>
             {sent ? (
               <div className="py-10 text-center flex flex-col items-center gap-4">
                 <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: "rgba(34,211,238,0.12)", border: `1px solid ${C.borderCyan}` }}>
                   <Icon name="CheckCircle" size={32} style={{ color: C.cyan } as React.CSSProperties} />
                 </div>
                 <h3 className="font-black text-xl uppercase">Заявка принята!</h3>
-                <p style={{ fontSize: 14.5, color: "#a8b3c7" }}>Перезвоним в течение 5 минут в рабочее время</p>
+                <p style={{ fontSize: 14.5, color: C.subtle }}>Перезвоним в течение 5 минут в рабочее время</p>
               </div>
             ) : (
               <>
@@ -235,7 +256,7 @@ export default function ServicePageLayout({ data }: { data: ServicePageData }) {
                     <span className="text-xs font-black uppercase tracking-[0.2em]" style={{ color: C.gold }}>Бесплатный расчёт</span>
                   </div>
                   <h2 className="font-black text-2xl uppercase">Оставить заявку</h2>
-                  <p className="mt-2" style={{ fontSize: 14.5, color: "#a8b3c7" }}>
+                  <p className="mt-2" style={{ fontSize: 14.5, color: C.subtle }}>
                     {data.priceNote}
                   </p>
                 </div>

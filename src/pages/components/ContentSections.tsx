@@ -20,12 +20,12 @@ interface ContentSectionsProps {
 
 /* Палитра акцентов для карточек — по кругу */
 const ACCENTS = [
-  { border: "rgba(34,211,238,0.45)",  icon: "rgba(34,211,238,0.12)",  color: "#22d3ee" },
-  { border: "rgba(240,192,48,0.45)",  icon: "rgba(240,192,48,0.12)",  color: "#f0c030" },
-  { border: "rgba(99,102,241,0.45)",  icon: "rgba(99,102,241,0.12)",  color: "#818cf8" },
-  { border: "rgba(239,68,68,0.45)",   icon: "rgba(239,68,68,0.12)",   color: "#f87171" },
-  { border: "rgba(34,197,94,0.45)",   icon: "rgba(34,197,94,0.12)",   color: "#4ade80" },
-  { border: "rgba(168,85,247,0.45)",  icon: "rgba(168,85,247,0.12)",  color: "#c084fc" },
+  { border: "rgba(56,232,255,0.4)",   icon: "rgba(56,232,255,0.10)",  color: "#38e8ff",  glow: "rgba(56,232,255,0.15)" },
+  { border: "rgba(255,209,64,0.4)",   icon: "rgba(255,209,64,0.10)",  color: "#ffd140",  glow: "rgba(255,209,64,0.15)" },
+  { border: "rgba(129,140,248,0.4)",  icon: "rgba(129,140,248,0.10)", color: "#a5b4fc",  glow: "rgba(129,140,248,0.15)" },
+  { border: "rgba(251,146,60,0.4)",   icon: "rgba(251,146,60,0.10)",  color: "#fb923c",  glow: "rgba(251,146,60,0.15)" },
+  { border: "rgba(74,222,128,0.4)",   icon: "rgba(74,222,128,0.10)",  color: "#4ade80",  glow: "rgba(74,222,128,0.15)" },
+  { border: "rgba(232,121,249,0.4)",  icon: "rgba(232,121,249,0.10)", color: "#e879f9",  glow: "rgba(232,121,249,0.15)" },
 ];
 
 function accent(i: number) { return ACCENTS[i % ACCENTS.length]; }
@@ -44,37 +44,42 @@ function Card({
   const a = accent(i);
   return (
     <div
-      className="relative rounded-2xl p-6 overflow-hidden transition-all duration-300 hover:-translate-y-1"
+      className="relative rounded-2xl p-6 overflow-hidden transition-all duration-300 hover:-translate-y-1.5 group"
       style={{
-        background: "rgba(20,25,40,0.9)",
+        background: `linear-gradient(145deg, #252b3d, #1e2438)`,
         border: `1px solid ${a.border}`,
-        boxShadow: `0 0 0 0 ${a.border}`,
       }}
-      onMouseEnter={e => (e.currentTarget.style.boxShadow = `0 8px 32px ${a.border}`)}
-      onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}
+      onMouseEnter={e => {
+        e.currentTarget.style.boxShadow = `0 12px 40px ${a.glow}, 0 0 0 1px ${a.border}`;
+        e.currentTarget.style.borderColor = a.color;
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.boxShadow = "none";
+        e.currentTarget.style.borderColor = a.border;
+      }}
     >
+      {/* Угловой свет */}
+      <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{ background: `radial-gradient(circle, ${a.glow}, transparent 70%)` }} />
+
       <div className="relative">
         <div className="flex items-start justify-between mb-4 gap-3">
           <div className="flex items-center gap-3">
-            {/* Иконка */}
             <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
               style={{ background: a.icon, border: `1px solid ${a.border}` }}>
               <Icon name={icon} fallback="Layers" size={20} style={{ color: a.color } as React.CSSProperties} />
             </div>
-            {/* Заголовок */}
-            <h3 className="font-black text-sm uppercase leading-snug">{title}</h3>
+            <h3 className="font-black text-sm uppercase leading-snug tracking-wide">{title}</h3>
           </div>
-          {/* Бейдж */}
           <span className="shrink-0 text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full"
             style={{ background: a.icon, color: a.color, border: `1px solid ${a.border}`, whiteSpace: "nowrap" }}>
             {badge}
           </span>
         </div>
 
-        {/* Разделитель */}
-        <div className="h-px mb-4 w-12" style={{ background: a.border }} />
+        <div className="h-px mb-4 w-12 rounded-full" style={{ background: `linear-gradient(to right, ${a.color}, transparent)` }} />
 
-        <p className="leading-relaxed" style={{ fontSize: 14.5, color: "#a8b3c7" }}>{desc}</p>
+        <p className="leading-relaxed" style={{ fontSize: 14.5, color: C.subtle }}>{desc}</p>
 
         {extra && <div className="mt-4">{extra}</div>}
       </div>
@@ -86,14 +91,19 @@ function Card({
 function SectionTitle({ accent: accentColor, label, title }: { accent: string; label: string; title: React.ReactNode }) {
   return (
     <div className="mb-12">
-      <div className="flex items-center gap-3 mb-3">
-        <div className="h-px w-8" style={{ background: accentColor }} />
-        <span className="text-xs font-black uppercase tracking-[0.2em]" style={{ color: accentColor }}>{label}</span>
+      <div className="inline-flex items-center gap-2.5 rounded-full px-4 py-1.5 mb-5"
+        style={{ background: `${accentColor}14`, border: `1px solid ${accentColor}35` }}>
+        <span className="w-1.5 h-1.5 rounded-full" style={{ background: accentColor }} />
+        <span className="text-[10px] font-black uppercase tracking-[0.25em]" style={{ color: accentColor }}>{label}</span>
       </div>
       <h2 className="font-black text-4xl md:text-6xl uppercase leading-tight">{title}</h2>
     </div>
   );
 }
+
+/* Паттерн-фон точки */
+const DOT_BG = "radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px)";
+const LINE_BG = "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)";
 
 export default function ContentSections({ form, setForm, sent, setSent, go }: ContentSectionsProps) {
   const inputStyle = {
@@ -105,8 +115,10 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
   return (
     <>
       {/* ── УСЛУГИ ── */}
-      <section id="works" className="py-24" style={{ background: C.bg }}>
-        <div className="max-w-screen-xl mx-auto px-5">
+      <section id="works" className="py-24 relative overflow-hidden" style={{ background: C.bg }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: DOT_BG, backgroundSize: "28px 28px", opacity: 0.8 }} />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none" style={{ background: `radial-gradient(ellipse, ${C.cyanDim}0a 0%, transparent 70%)` }} />
+        <div className="max-w-screen-xl mx-auto px-5 relative">
           <SectionTitle accent={C.cyan} label="Что мы делаем" title={<>Наши <span style={{ color: C.gold }}>услуги</span></>} />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {SERVICES.map((s, i) => (
@@ -126,8 +138,10 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
       </section>
 
       {/* ── ТЕХНИКА ── */}
-      <section id="tech" className="py-24" style={{ background: C.bgDeep }}>
-        <div className="max-w-screen-xl mx-auto px-5">
+      <section id="tech" className="py-24 relative overflow-hidden" style={{ background: C.bgDeep }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: LINE_BG, backgroundSize: "60px 60px" }} />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[400px] pointer-events-none" style={{ background: `radial-gradient(ellipse at bottom right, ${C.gold}0d 0%, transparent 65%)` }} />
+        <div className="max-w-screen-xl mx-auto px-5 relative">
           <SectionTitle accent={C.gold} label="Собственный парк" title={<>Наша <span style={{ color: C.cyan }}>техника</span></>} />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {TECH.map((t, i) => (
@@ -138,8 +152,10 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
       </section>
 
       {/* ── КАК РАБОТАЕТ ── */}
-      <section id="services" className="py-24" style={{ background: C.bg }}>
-        <div className="max-w-screen-xl mx-auto px-5">
+      <section id="services" className="py-24 relative overflow-hidden" style={{ background: C.bg }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: DOT_BG, backgroundSize: "22px 22px", opacity: 0.6 }} />
+        <div className="absolute top-1/2 -translate-y-1/2 left-0 w-[400px] h-[400px] pointer-events-none" style={{ background: `radial-gradient(circle, ${C.cyanDim}08 0%, transparent 70%)` }} />
+        <div className="max-w-screen-xl mx-auto px-5 relative">
           <SectionTitle accent={C.cyan} label="Просто и прозрачно" title={<>Как это <span style={{ color: C.gold }}>работает</span></>} />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
             {HOW.map((h, i) => (
@@ -150,47 +166,53 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
       </section>
 
       {/* ── ПРИМЕРЫ РАБОТ ── */}
-      <section id="portfolio" className="py-24" style={{ background: C.bgDeep }}>
-        <div className="max-w-screen-xl mx-auto px-5">
+      <section id="portfolio" className="py-24 relative overflow-hidden" style={{ background: C.bgDeep }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: LINE_BG, backgroundSize: "50px 50px" }} />
+        <div className="max-w-screen-xl mx-auto px-5 relative">
           <SectionTitle accent={C.cyan} label="Выполненные объекты" title={<>Примеры <span style={{ color: C.gold }}>работ</span></>} />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {WORKS.map((w, i) => {
               const a = accent(i);
               return (
                 <div key={i}
-                  className="relative rounded-2xl overflow-hidden group transition-all duration-300 hover:-translate-y-1"
-                  style={{ background: "rgba(20,25,40,0.9)", border: `1px solid ${a.border}` }}
-                  onMouseEnter={e => (e.currentTarget.style.boxShadow = `0 8px 32px ${a.border}`)}
-                  onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}>
+                  className="relative rounded-2xl overflow-hidden group transition-all duration-300 hover:-translate-y-2"
+                  style={{ background: `linear-gradient(145deg, #252b3d, #1e2438)`, border: `1px solid ${a.border}` }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.boxShadow = `0 16px 48px ${a.glow}`;
+                    e.currentTarget.style.borderColor = a.color;
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.boxShadow = "none";
+                    e.currentTarget.style.borderColor = a.border;
+                  }}>
 
                   {/* Фото */}
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-52 overflow-hidden">
                     <img src={w.img} alt={w.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                    <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 40%, rgba(10,14,24,0.92))" }} />
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108" />
+                    <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 35%, rgba(18,22,36,0.95))" }} />
                     {/* Бейдж */}
-                    <div className="absolute top-3 right-3">
-                      <span className="text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full"
-                        style={{ background: "rgba(10,14,24,0.75)", color: a.color, border: `1px solid ${a.border}`, backdropFilter: "blur(6px)" }}>
+                    <div className="absolute top-3 left-3">
+                      <span className="text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full"
+                        style={{ background: a.glow, color: a.color, border: `1px solid ${a.border}`, backdropFilter: "blur(8px)" }}>
                         {w.tag}
                       </span>
                     </div>
-
+                    {/* Площадь поверх фото */}
+                    <div className="absolute bottom-3 right-3 flex items-center gap-1 text-xs font-black"
+                      style={{ color: "#fff", textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}>
+                      <Icon name="Maximize2" size={11} />
+                      {w.area}
+                    </div>
                   </div>
 
                   <div className="p-5">
-                    <div className="h-px mb-4 w-10" style={{ background: a.border }} />
+                    <div className="h-0.5 mb-4 w-10 rounded-full" style={{ background: `linear-gradient(to right, ${a.color}, transparent)` }} />
                     <h3 className="font-black text-sm uppercase tracking-wide mb-2">{w.title}</h3>
-                    <p className="leading-relaxed mb-4" style={{ fontSize: 14.5, color: "#a8b3c7" }}>{w.desc}</p>
-                    <div className="flex items-center justify-between pt-3 border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-                      <div className="flex items-center gap-1.5 text-xs font-bold" style={{ color: C.subtle }}>
-                        <Icon name="Maximize2" size={12} />
-                        {w.area}
-                      </div>
-                      <div className="flex items-center gap-1.5 text-xs font-bold" style={{ color: C.subtle }}>
-                        <Icon name="MapPin" size={12} />
-                        {w.city}
-                      </div>
+                    <p className="leading-relaxed mb-4" style={{ fontSize: 14, color: C.subtle }}>{w.desc}</p>
+                    <div className="flex items-center gap-1.5 text-xs font-bold" style={{ color: C.muted }}>
+                      <Icon name="MapPin" size={11} style={{ color: a.color } as React.CSSProperties} />
+                      {w.city}
                     </div>
                   </div>
                 </div>
@@ -201,18 +223,26 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
       </section>
 
       {/* ── ОТЗЫВЫ ── */}
-      <section id="reviews" className="py-24" style={{ background: C.bg }}>
-        <div className="max-w-screen-xl mx-auto px-5">
+      <section id="reviews" className="py-24 relative overflow-hidden" style={{ background: C.bg }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: DOT_BG, backgroundSize: "24px 24px", opacity: 0.7 }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] pointer-events-none" style={{ background: `radial-gradient(ellipse, ${C.gold}07 0%, transparent 65%)` }} />
+        <div className="max-w-screen-xl mx-auto px-5 relative">
           <SectionTitle accent={C.cyan} label="Клиенты о нас" title={<>От<span style={{ color: C.gold }}>зывы</span></>} />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {REVIEWS.map((r, i) => {
               const a = accent(i);
               return (
                 <div key={i}
-                  className="relative rounded-2xl p-7 overflow-hidden transition-all duration-300 hover:-translate-y-1"
-                  style={{ background: "rgba(20,25,40,0.9)", border: `1px solid ${a.border}` }}
-                  onMouseEnter={e => (e.currentTarget.style.boxShadow = `0 8px 32px ${a.border}`)}
-                  onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}>
+                  className="relative rounded-2xl p-7 overflow-hidden transition-all duration-300 hover:-translate-y-1.5"
+                  style={{ background: `linear-gradient(145deg, #252b3d, #1e2438)`, border: `1px solid ${a.border}` }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.boxShadow = `0 12px 40px ${a.glow}`;
+                    e.currentTarget.style.borderColor = a.color;
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.boxShadow = "none";
+                    e.currentTarget.style.borderColor = a.border;
+                  }}>
                   {/* Большая кавычка */}
                   <div className="absolute right-4 top-0 font-black select-none pointer-events-none leading-none"
                     style={{ fontSize: "7rem", color: a.border, fontFamily: "Georgia, serif" }}>
@@ -245,8 +275,10 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
       </section>
 
       {/* ── ФОРМА ЗАЯВКИ ── */}
-      <section id="form" className="py-24" style={{ background: C.bgDeep }}>
-        <div className="max-w-screen-xl mx-auto px-5">
+      <section id="form" className="py-24 relative overflow-hidden" style={{ background: C.bgDeep }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: LINE_BG, backgroundSize: "55px 55px" }} />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[400px] pointer-events-none" style={{ background: `radial-gradient(ellipse at bottom left, ${C.cyanDim}09 0%, transparent 65%)` }} />
+        <div className="max-w-screen-xl mx-auto px-5 relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="flex items-center gap-3 mb-4">
@@ -271,7 +303,7 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
               </div>
             </div>
 
-            <div className="rounded-2xl p-8 border" style={{ background: "rgba(15,20,34,0.9)", borderColor: C.borderCyan }}>
+            <div className="rounded-2xl p-8" style={{ background: "linear-gradient(145deg, #252b3d, #1e2438)", border: `1px solid ${C.borderCyan}` }}>
               {sent ? (
                 <div className="py-12 text-center flex flex-col items-center gap-4">
                   <div className="w-20 h-20 rounded-2xl flex items-center justify-center" style={{ background: "rgba(34,211,238,0.12)", border: `1px solid ${C.borderCyan}` }}>
@@ -335,8 +367,9 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
       </section>
 
       {/* ── КОНТАКТЫ ── */}
-      <section id="contacts" className="py-24" style={{ background: C.bg }}>
-        <div className="max-w-screen-xl mx-auto px-5">
+      <section id="contacts" className="py-24 relative overflow-hidden" style={{ background: C.bg }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: DOT_BG, backgroundSize: "26px 26px", opacity: 0.7 }} />
+        <div className="max-w-screen-xl mx-auto px-5 relative">
           <SectionTitle accent={C.gold} label="Связаться" title={<>Конта<span style={{ color: C.cyan }}>кты</span></>} />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <div className="space-y-4">
@@ -349,9 +382,15 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
                 return (
                   <a key={c.label} href={c.href}
                     className="flex items-center gap-5 rounded-2xl p-5 transition-all duration-300 block"
-                    style={{ background: "rgba(20,25,40,0.9)", border: `1px solid ${a.border}`, textDecoration: "none" }}
-                    onMouseEnter={e => (e.currentTarget.style.boxShadow = `0 8px 24px ${a.border}`)}
-                    onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}>
+                    style={{ background: `linear-gradient(145deg, #252b3d, #1e2438)`, border: `1px solid ${a.border}`, textDecoration: "none" }}
+                    onMouseEnter={e => {
+                      (e.currentTarget as HTMLElement).style.boxShadow = `0 10px 30px ${a.glow}`;
+                      (e.currentTarget as HTMLElement).style.borderColor = a.color;
+                    }}
+                    onMouseLeave={e => {
+                      (e.currentTarget as HTMLElement).style.boxShadow = "none";
+                      (e.currentTarget as HTMLElement).style.borderColor = a.border;
+                    }}>
                     <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
                       style={{ background: a.icon, border: `1px solid ${a.border}` }}>
                       <Icon name={c.icon} fallback="Info" size={18} style={{ color: a.color } as React.CSSProperties} />
@@ -368,7 +407,7 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
                   </a>
                 );
               })}
-              <div className="rounded-2xl p-5" style={{ background: "rgba(20,25,40,0.9)", border: `1px solid ${ACCENTS[3].border}` }}>
+              <div className="rounded-2xl p-5" style={{ background: `linear-gradient(145deg, #252b3d, #1e2438)`, border: `1px solid ${ACCENTS[3].border}` }}>
                 <div className="text-[10px] font-black uppercase tracking-widest mb-3" style={{ color: C.muted }}>Работаем в городах</div>
                 <div className="flex flex-wrap gap-2">
                   {["НН","Кстово","Бор","Дзержинск","Балахна","Арзамас","Выкса","Павлово"].map((city, i) => {
@@ -385,8 +424,9 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
             </div>
 
             <div className="rounded-2xl p-10 flex flex-col justify-between gap-8 relative overflow-hidden"
-              style={{ background: `linear-gradient(135deg, ${C.bgDark}, ${C.bgDeep})`, border: `1px solid ${C.borderGold}` }}>
-              <div className="absolute -right-10 -top-10 w-48 h-48 rounded-full opacity-10" style={{ background: `radial-gradient(circle, ${C.gold}, transparent)` }} />
+              style={{ background: `linear-gradient(135deg, #252b3d 0%, #1a1f30 100%)`, border: `1px solid ${C.borderGold}` }}>
+              <div className="absolute -right-8 -top-8 w-52 h-52 rounded-full pointer-events-none" style={{ background: `radial-gradient(circle, ${C.gold}18 0%, transparent 70%)` }} />
+              <div className="absolute -left-8 -bottom-8 w-40 h-40 rounded-full pointer-events-none" style={{ background: `radial-gradient(circle, ${C.cyanDim}12 0%, transparent 70%)` }} />
               <div className="relative">
                 <div className="font-black text-2xl uppercase leading-snug mb-3">Нужен расчёт<br />стоимости?</div>
                 <p className="leading-relaxed" style={{ fontSize: 15, color: "#a8b3c7" }}>

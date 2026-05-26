@@ -112,7 +112,7 @@ export default function HeroSection({ go }: HeroSectionProps) {
           style={{ minHeight: "calc(100svh - 70px)", paddingTop: "3rem", paddingBottom: "6rem", zIndex: 5 }}>
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-7 text-xs font-bold uppercase tracking-widest"
-              style={{ background: "rgba(34,211,238,0.08)", border: `1px solid rgba(34,211,238,0.25)`, color: C.cyan }}>
+              style={{ background: "rgba(56,232,255,0.08)", border: `1px solid rgba(56,232,255,0.28)`, color: C.cyan }}>
               <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: C.cyan }} />
               Нижний Новгород и область · Работаем 24/7
             </div>
