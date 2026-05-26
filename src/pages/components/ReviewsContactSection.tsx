@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { jsPDF } from "jspdf";
 import Icon from "@/components/ui/icon";
 import { C, REVIEWS, PHONE, PHONE_HREF } from "./constants";
 import { accent, ACCENTS, SectionTitle, PhotoDivider, FormState } from "./SharedUI";
@@ -33,6 +34,41 @@ const REQ_ITEMS = [
   { icon: "ScanLine", label: "БИК", value: "044525593" },
 ];
 
+function makePdf(title: string, lines: string[][]): jsPDF {
+  const doc = new jsPDF({ unit: "mm", format: "a4" });
+  doc.setFont("helvetica");
+
+  doc.setFontSize(16);
+  doc.setTextColor(30, 30, 30);
+  doc.text(title, 20, 24);
+
+  doc.setDrawColor(34, 211, 238);
+  doc.setLineWidth(0.5);
+  doc.line(20, 28, 190, 28);
+
+  let y = 38;
+  for (const [label, value] of lines) {
+    doc.setFontSize(8);
+    doc.setTextColor(120, 140, 160);
+    doc.text(label.toUpperCase(), 20, y);
+    y += 5;
+    doc.setFontSize(11);
+    doc.setTextColor(20, 20, 20);
+    const wrapped = doc.splitTextToSize(value, 170);
+    doc.text(wrapped, 20, y);
+    y += wrapped.length * 6 + 4;
+    doc.setDrawColor(220, 230, 240);
+    doc.setLineWidth(0.2);
+    doc.line(20, y, 190, y);
+    y += 6;
+  }
+
+  doc.setFontSize(8);
+  doc.setTextColor(160, 160, 160);
+  doc.text("ООО «ФАВОРИТ» — официальные реквизиты", 20, 285);
+  return doc;
+}
+
 function RequisitesCard() {
   const [copied, setCopied] = useState<string | null>(null);
 
@@ -49,6 +85,76 @@ function RequisitesCard() {
       setCopied(label);
       setTimeout(() => setCopied(null), 1500);
     });
+  }
+
+  function downloadPdf() {
+    const doc = makePdf("Реквизиты ООО «ФАВОРИТ»", REQ_ITEMS.map(r => [r.label, r.value]));
+    doc.save("Реквизиты_ООО_Фаворит.pdf");
+  }
+
+  function downloadContract() {
+    const lines = [
+      "ДОГОВОР-ЗАЯВКА",
+      "",
+      "на оказание услуг по уборке помещений",
+      "",
+      `г. Нижний Новгород                                   «___» _________ 2024 г.`,
+      "",
+      "ООО «ФАВОРИТ», именуемое в дальнейшем «Исполнитель», в лице директора",
+      "Мкртчяна Саргиса Варужановича, действующего на основании Устава,",
+      "и ________________________________, именуемый(ая) в дальнейшем «Заказчик»,",
+      "заключили настоящий договор о нижеследующем:",
+      "",
+      "1. ПРЕДМЕТ ДОГОВОРА",
+      "Исполнитель оказывает услуги по профессиональной уборке помещений",
+      "по адресу: _____________________________________________",
+      "Площадь объекта: ______ м²",
+      "",
+      "2. СТОИМОСТЬ И ПОРЯДОК ОПЛАТЫ",
+      "Стоимость услуг: ____________ руб.",
+      "Оплата производится: ___________________",
+      "",
+      "3. РЕКВИЗИТЫ ИСПОЛНИТЕЛЯ",
+      ...REQ_ITEMS.map(r => `${r.label}: ${r.value}`),
+      "",
+      "4. ПОДПИСИ СТОРОН",
+      "",
+      "Исполнитель: _____________________  /Мкртчян С.В./",
+      "Заказчик:    _____________________  /____________/",
+    ];
+
+    const doc = new jsPDF({ unit: "mm", format: "a4" });
+    doc.setFont("helvetica");
+    doc.setFontSize(14);
+    doc.setTextColor(30, 30, 30);
+    doc.text("ДОГОВОР-ЗАЯВКА", 105, 20, { align: "center" });
+    doc.setFontSize(11);
+    doc.text("на оказание услуг по уборке помещений", 105, 28, { align: "center" });
+    doc.setDrawColor(240, 192, 48);
+    doc.setLineWidth(0.6);
+    doc.line(20, 32, 190, 32);
+
+    let y = 42;
+    doc.setFontSize(10);
+    doc.setTextColor(40, 40, 40);
+    for (let i = 2; i < lines.length; i++) {
+      if (y > 270) { doc.addPage(); y = 20; }
+      if (lines[i] === "" ) { y += 4; continue; }
+      if (lines[i].match(/^\d\./)) {
+        doc.setFontSize(11);
+        doc.setTextColor(20, 20, 20);
+        y += 2;
+        doc.text(lines[i], 20, y);
+        y += 7;
+        doc.setFontSize(10);
+        doc.setTextColor(60, 60, 60);
+      } else {
+        const wrapped = doc.splitTextToSize(lines[i], 170);
+        doc.text(wrapped, 20, y);
+        y += wrapped.length * 5.5 + 1;
+      }
+    }
+    doc.save("Договор_ООО_Фаворит.pdf");
   }
 
   return (
@@ -71,21 +177,13 @@ function RequisitesCard() {
             <Icon name={copied === "__all__" ? "Check" : "Copy"} size={12} />
             {copied === "__all__" ? "Скопировано" : "Скопировать"}
           </button>
-          <button
-            onClick={() => {
-              const lines = REQ_ITEMS.map(r => `${r.label}: ${r.value}`).join("\n");
-              const blob = new Blob([lines], { type: "text/plain" });
-              const url = URL.createObjectURL(blob);
-              const a = document.createElement("a");
-              a.href = url; a.download = "Реквизиты_ООО_Фаворит.txt"; a.click();
-              URL.revokeObjectURL(url);
-            }}
+          <button onClick={downloadPdf}
             className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-wider px-3 py-2 rounded-lg transition-all"
             style={{ background: "rgba(255,255,255,0.06)", color: "#94a3b8", border: "1px solid rgba(255,255,255,0.1)" }}>
             <Icon name="Download" size={12} />
             PDF
           </button>
-          <button
+          <button onClick={downloadContract}
             className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-wider px-4 py-2 rounded-lg transition-all"
             style={{ background: `linear-gradient(135deg,${C.goldDark},${C.gold})`, color: "#000" }}>
             <Icon name="FileText" size={12} />
