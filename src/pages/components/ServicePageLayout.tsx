@@ -290,11 +290,29 @@ export default function ServicePageLayout({ data }: { data: ServicePageData }) {
       </section>
 
       {/* ── ПОДВАЛ ── */}
-      <footer className="py-6 border-t" style={{ background: C.bgDark, borderColor: C.border }}>
-        <div className="max-w-screen-xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-4">
-          <span className="font-black text-sm" style={{ color: C.gold }}>ООО Фаворит</span>
-          <p className="text-xs" style={{ color: "#374151" }}>© 2024 Фаворит. Асфальтирование в Нижнем Новгороде</p>
-          <Link to="/" className="text-xs transition-colors" style={{ color: "#374151" }}>← На главную</Link>
+      <footer style={{ background: C.bgDark, borderTop: `1px solid ${C.border}` }}>
+        {/* Дисклеймер */}
+        <div style={{ borderBottom: `1px solid ${C.border}`, padding: "10px 20px" }}>
+          <div className="max-w-screen-xl mx-auto flex items-center gap-2.5">
+            <Icon name="Info" size={14} style={{ color: C.muted, flexShrink: 0 } as React.CSSProperties} />
+            <p className="text-xs leading-relaxed" style={{ color: C.muted }}>
+              Обращаем ваше внимание, что сайт носит исключительно информационный характер и ни при каких условиях не является публичной офертой.
+            </p>
+          </div>
+        </div>
+        {/* Копирайт */}
+        <div className="max-w-screen-xl mx-auto px-5 py-5 flex flex-col md:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-center md:text-left" style={{ color: C.muted }}>
+            © 2015–2026 ООО «Фаворит» — аренда манипуляторов в Нижнем Новгороде и области
+          </p>
+          <div className="flex items-center gap-5">
+            <button className="text-xs transition-opacity hover:opacity-80" style={{ color: C.cyan, background: "none", border: "none", cursor: "pointer" }}>
+              Политика конфиденциальности
+            </button>
+            <Link to="/" className="text-xs transition-opacity hover:opacity-70" style={{ color: C.muted }}>
+              ← На главную
+            </Link>
+          </div>
         </div>
       </footer>
     </div>

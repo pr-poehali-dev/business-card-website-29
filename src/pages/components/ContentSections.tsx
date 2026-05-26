@@ -412,33 +412,29 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
       </section>
 
       {/* ── ПОДВАЛ ── */}
-      <footer className="py-7 border-t" style={{ background: C.bgDark, borderColor: C.border }}>
-        <div className="max-w-screen-xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <svg width="36" height="40" viewBox="0 0 200 220" style={{ filter: "drop-shadow(0 1px 8px rgba(240,192,48,0.4))", flexShrink: 0 }}>
-              <defs>
-                <clipPath id="fShield">
-                  <path d="M100,6 L182,40 L182,118 Q182,166 100,194 Q18,166 18,118 L18,40 Z"/>
-                </clipPath>
-                <linearGradient id="fFade" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="50%" stopColor="transparent"/>
-                  <stop offset="100%" stopColor="rgba(10,14,24,0.8)"/>
-                </linearGradient>
-              </defs>
-              <image
-                href="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/bucket/c86c5623-6496-4556-91b1-3ddf8e92b89a.jpg"
-                x="18" y="6" width="164" height="188"
-                preserveAspectRatio="xMidYMid slice"
-                clipPath="url(#fShield)"/>
-              <path d="M100,6 L182,40 L182,118 Q182,166 100,194 Q18,166 18,118 L18,40 Z"
-                fill="url(#fFade)"/>
-              <path d="M100,6 L182,40 L182,118 Q182,166 100,194 Q18,166 18,118 L18,40 Z"
-                fill="none" stroke="#f0c030" strokeWidth="4"/>
-            </svg>
-            <span className="font-black text-sm tracking-wide uppercase" style={{ color: C.gold }}>ООО Фаворит</span>
+      <footer style={{ background: C.bgDark, borderTop: `1px solid ${C.border}` }}>
+        {/* Дисклеймер */}
+        <div style={{ borderBottom: `1px solid ${C.border}`, padding: "10px 20px" }}>
+          <div className="max-w-screen-xl mx-auto flex items-center gap-2.5">
+            <Icon name="Info" size={14} style={{ color: C.muted, flexShrink: 0 } as React.CSSProperties} />
+            <p className="text-xs leading-relaxed" style={{ color: C.muted }}>
+              Обращаем ваше внимание, что сайт носит исключительно информационный характер и ни при каких условиях не является публичной офертой.
+            </p>
           </div>
-          <p className="text-xs" style={{ color: "#374151" }}>© 2024 Фаворит. Асфальтирование в Нижнем Новгороде</p>
-          <button onClick={() => go("hero")} className="text-xs transition-colors" style={{ color: "#374151" }}>Наверх ↑</button>
+        </div>
+        {/* Копирайт */}
+        <div className="max-w-screen-xl mx-auto px-5 py-5 flex flex-col md:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-center md:text-left" style={{ color: C.muted }}>
+            © 2015–2026 ООО «Фаворит» — аренда манипуляторов в Нижнем Новгороде и области
+          </p>
+          <div className="flex items-center gap-5">
+            <button className="text-xs transition-opacity hover:opacity-80" style={{ color: C.cyan, background: "none", border: "none", cursor: "pointer" }}>
+              Политика конфиденциальности
+            </button>
+            <button onClick={() => go("hero")} className="text-xs transition-opacity hover:opacity-70" style={{ color: C.muted, background: "none", border: "none", cursor: "pointer" }}>
+              Наверх ↑
+            </button>
+          </div>
         </div>
       </footer>
     </>
