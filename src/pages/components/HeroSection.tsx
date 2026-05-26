@@ -72,7 +72,7 @@ export default function HeroSection({ go }: HeroSectionProps) {
             alt=""
             className={`w-full h-full object-cover kb-${current % 6}`}
             style={{
-              filter: "saturate(1.2) contrast(1.08) brightness(0.85)",
+              filter: "saturate(1.1) contrast(1.05) brightness(1.0)",
               opacity: fading ? 0 : 1,
               transition: "opacity 1.2s ease",
               transformOrigin: "center center",

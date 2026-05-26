@@ -90,8 +90,8 @@ export default function ServicePageLayout({ data }: { data: ServicePageData }) {
       {/* ── ГЕРОЙ ── */}
       <section className="relative pt-[70px] min-h-[60vh] flex items-end pb-16" style={{ background: C.bgDark }}>
         <div className="absolute inset-0">
-          <img src={data.heroImg} alt={data.title} className="w-full h-full object-cover opacity-55" />
-          <div className="absolute inset-0" style={{ background: `linear-gradient(to bottom, rgba(15,20,34,0.25), rgba(15,20,34,0.75) 80%, ${C.bgDark})` }} />
+          <img src={data.heroImg} alt={data.title} className="w-full h-full object-cover" />
+          <div className="absolute inset-0" style={{ background: `linear-gradient(to bottom, rgba(15,20,34,0.15), rgba(15,20,34,0.65) 80%, ${C.bgDark})` }} />
         </div>
         <div className="relative max-w-screen-xl mx-auto px-5 w-full">
           <Link to="/" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-6 transition-colors hover:opacity-80" style={{ color: C.cyan }}>
