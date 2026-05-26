@@ -99,10 +99,10 @@ export default function Index() {
   }, []);
 
   return (
-    <div className="bg-zinc-950 text-white min-h-screen font-montserrat overflow-x-hidden selection:bg-amber-500 selection:text-black">
+    <div className="bg-white text-zinc-900 min-h-screen font-montserrat overflow-x-hidden selection:bg-amber-400 selection:text-black">
 
       {/* ─── ШАПКА ─── */}
-      <header className="fixed inset-x-0 top-0 z-50 bg-zinc-950/90 backdrop-blur-xl border-b border-white/5">
+      <header className="fixed inset-x-0 top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-zinc-200 shadow-sm">
         <div className="max-w-screen-xl mx-auto px-5 h-[68px] flex items-center justify-between gap-6">
 
           {/* Лого */}
@@ -112,8 +112,8 @@ export default function Index() {
               <span className="absolute inset-0 flex items-center justify-center font-black text-black text-sm tracking-tighter">Ф</span>
             </div>
             <div className="leading-none">
-              <div className="font-black text-base tracking-[0.08em] uppercase">Фаворит</div>
-              <div className="text-[9px] text-zinc-500 uppercase tracking-[0.15em]">Асфальтирование НН</div>
+              <div className="font-black text-base tracking-[0.08em] uppercase text-zinc-900">Фаворит</div>
+              <div className="text-[9px] text-zinc-400 uppercase tracking-[0.15em]">Асфальтирование НН</div>
             </div>
           </button>
 
@@ -121,7 +121,7 @@ export default function Index() {
           <nav className="hidden lg:flex items-center gap-8">
             {[["hero","Главная"],["services","Услуги"],["works","Объекты"],["calc","Цены"],["reviews","Отзывы"],["contacts","Контакты"]].map(([id, label]) => (
               <button key={id} onClick={() => go(id)}
-                className={`relative text-[11px] font-bold uppercase tracking-[0.15em] transition-colors pb-0.5 ${nav === id ? "text-amber-500" : "text-zinc-400 hover:text-white"}`}>
+                className={`relative text-[11px] font-bold uppercase tracking-[0.15em] transition-colors pb-0.5 ${nav === id ? "text-amber-500" : "text-zinc-400 hover:text-zinc-900"}`}>
                 {label}
                 {nav === id && <span className="absolute -bottom-0.5 left-0 right-0 h-px bg-amber-500" />}
               </button>
@@ -130,7 +130,7 @@ export default function Index() {
 
           {/* Телефон + кнопка */}
           <div className="hidden md:flex items-center gap-5 shrink-0">
-            <a href={PHONE_HREF} className="text-sm font-black tracking-tight hover:text-amber-500 transition-colors flex items-center gap-2">
+            <a href={PHONE_HREF} className="text-sm font-black tracking-tight text-zinc-900 hover:text-amber-500 transition-colors flex items-center gap-2">
               <span className="w-6 h-6 bg-amber-500/15 rounded-sm flex items-center justify-center">
                 <Icon name="Phone" size={12} className="text-amber-500" />
               </span>
@@ -142,15 +142,15 @@ export default function Index() {
             </button>
           </div>
 
-          <button className="lg:hidden" onClick={() => setOpen(!open)}>
+          <button className="lg:hidden text-zinc-700" onClick={() => setOpen(!open)}>
             <Icon name={open ? "X" : "Menu"} size={22} />
           </button>
         </div>
 
         {open && (
-          <div className="lg:hidden bg-zinc-900 border-t border-white/5 px-5 py-5 flex flex-col gap-4">
+          <div className="lg:hidden bg-white border-t border-zinc-100 px-5 py-5 flex flex-col gap-4 shadow-lg">
             {[["hero","Главная"],["services","Услуги"],["works","Объекты"],["calc","Цены"],["reviews","Отзывы"],["contacts","Контакты"]].map(([id, label]) => (
-              <button key={id} onClick={() => go(id)} className="text-left font-bold text-sm uppercase tracking-widest text-zinc-300 hover:text-amber-500 transition-colors">{label}</button>
+              <button key={id} onClick={() => go(id)} className="text-left font-bold text-sm uppercase tracking-widest text-zinc-600 hover:text-amber-500 transition-colors">{label}</button>
             ))}
             <a href={PHONE_HREF} className="text-amber-500 font-black text-sm mt-1">{PHONE}</a>
           </div>
@@ -159,34 +159,32 @@ export default function Index() {
 
       {/* ─── ГЕРОЙ ─── */}
       <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
-        {/* Фото */}
         <div className="absolute inset-0">
           <img src={HERO_IMG} alt="Асфальтирование Фаворит НН" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/75 to-zinc-950/20" />
-          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-zinc-950/60" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-white/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white/50" />
         </div>
 
         {/* Диагональные полосы */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
           {[0,1,2,3].map(i => (
             <div key={i} className="absolute h-full w-px bg-gradient-to-b from-transparent via-amber-500 to-transparent"
-              style={{ left: `${20 + i * 22}%`, transform: "skewX(-15deg)", animationDelay: `${i * 0.4}s` }} />
+              style={{ left: `${20 + i * 22}%`, transform: "skewX(-15deg)" }} />
           ))}
         </div>
 
         <div className="relative max-w-screen-xl mx-auto px-5 pt-24 pb-52 w-full">
           <div className="max-w-2xl">
-            {/* Бейдж */}
-            <div className="inline-flex items-center gap-3 mb-8 bg-amber-500/10 border border-amber-500/25 px-4 py-2">
+            <div className="inline-flex items-center gap-3 mb-8 bg-amber-500/10 border border-amber-500/30 px-4 py-2">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shrink-0" />
-              <span className="text-amber-400 text-[10px] font-black uppercase tracking-[0.25em]">Нижний Новгород и область · Работаем с 2013</span>
+              <span className="text-amber-600 text-[10px] font-black uppercase tracking-[0.25em]">Нижний Новгород и область · Работаем с 2013</span>
             </div>
 
-            <h1 className="font-black text-[clamp(2.4rem,8vw,5.8rem)] leading-[0.92] uppercase tracking-tight mb-7">
+            <h1 className="font-black text-[clamp(2.4rem,8vw,5.8rem)] leading-[0.92] uppercase tracking-tight mb-7 text-zinc-900">
               Асфаль-<br />тируем<br /><span className="text-amber-500 italic">Фаворит</span>
             </h1>
 
-            <p className="text-zinc-300 text-lg leading-relaxed mb-10 max-w-lg">
+            <p className="text-zinc-500 text-lg leading-relaxed mb-10 max-w-lg">
               Дороги, дворы, парковки, промзоны — берём любые объекты под ключ. Более 350 сданных объектов по НН и области.
             </p>
 
@@ -197,16 +195,15 @@ export default function Index() {
                 <Icon name="ArrowRight" size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
               <a href={PHONE_HREF}
-                className="border-2 border-white/20 hover:border-amber-500 text-white hover:text-amber-500 font-black text-sm uppercase tracking-widest px-8 py-4 transition-all flex items-center gap-2">
+                className="border-2 border-zinc-300 hover:border-amber-500 text-zinc-700 hover:text-amber-500 font-black text-sm uppercase tracking-widest px-8 py-4 transition-all flex items-center gap-2">
                 <Icon name="Phone" size={15} />
                 {PHONE}
               </a>
             </div>
 
-            {/* Быстрые факты */}
             <div className="flex flex-wrap gap-6">
               {[["ShieldCheck","Гарантия 3 года"], ["Clock","Выезд за 24 ч"], ["BadgeCheck","Своя техника"]].map(([icon, text]) => (
-                <div key={text} className="flex items-center gap-2 text-zinc-400 text-xs font-bold uppercase tracking-wider">
+                <div key={text} className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider">
                   <Icon name={icon} fallback="Check" size={14} className="text-amber-500" />
                   {text}
                 </div>
@@ -216,8 +213,8 @@ export default function Index() {
         </div>
 
         {/* Счётчики */}
-        <div className="absolute bottom-0 inset-x-0 bg-zinc-900/95 backdrop-blur border-t border-white/5">
-          <div className="max-w-screen-xl mx-auto px-5 py-7 grid grid-cols-2 md:grid-cols-4 gap-6 divide-x divide-white/5">
+        <div className="absolute bottom-0 inset-x-0 bg-zinc-900 border-t border-zinc-800">
+          <div className="max-w-screen-xl mx-auto px-5 py-7 grid grid-cols-2 md:grid-cols-4 gap-6 divide-x divide-white/10">
             {[
               { to: 350, suffix: "+", label: "Объектов сдано" },
               { to: 800, suffix: "к м²", label: "Уложено асфальта" },
@@ -225,10 +222,33 @@ export default function Index() {
               { to: 24, suffix: " ч", label: "Выезд на замер" },
             ].map((s) => (
               <div key={s.label} className="text-center px-4">
-                <div className="font-black text-4xl text-amber-500 tabular-nums">
+                <div className="font-black text-4xl text-amber-400 tabular-nums">
                   <Counter to={s.to} suffix={s.suffix} />
                 </div>
-                <div className="text-zinc-500 text-[10px] uppercase tracking-widest mt-1">{s.label}</div>
+                <div className="text-zinc-400 text-[10px] uppercase tracking-widest mt-1">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── ПРЕИМУЩЕСТВА ─── */}
+      <section className="py-16 bg-zinc-50 border-b border-zinc-100">
+        <div className="max-w-screen-xl mx-auto px-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-zinc-200">
+            {[
+              { icon: "ShieldCheck", title: "Гарантия 3 года", desc: "Письменный договор и гарантийный талон на каждый объект" },
+              { icon: "Zap", title: "Выезд за 24 часа", desc: "Замер и коммерческое предложение в день обращения" },
+              { icon: "BadgeCheck", title: "Своя техника", desc: "Весь парк — наш. Никаких субподрядчиков и переплат" },
+            ].map((item) => (
+              <div key={item.title} className="bg-zinc-50 hover:bg-white p-8 flex gap-5 transition-colors group">
+                <div className="w-12 h-12 bg-amber-500/10 flex items-center justify-center flex-shrink-0 group-hover:bg-amber-500/20 transition-colors">
+                  <Icon name={item.icon} fallback="Check" size={22} className="text-amber-500" />
+                </div>
+                <div>
+                  <h3 className="font-black text-sm uppercase tracking-wide mb-2 text-zinc-900">{item.title}</h3>
+                  <p className="text-zinc-500 text-sm leading-relaxed">{item.desc}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -236,16 +256,16 @@ export default function Index() {
       </section>
 
       {/* ─── УСЛУГИ ─── */}
-      <section id="services" className="py-28 bg-zinc-950">
+      <section id="services" className="py-28 bg-white">
         <div className="max-w-screen-xl mx-auto px-5">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
             <div>
               <p className="text-amber-500 text-[10px] font-black uppercase tracking-[0.25em] mb-4">— Что мы делаем</p>
-              <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight">
+              <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight text-zinc-900">
                 Наши<br /><span className="text-amber-500">услуги</span>
               </h2>
             </div>
-            <p className="text-zinc-500 text-sm max-w-sm leading-relaxed md:text-right">
+            <p className="text-zinc-400 text-sm max-w-sm leading-relaxed md:text-right">
               Полный цикл дорожных работ от проекта до сдачи объекта с исполнительной документацией
             </p>
           </div>
@@ -253,14 +273,14 @@ export default function Index() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {SERVICES.map((s, i) => (
               <div key={i}
-                className="group border border-white/5 hover:border-amber-500/40 p-8 transition-all duration-300 hover:bg-zinc-900/60 cursor-pointer relative overflow-hidden">
-                <div className="absolute top-5 right-5 font-black text-5xl text-white/4 group-hover:text-amber-500/8 transition-colors leading-none select-none">
+                className="group border border-zinc-100 hover:border-amber-400/50 p-8 transition-all duration-300 hover:bg-amber-50/40 cursor-pointer relative overflow-hidden hover:shadow-md">
+                <div className="absolute top-5 right-5 font-black text-5xl text-zinc-100 group-hover:text-amber-400/20 transition-colors leading-none select-none">
                   {s.num}
                 </div>
                 <div className="w-11 h-11 bg-amber-500/10 group-hover:bg-amber-500/20 flex items-center justify-center mb-6 transition-colors skew-x-[-4deg]">
                   <Icon name={s.icon} fallback="Layers" size={20} className="text-amber-500" />
                 </div>
-                <h3 className="font-black text-base uppercase tracking-wide mb-3 group-hover:text-amber-500 transition-colors">{s.title}</h3>
+                <h3 className="font-black text-base uppercase tracking-wide mb-3 text-zinc-900 group-hover:text-amber-600 transition-colors">{s.title}</h3>
                 <p className="text-zinc-500 text-sm leading-relaxed">{s.desc}</p>
               </div>
             ))}
@@ -269,11 +289,11 @@ export default function Index() {
       </section>
 
       {/* ─── ОБЪЕКТЫ ─── */}
-      <section id="works" className="py-28 bg-zinc-900">
+      <section id="works" className="py-28 bg-zinc-50">
         <div className="max-w-screen-xl mx-auto px-5">
           <div className="mb-16">
             <p className="text-amber-500 text-[10px] font-black uppercase tracking-[0.25em] mb-4">— Выполненные проекты</p>
-            <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight">
+            <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight text-zinc-900">
               Наши<br /><span className="text-amber-500">объекты</span>
             </h2>
           </div>
@@ -281,15 +301,13 @@ export default function Index() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {WORKS.map((w, i) => (
               <div key={i}
-                className="group bg-zinc-950 hover:bg-zinc-800 border border-white/5 hover:border-amber-500/30 p-7 transition-all duration-300 relative overflow-hidden">
-                {/* Угловой акцент */}
-                <div className="absolute top-0 right-0 w-0 h-0 border-l-[40px] border-l-transparent border-t-[40px] border-t-amber-500/20 group-hover:border-t-amber-500/40 transition-colors" />
-
+                className="group bg-white hover:bg-amber-50/60 border border-zinc-100 hover:border-amber-400/40 p-7 transition-all duration-300 relative overflow-hidden hover:shadow-md">
+                <div className="absolute top-0 right-0 w-0 h-0 border-l-[40px] border-l-transparent border-t-[40px] border-t-amber-400/20 group-hover:border-t-amber-400/40 transition-colors" />
                 <div className="flex items-start justify-between mb-5">
-                  <span className="inline-block bg-amber-500/10 text-amber-500 text-[9px] font-black uppercase tracking-[0.2em] px-2.5 py-1">{w.type}</span>
-                  <span className="text-zinc-600 text-xs font-bold">{w.year}</span>
+                  <span className="inline-block bg-amber-500/10 text-amber-600 text-[9px] font-black uppercase tracking-[0.2em] px-2.5 py-1">{w.type}</span>
+                  <span className="text-zinc-400 text-xs font-bold">{w.year}</span>
                 </div>
-                <h3 className="font-black text-base uppercase tracking-tight mb-3 group-hover:text-amber-500 transition-colors leading-tight">{w.title}</h3>
+                <h3 className="font-black text-base uppercase tracking-tight mb-3 text-zinc-900 group-hover:text-amber-600 transition-colors leading-tight">{w.title}</h3>
                 <div className="flex items-center gap-2 text-zinc-400 text-sm">
                   <Icon name="Maximize2" size={12} className="text-amber-500 shrink-0" />
                   <span className="font-bold">{parseInt(w.area).toLocaleString("ru")} м²</span>
@@ -301,27 +319,26 @@ export default function Index() {
       </section>
 
       {/* ─── КАЛЬКУЛЯТОР ─── */}
-      <section id="calc" className="py-28 bg-zinc-950">
+      <section id="calc" className="py-28 bg-white">
         <div className="max-w-screen-xl mx-auto px-5">
           <div className="mb-16">
             <p className="text-amber-500 text-[10px] font-black uppercase tracking-[0.25em] mb-4">— Онлайн-расчёт</p>
-            <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight">
+            <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight text-zinc-900">
               Стои-<br /><span className="text-amber-500">мость</span>
             </h2>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-            {/* Ползунок + тарифы */}
             <div className="lg:col-span-3 space-y-8">
-              <div className="bg-zinc-900 border border-white/5 p-8">
+              <div className="bg-zinc-50 border border-zinc-200 p-8">
                 <div className="flex items-end justify-between mb-6">
                   <span className="text-zinc-400 text-xs font-bold uppercase tracking-widest">Площадь объекта</span>
-                  <span className="font-black text-4xl text-white tabular-nums">{area.toLocaleString("ru")} <span className="text-xl text-zinc-400">м²</span></span>
+                  <span className="font-black text-4xl text-zinc-900 tabular-nums">{area.toLocaleString("ru")} <span className="text-xl text-zinc-400">м²</span></span>
                 </div>
                 <input type="range" min={50} max={10000} step={50} value={area}
                   onChange={(e) => setArea(Number(e.target.value))}
                   className="w-full cursor-pointer accent-amber-500 h-1" />
-                <div className="flex justify-between text-zinc-600 text-xs mt-3 font-bold">
+                <div className="flex justify-between text-zinc-400 text-xs mt-3 font-bold">
                   <span>50 м²</span><span>10 000 м²</span>
                 </div>
               </div>
@@ -331,10 +348,10 @@ export default function Index() {
                   const active = tier.label === t.label;
                   return (
                     <div key={t.label}
-                      className={`p-5 border transition-all ${active ? "border-amber-500 bg-amber-500/10" : "border-white/5 bg-zinc-900 hover:border-white/15"}`}>
-                      <div className={`text-xs font-black uppercase tracking-widest mb-1 ${active ? "text-amber-500" : "text-zinc-500"}`}>{t.label}</div>
-                      <div className={`font-black text-2xl mb-1 ${active ? "text-white" : "text-zinc-300"}`}>{t.price.toLocaleString("ru")} ₽</div>
-                      <div className="text-zinc-500 text-xs">{t.range}</div>
+                      className={`p-5 border transition-all ${active ? "border-amber-500 bg-amber-50" : "border-zinc-200 bg-zinc-50 hover:border-zinc-300"}`}>
+                      <div className={`text-xs font-black uppercase tracking-widest mb-1 ${active ? "text-amber-500" : "text-zinc-400"}`}>{t.label}</div>
+                      <div className={`font-black text-2xl mb-1 ${active ? "text-zinc-900" : "text-zinc-600"}`}>{t.price.toLocaleString("ru")} ₽</div>
+                      <div className="text-zinc-400 text-xs">{t.range}</div>
                     </div>
                   );
                 })}
@@ -344,26 +361,26 @@ export default function Index() {
                 <div>
                   <div className="text-black/60 text-xs font-bold uppercase tracking-widest mb-1">Итого от</div>
                   <div className="font-black text-4xl text-black">{total.toLocaleString("ru")} ₽</div>
-                  <div className="text-black/60 text-xs mt-1">* без учёта подготовки основания</div>
+                  <div className="text-black/50 text-xs mt-1">* без учёта подготовки основания</div>
                 </div>
                 <Icon name="Calculator" size={48} className="text-black/20" />
               </div>
             </div>
 
             {/* Форма */}
-            <div className="lg:col-span-2 bg-zinc-900 border border-white/5 p-8">
+            <div className="lg:col-span-2 bg-zinc-50 border border-zinc-200 p-8">
               {sent ? (
                 <div className="h-full flex flex-col items-center justify-center text-center py-12 gap-4">
                   <div className="w-16 h-16 bg-amber-500/20 flex items-center justify-center">
                     <Icon name="CheckCircle" size={32} className="text-amber-500" />
                   </div>
-                  <h3 className="font-black text-xl uppercase">Заявка отправлена!</h3>
+                  <h3 className="font-black text-xl uppercase text-zinc-900">Заявка отправлена!</h3>
                   <p className="text-zinc-400 text-sm">Перезвоним в течение 30 минут в рабочее время</p>
                 </div>
               ) : (
                 <>
-                  <h3 className="font-black text-lg uppercase mb-1">Вызвать замерщика</h3>
-                  <p className="text-zinc-500 text-sm mb-7 leading-relaxed">Приедем, замерим, дадим точную смету — бесплатно</p>
+                  <h3 className="font-black text-lg uppercase mb-1 text-zinc-900">Вызвать замерщика</h3>
+                  <p className="text-zinc-400 text-sm mb-7 leading-relaxed">Приедем, замерим, дадим точную смету — бесплатно</p>
                   <div className="space-y-4">
                     {[
                       { key: "name", label: "Ваше имя", ph: "Иван Петров" },
@@ -371,9 +388,9 @@ export default function Index() {
                       { key: "obj", label: "Адрес объекта", ph: "ул. Горького 12, НН" },
                     ].map(({ key, label, ph }) => (
                       <div key={key}>
-                        <label className="text-zinc-500 text-[10px] uppercase tracking-widest block mb-2">{label}</label>
+                        <label className="text-zinc-400 text-[10px] uppercase tracking-widest block mb-2">{label}</label>
                         <input
-                          className="w-full bg-zinc-950 border border-white/10 focus:border-amber-500 text-white px-4 py-3 text-sm outline-none transition-colors placeholder-zinc-700"
+                          className="w-full bg-white border border-zinc-200 focus:border-amber-500 text-zinc-900 px-4 py-3 text-sm outline-none transition-colors placeholder-zinc-300"
                           placeholder={ph}
                           value={form[key as keyof typeof form]}
                           onChange={(e) => setForm({ ...form, [key]: e.target.value })}
@@ -385,7 +402,7 @@ export default function Index() {
                       className="w-full bg-amber-500 hover:bg-amber-400 text-black font-black text-xs uppercase tracking-[0.2em] py-4 transition-all hover:scale-[1.02] active:scale-[0.98]">
                       Отправить заявку →
                     </button>
-                    <p className="text-zinc-700 text-[10px] text-center leading-relaxed">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
+                    <p className="text-zinc-300 text-[10px] text-center leading-relaxed">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
                   </div>
                 </>
               )}
@@ -395,29 +412,29 @@ export default function Index() {
       </section>
 
       {/* ─── ОТЗЫВЫ ─── */}
-      <section id="reviews" className="py-28 bg-zinc-900">
+      <section id="reviews" className="py-28 bg-zinc-50">
         <div className="max-w-screen-xl mx-auto px-5">
           <div className="mb-16">
             <p className="text-amber-500 text-[10px] font-black uppercase tracking-[0.25em] mb-4">— Клиенты о нас</p>
-            <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight">
+            <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight text-zinc-900">
               От<span className="text-amber-500">зывы</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {REVIEWS.map((r, i) => (
-              <div key={i} className="bg-zinc-950 border border-white/5 hover:border-amber-500/20 p-8 transition-colors relative group overflow-hidden">
-                <div className="absolute -right-2 -top-4 font-black text-[9rem] text-white/3 group-hover:text-amber-500/5 transition-colors select-none leading-none">"</div>
+              <div key={i} className="bg-white border border-zinc-100 hover:border-amber-300/50 p-8 transition-all relative group overflow-hidden hover:shadow-md">
+                <div className="absolute -right-2 -top-4 font-black text-[9rem] text-zinc-100 group-hover:text-amber-400/20 transition-colors select-none leading-none">"</div>
                 <div className="flex gap-1 mb-5">
                   {Array.from({ length: r.stars }).map((_, j) => <Icon key={j} name="Star" size={13} className="text-amber-500" />)}
                 </div>
-                <p className="text-zinc-300 text-sm leading-relaxed mb-7 italic relative">«{r.text}»</p>
+                <p className="text-zinc-600 text-sm leading-relaxed mb-7 italic relative">«{r.text}»</p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-amber-500/10 flex items-center justify-center shrink-0 skew-x-[-4deg]">
                     <Icon name="User" size={14} className="text-amber-500" />
                   </div>
                   <div>
-                    <div className="font-black text-xs uppercase tracking-wide">{r.name}</div>
-                    <div className="text-zinc-600 text-xs mt-0.5">{r.role}</div>
+                    <div className="font-black text-xs uppercase tracking-wide text-zinc-900">{r.name}</div>
+                    <div className="text-zinc-400 text-xs mt-0.5">{r.role}</div>
                   </div>
                 </div>
               </div>
@@ -427,55 +444,53 @@ export default function Index() {
       </section>
 
       {/* ─── КОНТАКТЫ ─── */}
-      <section id="contacts" className="py-28 bg-zinc-950">
+      <section id="contacts" className="py-28 bg-white">
         <div className="max-w-screen-xl mx-auto px-5">
           <div className="mb-16">
             <p className="text-amber-500 text-[10px] font-black uppercase tracking-[0.25em] mb-4">— Связаться</p>
-            <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight">
+            <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight text-zinc-900">
               Конта<span className="text-amber-500">кты</span>
             </h2>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Инфо */}
-            <div className="space-y-5">
+            <div className="space-y-4">
               {[
-                { icon: "Phone", label: "Телефон", val: PHONE, sub: "Звоните в любое время" },
-                { icon: "MapPin", label: "Город", val: "Нижний Новгород", sub: "Работаем по всей области" },
-                { icon: "Clock", label: "Режим", val: "Пн–Пт 8:00–19:00", sub: "Приём заявок — круглосуточно" },
+                { icon: "Phone", label: "Телефон", val: PHONE, sub: "Звоните в любое время", href: PHONE_HREF },
+                { icon: "MapPin", label: "Город", val: "Нижний Новгород", sub: "Работаем по всей области", href: undefined },
+                { icon: "Clock", label: "Режим", val: "Пн–Пт 8:00–19:00", sub: "Приём заявок — круглосуточно", href: undefined },
               ].map((c) => (
                 <a key={c.label}
-                  href={c.icon === "Phone" ? PHONE_HREF : undefined}
-                  className="flex items-start gap-5 group p-5 bg-zinc-900 border border-white/5 hover:border-amber-500/30 transition-colors">
+                  href={c.href}
+                  className="flex items-start gap-5 group p-5 bg-zinc-50 border border-zinc-100 hover:border-amber-400/40 hover:bg-amber-50/40 transition-colors">
                   <div className="w-11 h-11 bg-amber-500/10 group-hover:bg-amber-500/20 flex items-center justify-center shrink-0 transition-colors">
                     <Icon name={c.icon} fallback="Info" size={17} className="text-amber-500" />
                   </div>
                   <div>
-                    <div className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.15em] mb-0.5">{c.label}</div>
-                    <div className="font-black text-base">{c.val}</div>
-                    <div className="text-zinc-600 text-xs mt-0.5">{c.sub}</div>
+                    <div className="text-zinc-400 text-[10px] font-black uppercase tracking-[0.15em] mb-0.5">{c.label}</div>
+                    <div className="font-black text-base text-zinc-900">{c.val}</div>
+                    <div className="text-zinc-400 text-xs mt-0.5">{c.sub}</div>
                   </div>
                 </a>
               ))}
 
-              {/* Города */}
-              <div className="p-5 bg-zinc-900 border border-white/5">
-                <div className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.15em] mb-3">Работаем в городах</div>
+              <div className="p-5 bg-zinc-50 border border-zinc-100">
+                <div className="text-zinc-400 text-[10px] font-black uppercase tracking-[0.15em] mb-3">Работаем в городах</div>
                 <div className="flex flex-wrap gap-2">
                   {["НН","Кстово","Бор","Дзержинск","Балахна","Арзамас","Выкса","Павлово"].map((city) => (
-                    <span key={city} className="bg-amber-500/10 text-amber-400 text-[10px] font-black uppercase tracking-widest px-3 py-1.5">{city}</span>
+                    <span key={city} className="bg-amber-500/10 text-amber-600 text-[10px] font-black uppercase tracking-widest px-3 py-1.5">{city}</span>
                   ))}
                 </div>
               </div>
             </div>
 
-            {/* Большой CTA */}
-            <div className="relative bg-zinc-900 border border-white/5 p-10 overflow-hidden flex flex-col justify-between min-h-80">
+            {/* CTA */}
+            <div className="relative bg-zinc-900 p-10 overflow-hidden flex flex-col justify-between min-h-80">
               <div className="absolute inset-0 opacity-5" style={{
                 backgroundImage: "repeating-linear-gradient(-45deg, #f59e0b 0px, #f59e0b 1px, transparent 1px, transparent 12px)"
               }} />
               <div className="relative">
-                <div className="font-black text-2xl uppercase leading-tight mb-4">
+                <div className="font-black text-2xl uppercase leading-tight mb-4 text-white">
                   Позвоните нам<br />прямо сейчас
                 </div>
                 <p className="text-zinc-400 text-sm leading-relaxed mb-8">
@@ -499,17 +514,17 @@ export default function Index() {
       </section>
 
       {/* ─── ПОДВАЛ ─── */}
-      <footer className="border-t border-white/5 py-8 bg-zinc-950">
+      <footer className="border-t border-zinc-100 py-8 bg-zinc-50">
         <div className="max-w-screen-xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="relative">
               <div className="w-7 h-7 bg-amber-500 skew-x-[-8deg]" />
               <span className="absolute inset-0 flex items-center justify-center font-black text-black text-xs">Ф</span>
             </div>
-            <span className="font-black text-sm tracking-widest uppercase">Фаворит</span>
+            <span className="font-black text-sm tracking-widest uppercase text-zinc-900">Фаворит</span>
           </div>
-          <p className="text-zinc-700 text-xs">© 2024 Фаворит. Асфальтирование в Нижнем Новгороде</p>
-          <button onClick={() => go("hero")} className="text-zinc-600 hover:text-zinc-400 text-xs transition-colors">Наверх ↑</button>
+          <p className="text-zinc-400 text-xs">© 2024 Фаворит. Асфальтирование в Нижнем Новгороде</p>
+          <button onClick={() => go("hero")} className="text-zinc-400 hover:text-zinc-600 text-xs transition-colors">Наверх ↑</button>
         </div>
       </footer>
     </div>
