@@ -80,6 +80,11 @@ const data: ServicePageData = {
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/ac75e147-b6f5-4c1d-9759-55e454a9930f.jpg",
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/fda1552e-c2b0-44e3-8078-58ab4780dbde.jpg",
     "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/683dc952-4c0a-44d7-99cb-bc437d0fdbb8.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/f163f97e-9181-4367-b141-7e7b8145c178.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/94452f3e-c5bc-4163-bc01-48125e057eff.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/9d59f14c-913c-491e-910c-faf0d3cd61ea.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/7c4378c7-5066-472c-b629-c3d348692227.jpg",
+    "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/1dfa06d8-e9e2-40bf-a395-dbc05087cb83.jpg",
   ],
   faq: [
     { q: "Какая плитка лучше — вибропрессованная или вибролитая?", a: "Вибропрессованная прочнее и устойчивее к нагрузкам — подходит для парковок и въездов. Вибролитая красивее, с чёткими гранями — лучше для пешеходных зон. Поможем подобрать под вашу задачу." },
