@@ -38,7 +38,7 @@ export const WORKS = [
     desc: "Полное благоустройство двора на 3 500 м²: дорожки, детская площадка, газон, водоотвод.",
     area: "3 500 м²",
     city: "Нижний Новгород",
-    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/683dc952-4c0a44d7-99cb-bc437d0fdbb8.jpg",
+    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/2fb123dc-fede-43e5-a990-bf59191f85c5.jpg",
   },
   {
     tag: "Укладка брусчатки",
