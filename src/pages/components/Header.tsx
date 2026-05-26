@@ -28,7 +28,7 @@ export default function Header({ activeNav, menuOpen, setMenuOpen, go }: HeaderP
         <img
           src="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/58857beb-7868-45cc-a054-534e6722a2be.jpg"
           alt="" className="w-full h-full object-cover object-center"
-          style={{ filter: "brightness(0.35) saturate(0.6)", transform: "scaleX(-1)" }}
+          style={{ filter: "brightness(0.15) saturate(0.4)", transform: "scaleX(-1)" }}
         />
         <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(10,14,24,0.98) 0%, rgba(10,14,24,0.82) 50%, rgba(10,14,24,0.7) 100%)" }} />
         <div className="absolute bottom-0 left-0 right-0 h-[2px]" style={{ background: `linear-gradient(90deg, ${C.gold} 0%, rgba(240,192,48,0.3) 60%, transparent 100%)` }} />
@@ -77,10 +77,9 @@ export default function Header({ activeNav, menuOpen, setMenuOpen, go }: HeaderP
             onMouseLeave={() => setServicesOpen(false)}>
             <button
               className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-md transition-all"
-              style={{ background: "rgba(220,38,38,0.85)", color: "#fff" }}>
+              style={{ background: "rgba(240,192,48,0.15)", border: `1px solid rgba(240,192,48,0.45)`, color: C.gold }}>
               Услуги
               <Icon name={servicesOpen ? "ChevronUp" : "ChevronDown"} size={11} />
-              <span className="px-1.5 py-0.5 rounded text-[9px] font-black" style={{ background: C.cyan, color: "#000" }}>NEW</span>
             </button>
 
             {servicesOpen && (
