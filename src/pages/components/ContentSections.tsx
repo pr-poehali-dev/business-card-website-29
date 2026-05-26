@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import { C, SERVICES, TECH, HOW, WORKS, REVIEWS, PHONE, PHONE_HREF } from "./constants";
 
@@ -109,7 +110,16 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
           <SectionTitle accent={C.cyan} label="Что мы делаем" title={<>Наши <span style={{ color: C.gold }}>услуги</span></>} />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {SERVICES.map((s, i) => (
-              <Card key={i} i={i} icon={s.icon} title={s.title} badge={s.price} desc={s.desc} />
+              <Card key={i} i={i} icon={s.icon} title={s.title} badge={s.price} desc={s.desc}
+                extra={s.href ? (
+                  <Link to={s.href}
+                    className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest transition-all hover:gap-2.5"
+                    style={{ color: C.cyan, textDecoration: "none" }}>
+                    Подробнее
+                    <Icon name="ArrowRight" size={12} />
+                  </Link>
+                ) : undefined}
+              />
             ))}
           </div>
         </div>
