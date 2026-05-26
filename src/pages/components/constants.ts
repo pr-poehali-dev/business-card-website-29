@@ -38,6 +38,7 @@ export const WORKS = [
     desc: "Полное благоустройство двора на 3 500 м²: дорожки, детская площадка, газон, водоотвод.",
     area: "3 500 м²",
     city: "Нижний Новгород",
+    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/82ce0839-fc62-4366-97e5-6db2abbaaeaf.jpg",
   },
   {
     tag: "Укладка брусчатки",
@@ -45,6 +46,7 @@ export const WORKS = [
     desc: "Укладка гранитной брусчатки на центральной улице. Подготовка основания, бордюры, ливнёвка.",
     area: "1 200 м²",
     city: "Нижний Новгород",
+    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/024c7194-a34a-4ea6-b406-af32146279b1.jpg",
   },
   {
     tag: "Укладка бордюров",
@@ -52,6 +54,7 @@ export const WORKS = [
     desc: "Установка 860 пог. м бордюрного камня по периметру производственной площадки.",
     area: "860 пог. м",
     city: "Кстово",
+    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/4f25364f-271f-4bb6-afd6-221ac88492b4.jpg",
   },
   {
     tag: "Строительство ангаров",
@@ -59,6 +62,7 @@ export const WORKS = [
     desc: "Металлокаркасный ангар 30×60 м с воротами, утеплением и ленточным фундаментом. Срок — 45 дней.",
     area: "1 800 м²",
     city: "Богородск",
+    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/e1bc6369-6cd3-47e4-9eaa-dbaed2b58e9d.jpg",
   },
   {
     tag: "Благоустройство",
@@ -66,6 +70,7 @@ export const WORKS = [
     desc: "Брусчатка + газон + лавочки + освещение. Комплексное благоустройство за 3 недели.",
     area: "2 100 м²",
     city: "Нижний Новгород",
+    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/94656144-ef7f-494c-9bdf-0eaf0c63ed64.jpg",
   },
   {
     tag: "Строительство ангаров",
@@ -73,6 +78,7 @@ export const WORKS = [
     desc: "Ангар под производство 24×48 м. Промышленные ворота, вентиляция, бетонный пол с упрочнением.",
     area: "1 150 м²",
     city: "Дзержинск",
+    img: "https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/e02ed826-047c-4b59-baa3-b95b7fff37ed.jpg",
   },
 ];
 

@@ -129,14 +129,20 @@ export default function ContentSections({ form, setForm, sent, setSent, go }: Co
             {WORKS.map((w, i) => (
               <div key={i} className="rounded-xl border overflow-hidden group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
                 style={{ background: C.bgDeep, borderColor: C.border }}>
-                <div className="h-3 w-full" style={{ background: `linear-gradient(to right, ${C.cyan}, ${C.gold})` }} />
-                <div className="p-6">
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider mb-4"
-                    style={{ background: "rgba(34,211,238,0.1)", color: C.cyan, border: `1px solid rgba(34,211,238,0.2)` }}>
-                    {w.tag}
+                <div className="relative h-48 overflow-hidden">
+                  <img src={w.img} alt={w.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 40%, rgba(10,14,24,0.85))" }} />
+                  <div className="absolute bottom-3 left-3">
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider"
+                      style={{ background: "rgba(10,14,24,0.75)", color: C.cyan, border: `1px solid rgba(34,211,238,0.35)`, backdropFilter: "blur(6px)" }}>
+                      {w.tag}
+                    </div>
                   </div>
+                </div>
+                <div className="p-5">
                   <h3 className="font-black text-sm uppercase tracking-wide mb-2">{w.title}</h3>
-                  <p className="text-sm leading-relaxed mb-5" style={{ color: C.muted }}>{w.desc}</p>
+                  <p className="text-sm leading-relaxed mb-4" style={{ color: C.muted }}>{w.desc}</p>
                   <div className="flex items-center justify-between pt-4 border-t" style={{ borderColor: C.border }}>
                     <div className="flex items-center gap-1.5 text-xs font-bold" style={{ color: C.subtle }}>
                       <Icon name="Maximize2" size={12} />
