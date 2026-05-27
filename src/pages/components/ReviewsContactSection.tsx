@@ -296,7 +296,7 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
               <div>
                 <p className="text-sm font-bold uppercase tracking-widest mb-2" style={{ color: C.gold }}>Звоните прямо сейчас</p>
                 <a href="tel:+79601690990"
-                  className="block font-black text-4xl md:text-5xl uppercase leading-tight transition-opacity hover:opacity-80"
+                  className="block font-black text-2xl sm:text-4xl md:text-5xl uppercase leading-tight transition-opacity hover:opacity-80 whitespace-nowrap"
                   style={{ color: "#fff" }}>
                   +7 960 169-09-90
                 </a>
