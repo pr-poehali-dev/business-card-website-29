@@ -383,9 +383,23 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
                 <div className="absolute -left-8 -bottom-8 w-40 h-40 rounded-full pointer-events-none" style={{ background: `radial-gradient(circle, ${C.cyanDim}12 0%, transparent 70%)` }} />
                 <div className="relative">
                   <div className="font-black text-2xl uppercase leading-snug mb-3">Нужен расчёт<br />стоимости?</div>
-                  <p className="leading-relaxed" style={{ fontSize: 15, color: "#a8b3c7" }}>
+                  <p className="leading-relaxed mb-5" style={{ fontSize: 15, color: "#a8b3c7" }}>
                     Выезд замерщика — бесплатно. Смета в день обращения. Работаем с физ. и юр. лицами, НДС.
                   </p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[
+                      { icon: "Clock", text: "Ответ за 5 минут" },
+                      { icon: "Ruler", text: "Замер бесплатно" },
+                      { icon: "FileText", text: "Смета в день звонка" },
+                      { icon: "ShieldCheck", text: "Гарантия 3 года" },
+                    ].map(({ icon, text }, i) => (
+                      <div key={i} className="flex items-center gap-2 rounded-xl px-3 py-2.5"
+                        style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                        <Icon name={icon} fallback="Check" size={14} style={{ color: C.gold } as React.CSSProperties} />
+                        <span className="text-xs font-bold leading-tight" style={{ color: "#e2e8f0" }}>{text}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
                 <div className="flex flex-col gap-3 relative">
                   <a href={PHONE_HREF}
