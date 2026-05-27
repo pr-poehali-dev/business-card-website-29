@@ -97,13 +97,6 @@ export default function ServicesSections() {
         </div>
       </section>
 
-      <PhotoDivider
-        img="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/4f631491-fdcd-46fa-a9d9-5b93bf5a3039.jpg"
-        label='Как это <span style="color:#38e8ff">работает</span>'
-        sublabel="Просто и прозрачно"
-        bgFrom={C.bgDeep} bgTo={C.bg}
-      />
-
       {/* ── КАК РАБОТАЕТ ── */}
       <section id="services" className="py-24 relative overflow-hidden">
         <SectionBg img="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/8a2044f9-1f3d-402b-bc04-723fcffaee4f.jpg" />
@@ -116,13 +109,6 @@ export default function ServicesSections() {
           </div>
         </div>
       </section>
-
-      <PhotoDivider
-        img="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/ec73bf99-c0e3-49c3-9722-5f313c5fdc4f.jpg"
-        label='Примеры <span style="color:#ffd140">работ</span>'
-        sublabel="Выполненные объекты"
-        bgFrom={C.bg} bgTo={C.bgDeep}
-      />
 
       {/* ── ПРИМЕРЫ РАБОТ ── */}
       <section id="portfolio" className="py-24 relative overflow-hidden">

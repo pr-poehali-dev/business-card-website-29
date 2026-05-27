@@ -248,13 +248,6 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
         </div>
       </section>
 
-      <PhotoDivider
-        img="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/c044d8db-6cca-4aa4-9ab7-7f0ccc8c8d40.jpg"
-        label='Оставить <span style="color:#38e8ff">заявку</span>'
-        sublabel="Бесплатный расчёт"
-        bgFrom={C.bg} bgTo={C.bgDeep}
-      />
-
       {/* ── ФОРМА ЗАЯВКИ ── */}
       <section id="form" className="py-24 relative overflow-hidden">
         <SectionBg img="https://cdn.poehali.dev/projects/767a3a56-afb6-4f9c-bffc-569465bff7eb/files/c044d8db-6cca-4aa4-9ab7-7f0ccc8c8d40.jpg" />
