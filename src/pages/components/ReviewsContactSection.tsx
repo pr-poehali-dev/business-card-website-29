@@ -289,64 +289,25 @@ export default function ReviewsContactSection({ form, setForm, sent, setSent, go
               </div>
             </div>
 
-            <div className="rounded-2xl p-8" style={{ background: "rgba(37,43,61,0.85)", border: `1px solid ${C.borderCyan}`, backdropFilter: "blur(12px)" }}>
-              {sent ? (
-                <div className="py-12 text-center flex flex-col items-center gap-4">
-                  <div className="w-20 h-20 rounded-2xl flex items-center justify-center" style={{ background: "rgba(34,211,238,0.12)", border: `1px solid ${C.borderCyan}` }}>
-                    <Icon name="CheckCircle" size={40} style={{ color: C.cyan } as React.CSSProperties} />
-                  </div>
-                  <h3 className="font-black text-2xl uppercase">Заявка принята!</h3>
-                  <p className="text-sm" style={{ color: C.muted }}>Перезвоним в течение 5 минут в рабочее время</p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  <h3 className="font-black text-xl uppercase mb-6">Оставить заявку</h3>
-                  {[
-                    { key: "name", ph: "Имя или компания", icon: "User" },
-                    { key: "phone", ph: "Телефон +7 (___) ___-__-__", icon: "Phone" },
-                    { key: "address", ph: "Адрес объекта", icon: "MapPin" },
-                    { key: "area", ph: "Площадь (м²)", icon: "Maximize2" },
-                  ].map(({ key, ph, icon }) => (
-                    <div key={key} className="relative">
-                      <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                        <Icon name={icon} fallback="Info" size={14} style={{ color: C.cyan } as React.CSSProperties} />
-                      </div>
-                      <input
-                        className="w-full pl-9 pr-4 py-3 rounded-xl text-sm outline-none transition-all"
-                        style={inputStyle}
-                        onFocus={e => (e.target.style.borderColor = C.cyan)}
-                        onBlur={e => (e.target.style.borderColor = C.borderCyan)}
-                        placeholder={ph}
-                        value={form[key as keyof FormState]}
-                        onChange={(e) => setForm({ ...form, [key]: e.target.value })}
-                      />
-                    </div>
-                  ))}
-                  <div className="relative">
-                    <div className="absolute left-3 top-3.5 pointer-events-none">
-                      <Icon name="MessageSquare" size={14} style={{ color: C.cyan } as React.CSSProperties} />
-                    </div>
-                    <textarea rows={3}
-                      className="w-full pl-9 pr-4 py-3 rounded-xl text-sm outline-none transition-all resize-none"
-                      style={inputStyle}
-                      onFocus={e => (e.target.style.borderColor = C.cyan)}
-                      onBlur={e => (e.target.style.borderColor = C.borderCyan)}
-                      placeholder="Тип работ, особенности объекта"
-                      value={form.comment}
-                      onChange={(e) => setForm({ ...form, comment: e.target.value })}
-                    />
-                  </div>
-                  <button
-                    onClick={() => { if (form.name && form.phone) setSent(true); }}
-                    className="w-full font-black text-base py-4 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg"
-                    style={{ background: `linear-gradient(135deg,${C.goldDark},${C.gold})`, color: "#000", boxShadow: "0 4px 20px rgba(240,192,48,0.3)" }}>
-                    Оставить заявку →
-                  </button>
-                  <p className="text-center text-[10px]" style={{ color: "#374151" }}>
-                    Нажимая кнопку, вы соглашаетесь с обработкой персональных данных
-                  </p>
-                </div>
-              )}
+            <div className="rounded-2xl p-8 flex flex-col items-center justify-center text-center gap-6" style={{ background: "rgba(37,43,61,0.85)", border: `1px solid ${C.borderCyan}`, backdropFilter: "blur(12px)" }}>
+              <div className="w-20 h-20 rounded-full flex items-center justify-center animate-pulse" style={{ background: "rgba(34,211,238,0.12)", border: `2px solid ${C.cyan}` }}>
+                <Icon name="Phone" size={36} style={{ color: C.cyan } as React.CSSProperties} />
+              </div>
+              <div>
+                <p className="text-sm font-bold uppercase tracking-widest mb-2" style={{ color: C.gold }}>Звоните прямо сейчас</p>
+                <a href="tel:+79601690990"
+                  className="block font-black text-4xl md:text-5xl uppercase leading-tight transition-opacity hover:opacity-80"
+                  style={{ color: "#fff" }}>
+                  +7 960 169-09-90
+                </a>
+                <p className="text-sm mt-3" style={{ color: C.muted }}>Ответим за 5 минут · Выезд за 24 часа</p>
+              </div>
+              <a href="tel:+79601690990"
+                className="w-full font-black text-lg py-5 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg text-center"
+                style={{ background: `linear-gradient(135deg,${C.goldDark},${C.gold})`, color: "#000", boxShadow: "0 4px 20px rgba(240,192,48,0.3)" }}>
+                Позвонить →
+              </a>
+              <p className="text-xs" style={{ color: C.muted }}>Бесплатный выезд замерщика · Гарантия 3 года</p>
             </div>
           </div>
         </div>
